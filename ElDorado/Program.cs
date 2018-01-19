@@ -10,7 +10,13 @@ namespace ElDorado
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World");
+            var inquistor = new FeedlyInquisitor(new SimpleWebClient());
+            var count = inquistor.GetSubscriberCount("http://cloud.feedly.com/v3/feeds/feed%2Fhttp%3A%2F%2Ffeeds.feedburner.com%2FGrabBagOfT");
+
+            Console.WriteLine(count);
+
+            Console.ReadLine();
+     
         }
     }
 }
