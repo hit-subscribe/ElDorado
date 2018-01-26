@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -19,10 +20,9 @@ namespace ElDorado
         public int GetSubscriberCount(string feedUrl)
         {
             var rawText = _client.GetRawText(feedUrl);
-            if(!string.IsNullOrEmpty(rawText))
-                return int.Parse(rawText.Split(',').First(s => s.Contains("subscribers")).Split(':')[1]);
 
-            return 0;
+            var feedlyFeed = JsonConvert.DeserializeObject<FeedlyFeed>(rawText);
+            return feedlyFeed == null ? 0 : feedlyFeed.Subscribers;
         }
     }
 }
