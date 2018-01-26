@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,16 +9,29 @@ namespace ElDorado
 {
     class Program
     {
+        private const string RootDirectory = @"C:\Users\Erik\Dropbox\Hit Subscribe\Data";
+
+        private static readonly FeedlyInquisitor _inquisitor = new FeedlyInquisitor(new SimpleWebClient());
+
         static void Main(string[] args)
         {
-            var inquistor = new FeedlyInquisitor(new SimpleWebClient());
-            //var count = inquistor.GetSubscriberCount("http://cloud.feedly.com/v3/feeds/feed%2Fhttp%3A%2F%2Ffeeds.feedburner.com%2FGrabBagOfT");
-            var count = inquistor.GetSubscriberCount("https://cloud.feedly.com/v3/feeds/feed%2Fhttp%3A%2F%2Fwww.daedtech.com%2Ffeed");
+            var inputFileLines = File.ReadAllLines($@"{RootDirectory}\blogs.csv");
 
-            Console.WriteLine(count);
+            string outputFile = $@"{RootDirectory}\stats.csv";
 
-            Console.ReadLine();
-     
+            File.AppendAllLines(outputFile, inputFileLines.Select(fl => BuildLineFromBlogStatsRecord(fl)));
+
+        }
+
+        private static string BuildLineFromBlogStatsRecord(string inputFileLine)
+        {
+            var statsRecord = new BlogStatsRecord(inputFileLine)
+            {
+                Timestamp = DateTime.Now,
+                SubscriberCount = _inquisitor.GetSubscriberCount(inputFileLine.Split(',')[2])
+            };
+
+            return statsRecord.ToCsv();
         }
     }
 }
