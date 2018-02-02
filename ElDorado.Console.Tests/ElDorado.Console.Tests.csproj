@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="When_Initializing_BlogStatsRecord_Should.cs" />
+    <Compile Include="When_Searching_ForAlexaRank_AlexaDataIniquisitor_Should.cs" />
     <Compile Include="When_Searching_For_Subscriber_Count_FeedlyInquisitor_Should.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

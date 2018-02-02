@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlexaDataInquisitor.cs" />
     <Compile Include="BlogStatsRecord.cs" />
     <Compile Include="FeedlyFeed.cs" />
     <Compile Include="FeedlyInquisitor.cs" />

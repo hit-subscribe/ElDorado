@@ -11,6 +11,7 @@ namespace ElDorado
         public string BlogName { get; private set; }
         public DateTime Timestamp { get; set; }
         public int SubscriberCount { get; set; }
+        public int AlexaRank { get; set; }
 
         public BlogStatsRecord(string blogRecord)
         {
@@ -19,7 +20,7 @@ namespace ElDorado
 
         public string ToCsv()
         {
-            return $"{BlogName},{Timestamp},{SubscriberCount}";
+            return $"{BlogName},{Timestamp},{SubscriberCount},{AlexaRank}";
         }
     }
 }

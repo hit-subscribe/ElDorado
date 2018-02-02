@@ -45,6 +45,15 @@ namespace ElDorado.Console.Tests
 
             Target.ToCsv().ShouldContain(subscriberCount.ToString());
         }
-    }   
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Result_In_A_ToCsv_Containing_AlexaRank()
+        {
+            var alexaRank = 123456;
+            Target.AlexaRank = alexaRank;
+
+            Target.ToCsv().ShouldContain(alexaRank.ToString());
+        }
+}   
 
 }

@@ -11,7 +11,8 @@ namespace ElDorado
     {
         private const string RootDirectory = @"C:\Users\Erik\Dropbox\Hit Subscribe\Data";
 
-        private static readonly FeedlyInquisitor _inquisitor = new FeedlyInquisitor(new SimpleWebClient());
+        private static readonly FeedlyInquisitor _feedlyInquisitor = new FeedlyInquisitor(new SimpleWebClient());
+        private static readonly AlexaDataInquisitor _alexaInquisitor = new AlexaDataInquisitor(new SimpleWebClient());
 
         static void Main(string[] args)
         {
@@ -25,10 +26,13 @@ namespace ElDorado
 
         private static string BuildLineFromBlogStatsRecord(string inputFileLine)
         {
+            string baseSite = inputFileLine.Split(',')[1];
+            string feedlyUrl = inputFileLine.Split(',')[2];
             var statsRecord = new BlogStatsRecord(inputFileLine)
             {
                 Timestamp = DateTime.Now,
-                SubscriberCount = _inquisitor.GetSubscriberCount(inputFileLine.Split(',')[2])
+                SubscriberCount = _feedlyInquisitor.GetSubscriberCount(feedlyUrl),
+                AlexaRank = _alexaInquisitor.GetGlobalRank(baseSite)
             };
 
             return statsRecord.ToCsv();
