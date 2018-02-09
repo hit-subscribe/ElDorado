@@ -60,7 +60,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="When_Building_The_Moz_Query_Url_MozInquisitor_Should.cs" />
     <Compile Include="When_Initializing_BlogStatsRecord_Should.cs" />
+    <Compile Include="When_Retrieving_Results_From_Moz_MozInquisitor_Should.cs" />
     <Compile Include="When_Searching_ForAlexaRank_AlexaDataIniquisitor_Should.cs" />
     <Compile Include="When_Searching_For_Subscriber_Count_FeedlyInquisitor_Should.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

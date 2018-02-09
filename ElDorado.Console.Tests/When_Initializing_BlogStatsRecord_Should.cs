@@ -54,6 +54,15 @@ namespace ElDorado.Console.Tests
 
             Target.ToCsv().ShouldContain(alexaRank.ToString());
         }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Result_In_A_Csv_Containing_DomainAuthority()
+        {
+            var domainAuthority = 22.34M;
+            Target.DomainAuthority = domainAuthority;
+
+            Target.ToCsv().ShouldContain(domainAuthority.ToString());
+        }
 }   
 
 }
