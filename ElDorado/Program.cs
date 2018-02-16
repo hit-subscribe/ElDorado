@@ -39,7 +39,8 @@ namespace ElDorado
                 Timestamp = DateTime.Now,
                 SubscriberCount = _feedlyInquisitor.GetSubscriberCount(feedlyUrl),
                 AlexaRank = _alexaInquisitor.GetGlobalRank(baseSite),
-                DomainAuthority = _mozInquisitor.GetDomainAuthority(new Uri(baseSite).Host)
+                DomainAuthority = _mozInquisitor.GetDomainAuthority(new Uri(baseSite).Host),
+                LinkingDomains = _mozInquisitor.GetLinkingDomains(new Uri(baseSite).Host),
             };
 
             return statsRecord.ToCsv();

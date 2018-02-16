@@ -63,6 +63,15 @@ namespace ElDorado.Console.Tests
 
             Target.ToCsv().ShouldContain(domainAuthority.ToString());
         }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Result_In_A_Csv_Containing_LinkingDomains()
+        {
+            var linkingDomains = 1234;
+            Target.LinkingDomains = linkingDomains;
+
+            Target.ToCsv().ShouldContain(linkingDomains.ToString());          
+        }
 }   
 
 }

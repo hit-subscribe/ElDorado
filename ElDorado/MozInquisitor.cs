@@ -23,18 +23,12 @@ namespace ElDorado
 
         public decimal GetDomainAuthority(string baseUrl)
         {
-            try
-            {
-                var authenticatedUrl = BuildUrl(baseUrl);
-                var rawText = _simpleWebClient.GetRawText(authenticatedUrl);
+            return GetMozRowMetric(baseUrl, mozRow => Math.Round((decimal)mozRow.pda, 2));
+        }
 
-                dynamic mozRow = JsonConvert.DeserializeObject(rawText);
-                return Math.Round((decimal)mozRow.pda, 2);
-            }
-            catch
-            {
-                return 0;
-            }
+        public int GetLinkingDomains(string baseUrl)
+        {
+            return GetMozRowMetric(baseUrl, mozRow => (int)mozRow.pid);
         }
 
         public string BuildUrl(string baseUrl)
@@ -49,6 +43,22 @@ namespace ElDorado
             return $"http://lsapi.seomoz.com/linkscape/url-metrics/{baseUrl}?Cols=288230376151711743&AccessID={accessId}&Expires={expiration}&Signature={signatureCode}";
         }
 
+        private dynamic GetMozRowMetric<T>(string baseUrl, Func<dynamic, T> selectMetric) where T : struct
+        {
+            try
+            {
+                var authenticatedUrl = BuildUrl(baseUrl);
+                var rawText = _simpleWebClient.GetRawText(authenticatedUrl);
+
+                var mozRowJson = JsonConvert.DeserializeObject(rawText);
+                return selectMetric(mozRowJson);
+            }
+            catch
+            {
+                return default(T);
+            }
+        }
+
         private static String GetSignatureCode(byte[] bytesToHash, string secret)
         {
             using (HMACSHA1 hashCalculator = new HMACSHA1(Encoding.ASCII.GetBytes(secret)))
@@ -59,5 +69,7 @@ namespace ElDorado
                 return HttpUtility.UrlEncode(hashedBytes);
             }
         }
+
+
     }
 }

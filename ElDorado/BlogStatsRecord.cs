@@ -13,6 +13,7 @@ namespace ElDorado
         public int SubscriberCount { get; set; }
         public int AlexaRank { get; set; }
         public decimal DomainAuthority { get; set; }
+        public int LinkingDomains { get; set; }
 
         public BlogStatsRecord(string blogRecord)
         {
@@ -21,7 +22,7 @@ namespace ElDorado
 
         public string ToCsv()
         {
-            return $"{BlogName},{Timestamp},{SubscriberCount},{AlexaRank},{DomainAuthority}";
+            return $"{BlogName},{Timestamp},{SubscriberCount},{AlexaRank},{DomainAuthority},{LinkingDomains}";
         }
     }
 }
