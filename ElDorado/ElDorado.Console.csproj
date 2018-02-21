@@ -74,5 +74,11 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ElDorado.Domain\ElDorado.Domain.csproj">
+      <Project>{b4d6567e-3f17-4d03-bebb-9a5841434497}</Project>
+      <Name>ElDorado.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
