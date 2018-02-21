@@ -16,7 +16,7 @@ namespace ElDorado
             _client = client;
         }
 
-        public int GetGlobalRank(string baseSiteUrl)
+        public virtual int GetGlobalRank(string baseSiteUrl)
         {
             var rawXml =_client.GetRawText($"http://data.alexa.com/data?cli=10&dat=snbamz&url={baseSiteUrl}");
             try

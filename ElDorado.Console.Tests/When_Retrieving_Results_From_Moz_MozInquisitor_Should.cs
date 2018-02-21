@@ -37,7 +37,7 @@ namespace ElDorado.Console.Tests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_0_By_Default_For_DomainAuthority()
         {
-            var domainAuthority = Target.GetDomainAuthority(string.Empty);
+            var domainAuthority = Target.GetMozStats(string.Empty).DomainAuthority;
 
             domainAuthority.ShouldBe(0);
         }
@@ -47,7 +47,7 @@ namespace ElDorado.Console.Tests
         {
             Client.Arrange(cl => cl.GetRawText(Arg.AnyString)).Returns(CallResult);
 
-            var domainAuthority = Target.GetDomainAuthority(BaseUrl);
+            var domainAuthority = Target.GetMozStats(BaseUrl).DomainAuthority;
 
             domainAuthority.ShouldBe(Decimal.Round(DomainAuthority, 2));
         }
@@ -57,7 +57,7 @@ namespace ElDorado.Console.Tests
         {
             var url = Target.BuildUrl("asdf");
 
-            Target.GetDomainAuthority("asdf");
+            Target.GetMozStats("asdf");
 
             Client.Assert(cl => cl.GetRawText(url), Occurs.Once());
         }
@@ -65,7 +65,7 @@ namespace ElDorado.Console.Tests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_0_By_Default_For_LinkingDomains()
         {
-            var linkingDomains = Target.GetLinkingDomains(string.Empty);
+            var linkingDomains = Target.GetMozStats(string.Empty).LinkingDomains;
 
             linkingDomains.ShouldBe(0);
         }
@@ -75,7 +75,7 @@ namespace ElDorado.Console.Tests
         {
             Client.Arrange(cl => cl.GetRawText(Arg.AnyString)).Returns(CallResult);
 
-            var linkingDomains = Target.GetLinkingDomains(BaseUrl);
+            var linkingDomains = Target.GetMozStats(BaseUrl).LinkingDomains;
 
             linkingDomains.ShouldBe(LinkingDomains);
         }

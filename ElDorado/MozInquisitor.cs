@@ -4,16 +4,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Web;
 
 namespace ElDorado
 {
     public class MozInquisitor
     {
+        public struct MozRecord
+        {
+            public decimal DomainAuthority { get; private set; }
+            public int LinkingDomains { get; private set; }
+
+            public MozRecord(decimal domainAuthority, int linkingDomains)
+            {
+                DomainAuthority = domainAuthority;
+                LinkingDomains = linkingDomains;
+            }
+        }
+
         private readonly Dictionary<string, string> _credentials;
         private readonly SimpleWebClient _simpleWebClient;
 
         public DateTime CurrentTime { get; set; } = DateTime.Now;
+
+        public int Timeout { get; set; } = 0;
 
         public MozInquisitor(IEnumerable<string> fileLines, SimpleWebClient simpleWebClient)
         {
@@ -21,14 +36,21 @@ namespace ElDorado
             _credentials = fileLines.ToDictionary(line => line.Split(':')[0], line => line.Split(':')[1]);
         }
 
-        public decimal GetDomainAuthority(string baseUrl)
+        public virtual MozRecord GetMozStats(string host)
         {
-            return GetMozRowMetric(baseUrl, mozRow => Math.Round((decimal)mozRow.pda, 2));
-        }
+            Thread.Sleep(Timeout * 1000);
+            try
+            {
+                var authenticatedUrl = BuildUrl(host);
+                var rawText = _simpleWebClient.GetRawText(authenticatedUrl);
 
-        public int GetLinkingDomains(string baseUrl)
-        {
-            return GetMozRowMetric(baseUrl, mozRow => (int)mozRow.pid);
+                dynamic mozRowJson = JsonConvert.DeserializeObject(rawText);
+                return new MozRecord(Math.Round((decimal)mozRowJson.pda, 2), (int)mozRowJson.pid);
+            }
+            catch
+            {
+                return new MozRecord(0, 0);
+            }
         }
 
         public string BuildUrl(string baseUrl)
@@ -41,22 +63,6 @@ namespace ElDorado
             var signatureCode = GetSignatureCode(bytesToHash, secret);
 
             return $"http://lsapi.seomoz.com/linkscape/url-metrics/{baseUrl}?Cols=288230376151711743&AccessID={accessId}&Expires={expiration}&Signature={signatureCode}";
-        }
-
-        private dynamic GetMozRowMetric<T>(string baseUrl, Func<dynamic, T> selectMetric) where T : struct
-        {
-            try
-            {
-                var authenticatedUrl = BuildUrl(baseUrl);
-                var rawText = _simpleWebClient.GetRawText(authenticatedUrl);
-
-                var mozRowJson = JsonConvert.DeserializeObject(rawText);
-                return selectMetric(mozRowJson);
-            }
-            catch
-            {
-                return default(T);
-            }
         }
 
         private static String GetSignatureCode(byte[] bytesToHash, string secret)

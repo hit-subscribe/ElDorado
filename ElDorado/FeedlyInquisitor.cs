@@ -17,7 +17,7 @@ namespace ElDorado
             _client = client;
         }
 
-        public int GetSubscriberCount(string feedUrl)
+        public virtual int GetSubscriberCount(string feedUrl)
         {
             var rawText = _client.GetRawText(feedUrl);
 

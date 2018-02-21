@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ElDorado.Console.Tests</RootNamespace>
     <AssemblyName>ElDorado.Console.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">15.0</VisualStudioVersion>
@@ -19,6 +19,7 @@
     <TestProjectType>UnitTest</TestProjectType>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,6 +39,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\MSTest.TestFramework.1.2.0\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
     </Reference>
@@ -60,8 +62,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TestingExtensions.cs" />
     <Compile Include="When_Building_The_Moz_Query_Url_MozInquisitor_Should.cs" />
     <Compile Include="When_Initializing_BlogStatsRecord_Should.cs" />
+    <Compile Include="When_Recording_BlogMetrics_BlogMetricsRecorder_Should.cs" />
     <Compile Include="When_Retrieving_Results_From_Moz_MozInquisitor_Should.cs" />
     <Compile Include="When_Searching_ForAlexaRank_AlexaDataIniquisitor_Should.cs" />
     <Compile Include="When_Searching_For_Subscriber_Count_FeedlyInquisitor_Should.cs" />
@@ -71,6 +75,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ElDorado.Domain\ElDorado.Domain.csproj">
+      <Project>{b4d6567e-3f17-4d03-bebb-9a5841434497}</Project>
+      <Name>ElDorado.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ElDorado\ElDorado.Console.csproj">
       <Project>{0e3d0f5e-c657-4544-bbb0-de1abaeaff1c}</Project>
       <Name>ElDorado.Console</Name>
