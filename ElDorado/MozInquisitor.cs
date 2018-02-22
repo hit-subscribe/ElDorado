@@ -23,17 +23,17 @@ namespace ElDorado
             }
         }
 
-        private readonly Dictionary<string, string> _credentials;
+        private readonly CredentialStore _credentials;
         private readonly SimpleWebClient _simpleWebClient;
 
         public DateTime CurrentTime { get; set; } = DateTime.Now;
 
         public int Timeout { get; set; } = 0;
 
-        public MozInquisitor(IEnumerable<string> fileLines, SimpleWebClient simpleWebClient)
+        public MozInquisitor(CredentialStore credentials, SimpleWebClient simpleWebClient)
         {
             _simpleWebClient = simpleWebClient;
-            _credentials = fileLines.ToDictionary(line => line.Split(':')[0], line => line.Split(':')[1]);
+            _credentials = credentials;
         }
 
         public virtual MozRecord GetMozStats(string host)

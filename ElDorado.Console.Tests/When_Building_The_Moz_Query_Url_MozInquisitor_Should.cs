@@ -17,14 +17,14 @@ namespace ElDorado.Console.Tests
 
         private const string BaseUrl = "daedtech.com";
 
-        private static readonly IEnumerable<string> FileLines = new List<string>() { IdLine, SecretLine };
+        private static readonly CredentialStore Credentials = new CredentialStore($"{IdLine}\r\n{SecretLine}");
 
         private MozInquisitor Target { get; set; }
 
         [TestInitialize]
         public void BeforeEachTest()
         {
-            Target = new MozInquisitor(FileLines, Mock.Create<SimpleWebClient>());
+            Target = new MozInquisitor(Credentials, Mock.Create<SimpleWebClient>());
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
