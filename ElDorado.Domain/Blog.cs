@@ -21,6 +21,9 @@ namespace ElDorado.Domain
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BlogMetric> BlogMetrics { get; set; }
 
+        [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BlogPost> BlogPosts { get; set; }
+
         [NotMapped]
         public string Hostname => new Uri(Url).Host;
     }

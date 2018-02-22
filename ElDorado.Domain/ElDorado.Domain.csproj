@@ -53,6 +53,7 @@
     <Compile Include="Blog.cs" />
     <Compile Include="BlogContext.cs" />
     <Compile Include="BlogMetric.cs" />
+    <Compile Include="BlogPost.cs" />
     <Compile Include="Migrations\201802210846572_CreatedBlogEntity.cs" />
     <Compile Include="Migrations\201802210846572_CreatedBlogEntity.Designer.cs">
       <DependentUpon>201802210846572_CreatedBlogEntity.cs</DependentUpon>
@@ -64,6 +65,10 @@
     <Compile Include="Migrations\201802210857225_CreatedBlogMetricEntity.cs" />
     <Compile Include="Migrations\201802210857225_CreatedBlogMetricEntity.Designer.cs">
       <DependentUpon>201802210857225_CreatedBlogMetricEntity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802220804122_AddedBlogPostTable.cs" />
+    <Compile Include="Migrations\201802220804122_AddedBlogPostTable.Designer.cs">
+      <DependentUpon>201802220804122_AddedBlogPostTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -81,6 +86,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201802210857225_CreatedBlogMetricEntity.resx">
       <DependentUpon>201802210857225_CreatedBlogMetricEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802220804122_AddedBlogPostTable.resx">
+      <DependentUpon>201802220804122_AddedBlogPostTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -21,6 +21,12 @@ namespace ElDorado.Domain
                 .WithRequired(b => b.Blog)
                 .HasForeignKey(b => b.BlogId)
                 .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<Blog>()
+                .HasMany(b => b.BlogPosts)
+                .WithRequired(b => b.Blog)
+                .HasForeignKey(b => b.BlogId)
+                .WillCascadeOnDelete(true);
         }
     }
 }
