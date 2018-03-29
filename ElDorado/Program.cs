@@ -1,4 +1,8 @@
 ﻿using ElDorado.Domain;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Services;
+using Google.Apis.Sheets.v4;
+using Google.Apis.Util.Store;
 using Manatee.Trello;
 using Manatee.Trello.ManateeJson;
 using Manatee.Trello.WebApi;
@@ -8,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -21,6 +26,7 @@ namespace ElDorado
 
             //SetupTrelloConnection();
             //AddCardToTrello();
+            //ReadFromGoogleSheet();
         }
 
         private static void GenerateBlogMetrics()
@@ -58,6 +64,57 @@ namespace ElDorado
             var board = new Board("AhqnpUJD");
             var plannedPostsList = board.Lists.First(l => l.Name == "Planned Posts");
             plannedPostsList.Cards.Add("A fifth added from El Dorado.");
+        }
+
+        private static void ReadFromGoogleSheet()
+        {
+            // Create Google Sheets API service.
+            var service = new SheetsService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = GetSheetsUserCredential(),
+                ApplicationName = "El Dorado",
+            });
+
+            var spreadsheetId = "1BFycG-T2eY3Uh8HWr5c5h-MjYEUJ8eKjqJ8GLxhdh2w";
+            var range = "Current!A2:E";
+            var request = service.Spreadsheets.Values.Get(spreadsheetId, range);
+
+            var values = request.Execute().Values;
+            Pad(values);
+
+            Console.WriteLine("Client, Title");
+            foreach (var row in values.Where(r => r.Count > 0))
+                Console.WriteLine("{0}, {1}", row[0], row[1]);
+
+            Console.Read();
+        }
+
+        private static UserCredential GetSheetsUserCredential()
+        {
+            // If modifying these scopes, delete your previously saved credentials
+            // at ~/.credentials/sheets.googleapis.com-dotnet-quickstart.json
+            UserCredential credential;
+
+            using (var stream = new FileStream(@"CredFiles\google.cred", FileMode.Open, FileAccess.Read))
+            {
+                string credPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+                credPath = Path.Combine(credPath, ".credentials/sheets.googleapis.com-dotnet-quickstart.json");
+
+                credential = GoogleWebAuthorizationBroker.AuthorizeAsync(GoogleClientSecrets.Load(stream).Secrets, new string[] { SheetsService.Scope.SpreadsheetsReadonly }, "user", CancellationToken.None, new FileDataStore(credPath, true)).Result;
+                Console.WriteLine("Credential file saved to: " + credPath);
+            }
+
+            return credential;
+        }
+
+        private static void Pad(IList<IList<object>> target)
+        {
+            var maxColumns = target.Max(r => r.Count);
+            foreach(var row in target)
+            {
+                for (int i = row.Count; i < maxColumns; i++)
+                    row.Add(string.Empty);
+            }
         }
     }
 }
