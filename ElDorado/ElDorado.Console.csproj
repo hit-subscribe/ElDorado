@@ -172,7 +172,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AlexaDataInquisitor.cs" />
+    <Compile Include="Metrics\AlexaDataInquisitor.cs" />
     <Compile Include="Metrics\BlogMetricsRecorder.cs" />
     <Compile Include="Metrics\BlogStatsRecord.cs" />
     <Compile Include="CredentialStore.cs" />
