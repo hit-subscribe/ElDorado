@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ElDorado
+namespace ElDorado.Metrics
 {
     public class FeedlyFeed
     {

@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Web;
 
-namespace ElDorado
+namespace ElDorado.Metrics
 {
     public class MozInquisitor
     {

@@ -173,13 +173,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlexaDataInquisitor.cs" />
-    <Compile Include="BlogMetricsRecorder.cs" />
-    <Compile Include="BlogStatsRecord.cs" />
+    <Compile Include="Metrics\BlogMetricsRecorder.cs" />
+    <Compile Include="Metrics\BlogStatsRecord.cs" />
     <Compile Include="CredentialStore.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="FeedlyFeed.cs" />
-    <Compile Include="FeedlyInquisitor.cs" />
-    <Compile Include="MozInquisitor.cs" />
+    <Compile Include="Metrics\FeedlyFeed.cs" />
+    <Compile Include="Metrics\FeedlyInquisitor.cs" />
+    <Compile Include="Metrics\MozInquisitor.cs" />
     <Compile Include="netfx\System\DateTimeEpochExtensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
