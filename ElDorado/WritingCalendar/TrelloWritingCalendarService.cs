@@ -15,8 +15,11 @@ namespace ElDorado.WritingCalendar
 
         private TrelloAuthorization Auth => TrelloAuthorization.Default;
 
-        private CardCollection PlannedPostCards => new Board(TrelloBoardId).Lists.First(l => l.Name == PlannedPostTrelloListName).Cards;
-        private IList<Card> BoardCards => new Board(TrelloBoardId).Cards.ToList();
+        private Lazy<Board> WritingCalender = new Lazy<Board>(() => new Board(TrelloBoardId));        
+        
+
+        private CardCollection PlannedPostCards => WritingCalender.Value.Lists.First(l => l.Name == PlannedPostTrelloListName).Cards;
+        private IList<Card> BoardCards => WritingCalender.Value.Cards.ToList();
 
         public void Initialize(CredentialStore credentialStore)
         {
@@ -36,7 +39,7 @@ namespace ElDorado.WritingCalendar
         public virtual bool DoesCardExist(string cardTitle)
         {
             var cards = BoardCards.ToList();
-            var isMatch =  cards.Any(c => c.Name == cardTitle);
+            var isMatch =  cards.Any(c => c.Name.Trim().ToLower().Contains(cardTitle.Trim().ToLower().Replace("  ", " ")));
             return isMatch;
         }
 
