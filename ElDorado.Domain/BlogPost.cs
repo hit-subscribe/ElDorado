@@ -21,6 +21,6 @@ namespace ElDorado.Domain
         public DateTime DraftDate { get; set; }
         public DateTime TargetFinalizeDate { get; set; }
         public DateTime TargetPublicationDate { get; set; }
-
+        public bool IsApproved { get; set; }
     }
 }

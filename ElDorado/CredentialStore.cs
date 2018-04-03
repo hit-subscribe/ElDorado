@@ -15,9 +15,9 @@ namespace ElDorado
         {
             get { return _credentials[i]; }
         }
-        public CredentialStore(string credentialFile)
+        public CredentialStore(string credentialFileLines)
         {
-            _credentials = SliceIntoLines(credentialFile).ToDictionary(line => Token(line, 0), line => Token(line, 1));
+            _credentials = SliceIntoLines(credentialFileLines).ToDictionary(line => Token(line, 0), line => Token(line, 1));
         }
 
         private static string Token(string line, int index)
