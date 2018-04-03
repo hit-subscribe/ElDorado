@@ -38,9 +38,8 @@ namespace ElDorado.WritingCalendar
         }
         public virtual bool DoesCardExist(string cardTitle)
         {
-            var cards = BoardCards.ToList();
-            var isMatch =  cards.Any(c => c.Name.Trim().ToLower().Contains(cardTitle.Trim().ToLower().Replace("  ", " ")));
-            return isMatch;
+            //This isn't going to stay like this -- implement some extension methods and test 'em
+            return BoardCards.ToList().Any(c => c.Name.Trim().ToLower().Contains(cardTitle.Trim().ToLower().Replace("  ", " ")));
         }
 
     }

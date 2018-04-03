@@ -15,7 +15,7 @@ namespace ElDorado.WritingCalendar
 {
     public class PlanningSpreadsheetService
     {
-        public virtual IList<BlogPost> GetPlannedPosts()
+        public virtual IEnumerable<BlogPost> GetPlannedPosts()
         {
             var service = new SheetsService(new BaseClientService.Initializer()
             {
@@ -30,7 +30,7 @@ namespace ElDorado.WritingCalendar
             var values = request.Execute().Values;
             Pad(values);
 
-            return values.Where(r => r.Count > 0).Select(r => CreateBlogPostFromSpreadsheetRow(r)).ToList();
+            return values.Where(r => r.Count > 0).Select(r => CreateBlogPostFromSpreadsheetRow(r));
         }
 
         private static BlogPost CreateBlogPostFromSpreadsheetRow(IList<object> row)
