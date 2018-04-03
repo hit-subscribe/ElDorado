@@ -1,5 +1,6 @@
 ﻿using ElDorado.Domain;
 using ElDorado.Metrics;
+using ElDorado.WritingCalendar;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.Sheets.v4;
@@ -23,7 +24,9 @@ namespace ElDorado
     {
         static void Main(string[] args)
         {
-            GenerateBlogMetrics();
+            //GenerateBlogMetrics();
+
+            Synchronize();
 
             //SetupTrelloConnection();
             //AddCardToTrello();
@@ -46,6 +49,15 @@ namespace ElDorado
                 context.BlogMetrics.AddRange(blogMetrics);
                 context.SaveChanges();
             }
+        }
+
+        private static void Synchronize()
+        {
+            var trelloService = new TrelloWritingCalendarService();
+            trelloService.Initialize(new CredentialStore(File.ReadAllText(@"CredFiles\trello.cred")));
+
+            var synchornizer = new BlogPostSynchronizer(trelloService, new PlanningSpreadsheetService());
+            synchornizer.UpdatePlannedInTrello();
         }
 
         private static void SetupTrelloConnection()

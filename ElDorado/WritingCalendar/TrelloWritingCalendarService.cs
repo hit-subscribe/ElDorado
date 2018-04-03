@@ -2,6 +2,7 @@
 using Manatee.Trello.ManateeJson;
 using Manatee.Trello.WebApi;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ElDorado.WritingCalendar
@@ -14,7 +15,8 @@ namespace ElDorado.WritingCalendar
 
         private TrelloAuthorization Auth => TrelloAuthorization.Default;
 
-        private CardCollection Cards => new Board(TrelloBoardId).Lists.First(l => l.Name == PlannedPostTrelloListName).Cards;
+        private CardCollection PlannedPostCards => new Board(TrelloBoardId).Lists.First(l => l.Name == PlannedPostTrelloListName).Cards;
+        private IList<Card> BoardCards => new Board(TrelloBoardId).Cards.ToList();
 
         public void Initialize(CredentialStore credentialStore)
         {
@@ -29,11 +31,13 @@ namespace ElDorado.WritingCalendar
         }
         public virtual void AddCard(string cardName)
         {
-            Cards.Add(cardName);
+            PlannedPostCards.Add(cardName);
         }
         public virtual bool DoesCardExist(string cardTitle)
         {
-            return Cards.Any(c => c.Name == cardTitle);
+            var cards = BoardCards.ToList();
+            var isMatch =  cards.Any(c => c.Name == cardTitle);
+            return isMatch;
         }
 
     }

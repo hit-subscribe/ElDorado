@@ -45,37 +45,5 @@ namespace ElDorado.Console.Tests.WritingCalendar
 
             TrelloWritingCalendarService.Assert(s => s.AddCard(PostThatAlreadyExistsInTrello.Title), Occurs.Never());
         }
-}
-
-    public class BlogPostSynchronizer
-    {
-        private readonly TrelloWritingCalendarService _trelloService;
-        private readonly PlanningSpreadsheetService _planningSpreadsheetService;
-        public BlogPostSynchronizer(TrelloWritingCalendarService trelloService, PlanningSpreadsheetService planningSpreadsheetService)
-        {
-            _planningSpreadsheetService = planningSpreadsheetService;
-            _trelloService = trelloService;
-        }
-
-        public void UpdatePlannedInTrello()
-        {
-            var approvedPosts = _planningSpreadsheetService.GetPlannedPosts().Where(bp => ShouldBeAddedToTrello(bp));
-
-            foreach (var post in approvedPosts)
-                _trelloService.AddCard(post.Title);
-        }
-
-        private bool ShouldBeAddedToTrello(BlogPost blogPostToConsider)
-        {
-            return blogPostToConsider.IsApproved && !_trelloService.DoesCardExist(blogPostToConsider.Title);
-        }
-    }
-    public class PlanningSpreadsheetService
-    {
-        public virtual IEnumerable<BlogPost> GetPlannedPosts()
-        {
-            return null;
-        }
-
     }
 }

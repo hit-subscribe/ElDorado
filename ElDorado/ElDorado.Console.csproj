@@ -184,6 +184,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimpleWebClient.cs" />
+    <Compile Include="WritingCalendar\BlogPostSynchronizer.cs" />
+    <Compile Include="WritingCalendar\PlanningSpreadsheetService.cs" />
     <Compile Include="WritingCalendar\TrelloWritingCalendarService.cs" />
   </ItemGroup>
   <ItemGroup>
