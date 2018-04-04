@@ -38,6 +38,7 @@ namespace ElDorado.WritingCalendar
             DateTime.TryParse(row[6].ToString(), out DateTime date);
             return new BlogPost()
             {
+                Blog = new Blog() { CompanyName = row[0].ToString() },
                 Title = row[1].ToString(),
                 DraftDate = date,
                 IsApproved = row[17].ToString() == "Yes"

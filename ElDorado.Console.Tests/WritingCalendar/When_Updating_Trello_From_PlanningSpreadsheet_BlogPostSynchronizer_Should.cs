@@ -35,7 +35,7 @@ namespace ElDorado.Console.Tests.WritingCalendar
         {
             Target.UpdatePlannedInTrello();
 
-            TrelloWritingCalendarService.Assert(s => s.AddCard(AprpovedPostFromSpreadsheet.Title), Occurs.Once());
+            TrelloWritingCalendarService.Assert(s => s.AddCard(AprpovedPostFromSpreadsheet), Occurs.Once());
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -43,7 +43,7 @@ namespace ElDorado.Console.Tests.WritingCalendar
         {
             Target.UpdatePlannedInTrello();
 
-            TrelloWritingCalendarService.Assert(s => s.AddCard(PostThatAlreadyExistsInTrello.Title), Occurs.Never());
+            TrelloWritingCalendarService.Assert(s => s.AddCard(PostThatAlreadyExistsInTrello), Occurs.Never());
         }
     }
 }

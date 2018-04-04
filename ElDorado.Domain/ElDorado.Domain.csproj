@@ -70,6 +70,10 @@
     <Compile Include="Migrations\201802220804122_AddedBlogPostTable.Designer.cs">
       <DependentUpon>201802220804122_AddedBlogPostTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804042040362_2XAndApproved.cs" />
+    <Compile Include="Migrations\201804042040362_2XAndApproved.Designer.cs">
+      <DependentUpon>201804042040362_2XAndApproved.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -89,6 +93,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201802220804122_AddedBlogPostTable.resx">
       <DependentUpon>201802220804122_AddedBlogPostTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804042040362_2XAndApproved.resx">
+      <DependentUpon>201804042040362_2XAndApproved.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

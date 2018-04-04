@@ -1,4 +1,5 @@
-﻿using Manatee.Trello;
+﻿using ElDorado.Domain;
+using Manatee.Trello;
 using Manatee.Trello.ManateeJson;
 using Manatee.Trello.WebApi;
 using System;
@@ -15,11 +16,13 @@ namespace ElDorado.WritingCalendar
 
         private TrelloAuthorization Auth => TrelloAuthorization.Default;
 
-        private Lazy<Board> WritingCalender = new Lazy<Board>(() => new Board(TrelloBoardId));        
+        private Lazy<Board> LazyWritingCalendar = new Lazy<Board>(() => new Board(TrelloBoardId));
+
+        private Board WritingCalendar => LazyWritingCalendar.Value;
         
 
-        private CardCollection PlannedPostCards => WritingCalender.Value.Lists.First(l => l.Name == PlannedPostTrelloListName).Cards;
-        private IList<Card> BoardCards => WritingCalender.Value.Cards.ToList();
+        private CardCollection PlannedPostCards => WritingCalendar.Lists.First(l => l.Name == PlannedPostTrelloListName).Cards;
+        private IList<Card> BoardCards => WritingCalendar.Cards.ToList();
 
         public void Initialize(CredentialStore credentialStore)
         {
@@ -32,9 +35,12 @@ namespace ElDorado.WritingCalendar
             Auth.AppKey = credentialStore["TrelloAppKey"];
             Auth.UserToken = credentialStore["TrelloUserToken"];
         }
-        public virtual void AddCard(string cardName)
+        public virtual void AddCard(BlogPost postToAdd)
         {
-            PlannedPostCards.Add(cardName);
+            var erik = WritingCalendar.Members.Where(m => m.UserName == "erikdietrich");
+            var clientLabels = WritingCalendar.Labels.Where(l => l.Name == postToAdd?.Blog?.CompanyName); 
+
+            PlannedPostCards.Add(name: postToAdd.Title, dueDate: postToAdd.DraftDate.AddHours(12), members: erik, labels: clientLabels);
         }
         public virtual bool DoesCardExist(string cardTitle)
         {
