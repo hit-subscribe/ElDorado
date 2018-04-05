@@ -46,7 +46,6 @@ namespace ElDorado.WritingCalendar
                 credPath = Path.Combine(credPath, ".credentials/sheets.googleapis.com-dotnet-quickstart.json");
 
                 credential = GoogleWebAuthorizationBroker.AuthorizeAsync(GoogleClientSecrets.Load(stream).Secrets, new string[] { SheetsService.Scope.SpreadsheetsReadonly }, "user", CancellationToken.None, new FileDataStore(credPath, true)).Result;
-                Console.WriteLine("Credential file saved to: " + credPath);
             }
 
             return credential;
