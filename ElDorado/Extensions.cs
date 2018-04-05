@@ -15,5 +15,19 @@ namespace ElDorado
 
             return Convert.ToInt64(ts.TotalSeconds);
         }
+
+        public static IList<IList<object>> Pad(this IList<IList<object>> target)
+        {
+            var maxColumns = target.Max(r => r.Count);
+
+            foreach (var row in target)
+            {
+                for (int i = row.Count; i < maxColumns; i++)
+                    row.Add(string.Empty);
+            }
+
+            return target;
+        }
+            
     }
 }

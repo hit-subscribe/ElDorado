@@ -27,22 +27,11 @@ namespace ElDorado.WritingCalendar
             var range = "Current!A2:S";
             var request = service.Spreadsheets.Values.Get(spreadsheetId, range);
 
-            var values = request.Execute().Values;
-            Pad(values);
+            var values = request.Execute().Values.Pad();
 
-            return values.Where(r => r.Count > 0).Select(r => CreateBlogPostFromSpreadsheetRow(r));
-        }
+            var factory = new BlogPostFactory();
 
-        private static BlogPost CreateBlogPostFromSpreadsheetRow(IList<object> row)
-        {
-            DateTime.TryParse(row[6].ToString(), out DateTime date);
-            return new BlogPost()
-            {
-                Blog = new Blog() { CompanyName = row[0].ToString() },
-                Title = row[1].ToString(),
-                DraftDate = date,
-                IsApproved = row[17].ToString() == "Yes"
-            };
+            return values.Where(r => r.Count > 0 && !string.IsNullOrEmpty(r[0].ToString())).Select(r => factory.MakePostFromGoogleSheetRow(r));
         }
 
         private static UserCredential GetSheetsUserCredential()
@@ -62,16 +51,5 @@ namespace ElDorado.WritingCalendar
 
             return credential;
         }
-
-        private static void Pad(IList<IList<object>> target)
-        {
-            var maxColumns = target.Max(r => r.Count);
-            foreach (var row in target)
-            {
-                for (int i = row.Count; i < maxColumns; i++)
-                    row.Add(string.Empty);
-            }
-        }
-
     }
 }

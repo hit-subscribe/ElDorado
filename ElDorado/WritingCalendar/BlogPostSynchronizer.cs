@@ -11,6 +11,7 @@ namespace ElDorado.WritingCalendar
     {
         private readonly TrelloWritingCalendarService _trelloService;
         private readonly PlanningSpreadsheetService _planningSpreadsheetService;
+
         public BlogPostSynchronizer(TrelloWritingCalendarService trelloService, PlanningSpreadsheetService planningSpreadsheetService)
         {
             _planningSpreadsheetService = planningSpreadsheetService;
