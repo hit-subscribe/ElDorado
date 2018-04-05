@@ -39,6 +39,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Gold.ConsoleMenu, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Gold.ConsoleMenu.2.1.0\lib\net20\Gold.ConsoleMenu.dll</HintPath>
+    </Reference>
     <Reference Include="Google.Apis, Version=1.32.2.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Apis.1.32.2\lib\net45\Google.Apis.dll</HintPath>
     </Reference>
@@ -172,6 +175,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Menu\MainMenu.cs" />
     <Compile Include="Metrics\AlexaDataInquisitor.cs" />
     <Compile Include="Metrics\BlogMetricsRecorder.cs" />
     <Compile Include="Metrics\BlogStatsRecord.cs" />
