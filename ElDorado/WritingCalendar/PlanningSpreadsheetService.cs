@@ -31,7 +31,13 @@ namespace ElDorado.WritingCalendar
 
             var factory = new BlogPostFactory();
 
-            return values.Where(r => r.Count > 0 && !string.IsNullOrEmpty(r[0].ToString())).Select(r => factory.MakePostFromGoogleSheetRow(r));
+            return values.Where(r => IsSheetRowValid(r)).Select(r => factory.MakePostFromGoogleSheetRow(r));
+        }
+
+        private static bool IsSheetRowValid(IList<object> r)
+        {
+            //We can pull this out for testing also, perhaps to the factory
+            return r.Count > 0 && !string.IsNullOrEmpty(r[0].ToString()) && !string.IsNullOrEmpty(r[6].ToString());
         }
 
         private static UserCredential GetSheetsUserCredential()

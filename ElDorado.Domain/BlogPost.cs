@@ -23,5 +23,6 @@ namespace ElDorado.Domain
         public DateTime TargetPublicationDate { get; set; }
         public bool IsApproved { get; set; }
         public bool IsDoublePost { get; set; }
+        public string Author { get; set; }
     }
 }

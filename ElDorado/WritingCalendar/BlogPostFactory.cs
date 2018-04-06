@@ -21,8 +21,10 @@ namespace ElDorado.WritingCalendar
                     CompanyName = googleSheetRow[0].ToString()
                 },
                 Title = googleSheetRow[1].ToString(),
+                Author = googleSheetRow[5].ToString(),
                 DraftDate = DateTime.Parse(googleSheetRow[6].ToString()),
-                IsApproved = googleSheetRow[17].ToString() == "Yes"
+                IsApproved = googleSheetRow[17].ToString() == "Yes",
+                IsDoublePost = googleSheetRow[18].ToString() == "Yes"
             };
         }
     }

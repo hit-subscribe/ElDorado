@@ -38,10 +38,15 @@ namespace ElDorado.WritingCalendar
         public virtual void AddCard(BlogPost postToAdd)
         {
             var erik = WritingCalendar.Members.Where(m => m.UserName == "erikdietrich");
-            var clientLabels = WritingCalendar.Labels.Where(l => l.Name == postToAdd?.Blog?.CompanyName); 
+            var members = WritingCalendar.Members.Where(m => !string.IsNullOrEmpty(postToAdd.Author) && m.FullName.Contains(postToAdd.Author)).Union(erik);
 
-            PlannedPostCards.Add(name: postToAdd.Title, dueDate: postToAdd.DraftDate.AddHours(12), members: erik, labels: clientLabels);
+            var clientLabels = WritingCalendar.Labels.Where(l => l.Name == postToAdd?.Blog?.CompanyName);
+
+            string cardTitle = $"{postToAdd.Title}{(postToAdd.IsDoublePost ? " (2x)" : string.Empty)}";
+
+            PlannedPostCards.Add(name: cardTitle, dueDate: postToAdd.DraftDate.AddHours(12), members: members, labels: clientLabels);
         }
+
         public virtual bool DoesCardExist(string cardTitle)
         {
             //This isn't going to stay like this -- implement some extension methods and test 'em
