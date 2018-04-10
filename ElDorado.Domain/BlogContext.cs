@@ -13,6 +13,7 @@ namespace ElDorado.Domain
 
         public virtual DbSet<Blog> Blogs { get; set; }
         public virtual DbSet<BlogMetric> BlogMetrics { get; set; }
+        public virtual DbSet<BlogPost> BlogPosts { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

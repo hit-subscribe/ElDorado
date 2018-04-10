@@ -74,6 +74,14 @@
     <Compile Include="Migrations\201804042040362_2XAndApproved.Designer.cs">
       <DependentUpon>201804042040362_2XAndApproved.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804100751110_Fleshing Out Blog Post.cs" />
+    <Compile Include="Migrations\201804100751110_Fleshing Out Blog Post.Designer.cs">
+      <DependentUpon>201804100751110_Fleshing Out Blog Post.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804100803250_Making datetimes nullable.cs" />
+    <Compile Include="Migrations\201804100803250_Making datetimes nullable.Designer.cs">
+      <DependentUpon>201804100803250_Making datetimes nullable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -96,6 +104,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804042040362_2XAndApproved.resx">
       <DependentUpon>201804042040362_2XAndApproved.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804100751110_Fleshing Out Blog Post.resx">
+      <DependentUpon>201804100751110_Fleshing Out Blog Post.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804100803250_Making datetimes nullable.resx">
+      <DependentUpon>201804100803250_Making datetimes nullable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

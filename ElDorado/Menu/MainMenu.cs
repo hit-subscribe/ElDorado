@@ -42,5 +42,25 @@ namespace ElDorado.Menu
             var synchornizer = new BlogPostSynchronizer(trelloService, new PlanningSpreadsheetService());
             synchornizer.UpdatePlannedInTrello();
         }
+
+        [MenuMethod("Add posts from spreadsheet to database")]
+        public static void AddPostsToDatabase()
+        {
+            var spreadsheetService = new PlanningSpreadsheetService();
+            var posts = spreadsheetService.GetPlannedPosts("Archive!A2:T").ToList();
+
+            using (var context = new BlogContext())
+            {
+                foreach(var post in posts)
+                {
+                    post.Blog = context.Blogs.First(b => b.CompanyName == post.Blog.CompanyName);
+                }
+                context.BlogPosts.AddRange(posts);
+                context.SaveChanges();
+
+                spreadsheetService.UpdatePostIds(context.BlogPosts.ToList(), "Archive!A2:T");
+            }
+
+        }
     }
 }

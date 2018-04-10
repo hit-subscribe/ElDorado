@@ -44,7 +44,7 @@ namespace ElDorado.WritingCalendar
 
             string cardTitle = $"{postToAdd.Title}{(postToAdd.IsDoublePost ? " (2x)" : string.Empty)}";
 
-            PlannedPostCards.Add(name: cardTitle, dueDate: postToAdd.DraftDate.AddHours(12), members: members, labels: clientLabels);
+            PlannedPostCards.Add(name: cardTitle, dueDate: postToAdd.DraftDate.Value.AddHours(12), members: members, labels: clientLabels);
         }
 
         public virtual bool DoesCardExist(string cardTitle)
