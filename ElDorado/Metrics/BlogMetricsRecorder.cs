@@ -24,14 +24,14 @@ namespace ElDorado.Metrics
 
         public IEnumerable<BlogMetric> GenerateMetrics(IEnumerable<Blog> blogs)
         {
-            foreach (var blog in blogs)
+            foreach (var blog in blogs.Where(b => b.Url != null))
             {
                 var mozStats = _mozInquisitor.GetMozStats(blog.Hostname);
                 yield return new BlogMetric()
                 {
                     BlogId = blog.Id,
-                    FeedlySubscribers = _feedlyInquisitor.GetSubscriberCount(blog.FeedlyUrl),
-                    AlexaRanking = _alexaInquisitor.GetGlobalRank(blog.Url),
+                    FeedlySubscribers = string.IsNullOrEmpty(blog.FeedlyUrl) ? 0 : _feedlyInquisitor.GetSubscriberCount(blog.FeedlyUrl),
+                    AlexaRanking = string.IsNullOrEmpty(blog.Url) ? 0 : _alexaInquisitor.GetGlobalRank(blog.Url),
                     DomainAuthority = mozStats.DomainAuthority,
                     LinkingRootDomains = mozStats.LinkingDomains,
                     Recorded = TimeRecordingStrategy()

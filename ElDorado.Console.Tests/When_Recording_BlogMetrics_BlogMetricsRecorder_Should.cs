@@ -84,7 +84,7 @@ namespace ElDorado.Console.Tests
             blogMetrics.First().BlogId.ShouldBe(TargetBlog.Id);
         }
 
-    [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Set_Recorded_To_Current_Time()
         {
             var timeStamp = new DateTime(2018, 2, 22);
@@ -94,5 +94,27 @@ namespace ElDorado.Console.Tests
 
             blogMetrics.First().Recorded.ShouldBe(timeStamp);
         }
-    }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Set_FeedlySubscribers_To_Zero_When_FeedlyInquisitor_Throws_Exception()
+        {
+            FeedlyInquisitor.Arrange(fi => fi.GetSubscriberCount(null)).Throws(new InvalidOperationException());
+            TargetBlogs.First().FeedlyUrl = null;
+
+            var blogMetrics = Target.GenerateMetrics(TargetBlogs);
+
+            blogMetrics.First().FeedlySubscribers.ShouldBe(0);
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Set_AlexaRanking_To_Zero_When_Alexa_Inquisitor_Throws_Exception()
+        {
+            AlexaInquisitor.Arrange(ai => ai.GetGlobalRank(null)).Throws(new InvalidOperationException());
+            TargetBlogs.First().Url = null;
+
+            var blogMetrics = Target.GenerateMetrics(TargetBlogs);
+
+            blogMetrics.Count().ShouldBe(0);
+        }
+}
 }
