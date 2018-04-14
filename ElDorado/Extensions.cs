@@ -28,6 +28,11 @@ namespace ElDorado
 
             return target;
         }
+
+        public static bool LooselyMatches(this string target, string matchCandidate)
+        {
+            return target.ToLower().Trim() == matchCandidate.ToLower().Replace("  ", " ");
+        }
             
     }
 }

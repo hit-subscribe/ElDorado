@@ -42,15 +42,12 @@ namespace ElDorado.WritingCalendar
 
             var clientLabels = WritingCalendar.Labels.Where(l => l.Name == postToAdd?.Blog?.CompanyName);
 
-            string cardTitle = $"{postToAdd.Title}{(postToAdd.IsDoublePost ? " (2x)" : string.Empty)}";
-
-            PlannedPostCards.Add(name: cardTitle, dueDate: postToAdd.DraftDate.Value.AddHours(12), members: members, labels: clientLabels);
+            PlannedPostCards.Add(name: postToAdd.AuthorTitle, dueDate: postToAdd.DraftDate.Value.AddHours(12), members: members, labels: clientLabels);
         }
 
-        public virtual bool DoesCardExist(string cardTitle)
+        public virtual bool DoesCardExist(string blogPostTitle)
         {
-            //This isn't going to stay like this -- implement some extension methods and test 'em
-            return BoardCards.ToList().Any(c => c.Name.Trim().ToLower().Contains(cardTitle.Trim().ToLower().Replace("  ", " ")));
+            return BoardCards.ToList().Any(c => c.Name.LooselyMatches(blogPostTitle));
         }
 
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,5 +29,8 @@ namespace ElDorado.Domain
         public bool IsApproved { get; set; }
         public bool IsDoublePost { get; set; }
         public string Author { get; set; }
+
+        [NotMapped]
+        public string AuthorTitle => $"{Title}{(IsDoublePost ? " (2x)" : string.Empty)}";
     }
 }

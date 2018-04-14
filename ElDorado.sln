@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElDorado.Console.Tests", "E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElDorado.Domain", "ElDorado.Domain\ElDorado.Domain.csproj", "{B4D6567E-3F17-4D03-BEBB-9A5841434497}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElDorado.Domain.Tests", "ElDorado.Domain.Tests\ElDorado.Domain.Tests.csproj", "{1B5E78D9-D635-49F9-9F7A-DB63614BBDE6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{B4D6567E-3F17-4D03-BEBB-9A5841434497}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4D6567E-3F17-4D03-BEBB-9A5841434497}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4D6567E-3F17-4D03-BEBB-9A5841434497}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B5E78D9-D635-49F9-9F7A-DB63614BBDE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B5E78D9-D635-49F9-9F7A-DB63614BBDE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B5E78D9-D635-49F9-9F7A-DB63614BBDE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B5E78D9-D635-49F9-9F7A-DB63614BBDE6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
