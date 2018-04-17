@@ -21,7 +21,7 @@ namespace ElDorado.Domain
         public string SeoTitle { get; set; }
         public string UrlSlug { get; set; }
         public string Mission { get; set; }
-        string Keyword { get; set; }
+        public string Keyword { get; set; }
         public DateTime? DraftDate { get; set; }
         public DateTime? TargetFinalizeDate { get; set; }
         public DateTime? TargetPublicationDate { get; set; }

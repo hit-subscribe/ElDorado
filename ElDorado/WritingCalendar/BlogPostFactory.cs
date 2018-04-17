@@ -11,6 +11,7 @@ namespace ElDorado.WritingCalendar
     {
         public BlogPost MakePostFromGoogleSheetRow(IList<object> googleSheetRow)
         {
+            var sheetRowStrings = googleSheetRow.Select(o => o?.ToString()).ToList();
             if (googleSheetRow.Count < 18)
                 throw new ArgumentException(nameof(googleSheetRow));
 
@@ -18,13 +19,17 @@ namespace ElDorado.WritingCalendar
             {
                 Blog = new Blog()
                 {
-                    CompanyName = googleSheetRow[0].ToString()
+                    CompanyName = sheetRowStrings[0]
                 },
-                Title = googleSheetRow[1].ToString(),
-                Author = googleSheetRow[5].ToString(),
-                DraftDate = DateTime.Parse(googleSheetRow[6].ToString()),
-                IsApproved = googleSheetRow[17].ToString() == "Yes",
-                IsDoublePost = googleSheetRow[18].ToString() == "Yes"
+                Title = sheetRowStrings[1],
+                Mission = sheetRowStrings[4],
+                Author = sheetRowStrings[5],
+                DraftDate = DateTime.Parse(sheetRowStrings[6]),
+                TargetFinalizeDate = sheetRowStrings[7].SafeToDateTime(),
+                TargetPublicationDate = sheetRowStrings[8].SafeToDateTime(),
+                Keyword = sheetRowStrings[9],
+                IsApproved = sheetRowStrings[17] == "Yes",
+                IsDoublePost = sheetRowStrings[18] == "Yes"
             };
         }
     }

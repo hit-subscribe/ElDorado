@@ -170,6 +170,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExtensionTests\When_Converting_DateTimes_SafeToDateTime_Should.cs" />
     <Compile Include="ExtensionTests\When_Loose_Matching_LooselyMatches_Should.cs" />
     <Compile Include="ExtensionTests\When_Padding_The_Results_Of_A_GoogleSheet_Pad_Should.cs" />
     <Compile Include="TestingExtensions.cs" />

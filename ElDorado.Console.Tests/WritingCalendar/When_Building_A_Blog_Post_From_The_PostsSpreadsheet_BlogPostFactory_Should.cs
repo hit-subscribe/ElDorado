@@ -15,10 +15,14 @@ namespace ElDorado.Console.Tests.WritingCalendar
     {
         private const string CompanyName = "Some Tech Company";
         private const string Title = "A Blog Post Title";
-        private const string DraftDate = "12/25/2018";
+        private const string DraftDate = "12/15/2018";
+        private const string FinalizedDate = "12/22/2018";
+        private const string PublicationDate = "12/26/2018";
         private const string AuthorName = "Erik";
+        private const string Keyword = "C# Goodies";
+        private const string Mission = "To boldly go where no one has gone before.";
 
-        private readonly IList<object> GoogleSheetRow = new List<object>() { CompanyName, Title, null, null, null, AuthorName, DraftDate, null, null, null, null, null, null, null, null, null, null, "Yes", "Yes" };
+        private readonly IList<object> GoogleSheetRow = new List<object>() { CompanyName, Title, null, null, Mission, AuthorName, DraftDate, FinalizedDate, PublicationDate, Keyword, null, null, null, null, null, null, null, "Yes", "Yes" };
 
         private BlogPostFactory Target { get; set; }
 
@@ -73,6 +77,48 @@ namespace ElDorado.Console.Tests.WritingCalendar
             var post = Target.MakePostFromGoogleSheetRow(GoogleSheetRow);
 
             post.Author.ShouldBe(AuthorName);
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Return_A_BlogPost_With_FinalizedDate()
+        {
+            var post = Target.MakePostFromGoogleSheetRow(GoogleSheetRow);
+
+            post.TargetFinalizeDate.ShouldBe(DateTime.Parse(FinalizedDate));
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Return_A_BlogPost_With_Null_FinalizedDate_When_FinalizedDate_Is_Null()
+        {
+            GoogleSheetRow[7] = null;
+
+            var post = Target.MakePostFromGoogleSheetRow(GoogleSheetRow);
+
+            post.TargetFinalizeDate.ShouldBe(null);
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Return_A_BlogPost_With_TargetPublicationDate_Set()
+        {
+            var post = Target.MakePostFromGoogleSheetRow(GoogleSheetRow);
+
+            post.TargetPublicationDate.ShouldBe(DateTime.Parse(PublicationDate));
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Return_A_Blog_Post_With_Keyword_Set()
+        {
+            var post = Target.MakePostFromGoogleSheetRow(GoogleSheetRow);
+
+            post.Keyword.ShouldBe(Keyword);
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Return_A_BlogPost_With_Mission_Set()
+        {
+            var post = Target.MakePostFromGoogleSheetRow(GoogleSheetRow);
+
+            post.Mission.ShouldBe(Mission);
         }
 
     [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]

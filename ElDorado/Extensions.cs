@@ -33,6 +33,11 @@ namespace ElDorado
         {
             return target.ToLower().Trim() == matchCandidate.ToLower().Replace("  ", " ");
         }
+
+        public static DateTime? SafeToDateTime(this object target)
+        {
+            return DateTime.TryParse(target?.ToString(), out DateTime result) ? result : (DateTime?)null;
+        }
             
     }
 }

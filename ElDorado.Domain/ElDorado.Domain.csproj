@@ -82,6 +82,10 @@
     <Compile Include="Migrations\201804100803250_Making datetimes nullable.Designer.cs">
       <DependentUpon>201804100803250_Making datetimes nullable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804170236239_Adding Keyword to Blog Post.cs" />
+    <Compile Include="Migrations\201804170236239_Adding Keyword to Blog Post.Designer.cs">
+      <DependentUpon>201804170236239_Adding Keyword to Blog Post.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -110,6 +114,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804100803250_Making datetimes nullable.resx">
       <DependentUpon>201804100803250_Making datetimes nullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804170236239_Adding Keyword to Blog Post.resx">
+      <DependentUpon>201804170236239_Adding Keyword to Blog Post.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
