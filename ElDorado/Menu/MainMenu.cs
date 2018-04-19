@@ -51,9 +51,10 @@ namespace ElDorado.Menu
 
             using (var context = new BlogContext())
             {
-                foreach(var post in posts)
+                foreach(var post in posts.ToList())
                 {
                     post.Blog = context.Blogs.First(b => b.CompanyName == post.Blog.CompanyName);
+                    post.Author = context.Authors.FirstOrDefault(a => a.FirstName == post.Author.FirstName);
                 }
                 context.BlogPosts.AddRange(posts);
                 context.SaveChanges();

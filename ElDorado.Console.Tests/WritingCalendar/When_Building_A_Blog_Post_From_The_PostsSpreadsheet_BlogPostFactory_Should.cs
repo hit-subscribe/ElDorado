@@ -76,7 +76,7 @@ namespace ElDorado.Console.Tests.WritingCalendar
         {
             var post = Target.MakePostFromGoogleSheetRow(GoogleSheetRow);
 
-            post.Author.ShouldBe(AuthorName);
+            post.Author.FirstName.ShouldBe(AuthorName);
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]

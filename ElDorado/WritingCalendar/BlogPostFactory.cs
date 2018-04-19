@@ -23,7 +23,7 @@ namespace ElDorado.WritingCalendar
                 },
                 Title = sheetRowStrings[1],
                 Mission = sheetRowStrings[4],
-                Author = sheetRowStrings[5],
+                Author = new Author() { FirstName = sheetRowStrings[5] },
                 DraftDate = DateTime.Parse(sheetRowStrings[6]),
                 TargetFinalizeDate = sheetRowStrings[7].SafeToDateTime(),
                 TargetPublicationDate = sheetRowStrings[8].SafeToDateTime(),

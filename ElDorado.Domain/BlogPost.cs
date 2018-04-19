@@ -16,6 +16,10 @@ namespace ElDorado.Domain
 
         public virtual Blog Blog { get; set; }
 
+        public int? AuthorId { get; set; }
+
+        public virtual Author Author { get; set; }
+
         [Required]
         public string Title { get; set; }
         public string SeoTitle { get; set; }
@@ -28,7 +32,6 @@ namespace ElDorado.Domain
         public DateTime? SubmittedDate { get; set; }
         public bool IsApproved { get; set; }
         public bool IsDoublePost { get; set; }
-        public string Author { get; set; }
 
         [NotMapped]
         public string AuthorTitle => $"{Title}{(IsDoublePost ? " (2x)" : string.Empty)}";

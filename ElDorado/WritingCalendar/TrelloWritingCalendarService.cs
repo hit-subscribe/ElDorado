@@ -38,7 +38,7 @@ namespace ElDorado.WritingCalendar
         public virtual void AddCard(BlogPost postToAdd)
         {
             var erik = WritingCalendar.Members.Where(m => m.UserName == "erikdietrich");
-            var members = WritingCalendar.Members.Where(m => !string.IsNullOrEmpty(postToAdd.Author) && m.FullName.Contains(postToAdd.Author)).Union(erik);
+            var members = WritingCalendar.Members.Where(m => !string.IsNullOrEmpty(postToAdd.Author.FirstName) && m.FullName.Contains(postToAdd.Author.FirstName)).Union(erik);
 
             var clientLabels = WritingCalendar.Labels.Where(l => l.Name == postToAdd?.Blog?.CompanyName);
 

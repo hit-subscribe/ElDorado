@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Author.cs" />
     <Compile Include="Blog.cs" />
     <Compile Include="BlogContext.cs" />
     <Compile Include="BlogMetric.cs" />
@@ -86,6 +87,18 @@
     <Compile Include="Migrations\201804170236239_Adding Keyword to Blog Post.Designer.cs">
       <DependentUpon>201804170236239_Adding Keyword to Blog Post.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804190510196_Adding author to the database.cs" />
+    <Compile Include="Migrations\201804190510196_Adding author to the database.Designer.cs">
+      <DependentUpon>201804190510196_Adding author to the database.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804190520416_Fixing a spelling mistake in an author column.cs" />
+    <Compile Include="Migrations\201804190520416_Fixing a spelling mistake in an author column.Designer.cs">
+      <DependentUpon>201804190520416_Fixing a spelling mistake in an author column.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804190535302_Making author foreign key nullable for blog post.cs" />
+    <Compile Include="Migrations\201804190535302_Making author foreign key nullable for blog post.Designer.cs">
+      <DependentUpon>201804190535302_Making author foreign key nullable for blog post.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -117,6 +130,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804170236239_Adding Keyword to Blog Post.resx">
       <DependentUpon>201804170236239_Adding Keyword to Blog Post.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804190510196_Adding author to the database.resx">
+      <DependentUpon>201804190510196_Adding author to the database.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804190520416_Fixing a spelling mistake in an author column.resx">
+      <DependentUpon>201804190520416_Fixing a spelling mistake in an author column.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804190535302_Making author foreign key nullable for blog post.resx">
+      <DependentUpon>201804190535302_Making author foreign key nullable for blog post.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
