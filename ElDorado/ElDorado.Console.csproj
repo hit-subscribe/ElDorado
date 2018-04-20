@@ -190,7 +190,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\BlogPostRepository.cs" />
     <Compile Include="SimpleWebClient.cs" />
-    <Compile Include="WritingCalendar\BlogPostFactory.cs" />
     <Compile Include="WritingCalendar\BlogPostSynchronizer.cs" />
     <Compile Include="WritingCalendar\GoogleSheet.cs" />
     <Compile Include="WritingCalendar\PlanningSpreadsheetService.cs" />
