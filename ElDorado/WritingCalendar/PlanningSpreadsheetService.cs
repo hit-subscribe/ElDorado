@@ -17,45 +17,49 @@ namespace ElDorado.WritingCalendar
 {
     public class PlanningSpreadsheetService
     {
-        public virtual IEnumerable<BlogPost> GetPlannedPosts(string range = "Current!A2:T")
+        private const string MasterSpreadsheetId = "1BFycG-T2eY3Uh8HWr5c5h-MjYEUJ8eKjqJ8GLxhdh2w";
+
+        private readonly SheetsService _service;
+        private readonly BlogPostFactory _factory = new BlogPostFactory();
+
+        public PlanningSpreadsheetService()
         {
-            var service = new SheetsService(new BaseClientService.Initializer()
+            _service = new SheetsService(new BaseClientService.Initializer()
             {
                 HttpClientInitializer = GetSheetsUserCredential(),
                 ApplicationName = "El Dorado",
             });
+        }
 
-            var spreadsheetId = "1BFycG-T2eY3Uh8HWr5c5h-MjYEUJ8eKjqJ8GLxhdh2w";
-            var request = service.Spreadsheets.Values.Get(spreadsheetId, range);
-            var values = request.Execute().Values.Pad();
+        public virtual IEnumerable<BlogPost> GetPlannedPosts(string range = "Current!A2:T")
+        {
+            var sheetCells = GetCells(range);
 
-            var factory = new BlogPostFactory();
-
-            return values.Where(r => IsSheetRowValid(r)).Select(r => factory.MakePostFromGoogleSheetRow(r));
+            return sheetCells.Where(r => IsSheetRowValid(r)).Select(r => _factory.MakePostFromGoogleSheetRow(r));
         }
 
         public void UpdatePostIds(IEnumerable<BlogPost> blogPosts, string range = "Current!A2:T")
         {
-            var service = new SheetsService(new BaseClientService.Initializer()
-            {
-                HttpClientInitializer = GetSheetsUserCredential(),
-                ApplicationName = "El Dorado",
-            });
+            var cells = GetCells(range);
 
-            var spreadsheetId = "1BFycG-T2eY3Uh8HWr5c5h-MjYEUJ8eKjqJ8GLxhdh2w";
-            var request = service.Spreadsheets.Values.Get(spreadsheetId, range);
-            var values = request.Execute().Values.Pad();
-
-            var valueRange = new ValueRange();
-            valueRange.Values = values;
-
-            foreach(var row in values)
+            foreach (var row in cells)
             {
                 var matchingBlogPost = blogPosts.FirstOrDefault(p => p.Title == row[1].ToString());
                 row[19] = matchingBlogPost?.Id;
             }
 
-            var updateRequest = service.Spreadsheets.Values.Update(valueRange, spreadsheetId, range);
+            UpdateSpreadsheet(range, cells);
+        }
+
+        private IList<IList<object>> GetCells(string range)
+        {
+            var request = _service.Spreadsheets.Values.Get(MasterSpreadsheetId, range);
+            return request.Execute().Values.Pad();
+        }
+
+        private void UpdateSpreadsheet(string range, IList<IList<object>> cells)
+        {
+            var updateRequest = _service.Spreadsheets.Values.Update(new ValueRange() { Values = cells }, MasterSpreadsheetId, range);
             updateRequest.ValueInputOption = SpreadsheetsResource.ValuesResource.UpdateRequest.ValueInputOptionEnum.RAW;
             updateRequest.Execute();
         }
