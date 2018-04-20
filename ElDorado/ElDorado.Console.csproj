@@ -191,6 +191,7 @@
     <Compile Include="Repository\BlogPostRepository.cs" />
     <Compile Include="SimpleWebClient.cs" />
     <Compile Include="WritingCalendar\BlogPostSynchronizer.cs" />
+    <Compile Include="WritingCalendar\ClientSpreadsheetService.cs" />
     <Compile Include="WritingCalendar\GoogleSheet.cs" />
     <Compile Include="WritingCalendar\PlanningSpreadsheetService.cs" />
     <Compile Include="WritingCalendar\TrelloWritingCalendarService.cs" />

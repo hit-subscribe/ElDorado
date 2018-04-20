@@ -196,6 +196,7 @@
     <Compile Include="WritingCalendar\When_UpdatingPostIds_On_The_PlanningSpreadsheet_UpdatePostIds_Should.cs" />
     <Compile Include="WritingCalendar\When_Updating_Trello_From_PlanningSpreadsheet_BlogPostSynchronizer_Should.cs" />
     <Compile Include="WritingCalendar\When_Initializing_WritingCalendarSynchronizer_Should.cs" />
+    <Compile Include="WritingCalendar\When_Writing_To_A_ClientPostPlan_ClientSpreadsheetService_Should.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
