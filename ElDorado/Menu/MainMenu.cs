@@ -1,5 +1,6 @@
 ﻿using ElDorado.Domain;
 using ElDorado.Metrics;
+using ElDorado.Repository;
 using ElDorado.WritingCalendar;
 using Gold.ConsoleMenu;
 using System;
@@ -14,6 +15,8 @@ namespace ElDorado.Menu
     [MenuClass("Main Menu")]
     public class MainMenu
     {
+        private static readonly BlogContext _context = new BlogContext();
+
         [MenuMethod("Record blog metrics")]
         public static void RecordMetrics()
         {
@@ -46,22 +49,13 @@ namespace ElDorado.Menu
         [MenuMethod("Add posts from spreadsheet to database")]
         public static void AddPostsToDatabase()
         {
+            var repository = new BlogPostRepository(_context);
             var spreadsheetService = new PlanningSpreadsheetService();
+
             var posts = spreadsheetService.GetPlannedPosts("Archive!A2:T").ToList();
+            repository.Add(posts);
 
-            using (var context = new BlogContext())
-            {
-                foreach(var post in posts.ToList())
-                {
-                    post.Blog = context.Blogs.First(b => b.CompanyName == post.Blog.CompanyName);
-                    post.Author = context.Authors.FirstOrDefault(a => a.FirstName == post.Author.FirstName);
-                }
-                context.BlogPosts.AddRange(posts);
-                context.SaveChanges();
-
-                spreadsheetService.UpdatePostIds(context.BlogPosts.ToList(), "Archive!A2:T");
-            }
-
+            spreadsheetService.UpdatePostIds(_context.BlogPosts.ToList(), "Archive!A2:T");
         }
     }
 }

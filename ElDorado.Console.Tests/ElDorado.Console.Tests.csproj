@@ -39,6 +39,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Manatee.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=c267f67a39449c62, processorArchitecture=MSIL">
       <HintPath>..\packages\Manatee.Json.9.6.0\lib\netstandard1.3\Manatee.Json.dll</HintPath>
     </Reference>
@@ -162,6 +168,9 @@
     <Reference Include="Telerik.JustMock, Version=2018.1.117.2, Culture=neutral, PublicKeyToken=721b6c5bc0326b3a, processorArchitecture=MSIL">
       <HintPath>..\packages\JustMock.2018.1.117.2\lib\Net\Telerik.JustMock.dll</HintPath>
     </Reference>
+    <Reference Include="Telerik.JustMock.EntityFramework, Version=2015.3.929.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\JustMock.EntityFramework.2015.3.929.5\lib\Net45\Telerik.JustMock.EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="TypeMock, Version=8.6.1.0, Culture=neutral, PublicKeyToken=3dae460033b8d8e2, processorArchitecture=MSIL">
       <HintPath>..\packages\Typemock.Isolator.8.6.1.0\lib\TypeMock.dll</HintPath>
     </Reference>
@@ -170,6 +179,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Repository\When_Writing_BlogPosts_To_The_Database_BlogPostRepository_Should.cs" />
     <Compile Include="ExtensionTests\When_Converting_DateTimes_SafeToDateTime_Should.cs" />
     <Compile Include="ExtensionTests\When_Loose_Matching_LooselyMatches_Should.cs" />
     <Compile Include="ExtensionTests\When_Padding_The_Results_Of_A_GoogleSheet_Pad_Should.cs" />

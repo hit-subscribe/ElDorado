@@ -6,10 +6,7 @@ namespace ElDorado.Domain
 
     public partial class BlogContext : DbContext
     {
-        public BlogContext()
-            : base("name=BlogContext")
-        {
-        }
+        public BlogContext() : base("name=BlogContext") { }
 
         public virtual DbSet<Blog> Blogs { get; set; }
         public virtual DbSet<BlogMetric> BlogMetrics { get; set; }

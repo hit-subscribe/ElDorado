@@ -35,5 +35,11 @@ namespace ElDorado.Domain
 
         [NotMapped]
         public string AuthorTitle => $"{Title}{(IsDoublePost ? " (2x)" : string.Empty)}";
+
+        [NotMapped]
+        public string PostAuthorFirstName => Author?.FirstName;
+
+        [NotMapped]
+        public string BlogCompanyName => Blog?.CompanyName;
     }
 }
