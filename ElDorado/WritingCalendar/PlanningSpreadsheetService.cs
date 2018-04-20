@@ -36,15 +36,10 @@ namespace ElDorado.WritingCalendar
         private BlogPost MakePostFromGoogleSheetRow(IList<object> googleSheetRow)
         {
             var sheetRowStrings = googleSheetRow.Select(o => o?.ToString()).ToList();
-            if (googleSheetRow.Count < 18)
-                throw new ArgumentException(nameof(googleSheetRow));
 
             return new BlogPost()
             {
-                Blog = new Blog()
-                {
-                    CompanyName = sheetRowStrings[0]
-                },
+                Blog = new Blog() { CompanyName = sheetRowStrings[0] },
                 Title = sheetRowStrings[1],
                 Mission = sheetRowStrings[4],
                 Author = new Author() { FirstName = sheetRowStrings[5] },
