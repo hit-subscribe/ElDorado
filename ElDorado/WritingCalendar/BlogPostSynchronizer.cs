@@ -20,7 +20,7 @@ namespace ElDorado.WritingCalendar
 
         public void UpdatePlannedInTrello()
         {
-            var postsToAdd = _planningSpreadsheetService.GetPlannedPosts().Where(bp => ShouldBeAddedToTrello(bp));
+            var postsToAdd = _planningSpreadsheetService.GetPosts().Where(bp => ShouldBeAddedToTrello(bp));
 
             foreach (var post in postsToAdd)
                 _trelloService.AddCard(post);

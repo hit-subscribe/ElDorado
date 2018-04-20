@@ -7,11 +7,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Telerik.JustMock;
+using Telerik.JustMock.Helpers;
 
 namespace ElDorado.Console.Tests.WritingCalendar
 {
     [TestClass]
-    public class When_Building_A_Blog_Post_From_The_PostsSpreadsheet_BlogPostFactory_Should
+    public class When_Fetching_A_BlogPost_From_The_PostsSpreadsheet_PlanningSpreadsheetService_Should
     {
         private const string CompanyName = "Some Tech Company";
         private const string Title = "A Blog Post Title";
@@ -22,20 +24,24 @@ namespace ElDorado.Console.Tests.WritingCalendar
         private const string Keyword = "C# Goodies";
         private const string Mission = "To boldly go where no one has gone before.";
 
-        private readonly IList<object> GoogleSheetRow = new List<object>() { CompanyName, Title, null, null, Mission, AuthorName, DraftDate, FinalizedDate, PublicationDate, Keyword, null, null, null, null, null, null, null, "Yes", "Yes" };
+        private readonly IList<IList<object>> AllSpreadsheetRows = new List<IList<object>>() { new List<object>() { CompanyName, Title, null, null, Mission, AuthorName, DraftDate, FinalizedDate, PublicationDate, Keyword, null, null, null, null, null, null, null, "Yes", "Yes" } };
 
-        private BlogPostFactory Target { get; set; }
+        private GoogleSheet Sheet { get; } = Mock.Create<GoogleSheet>();
+
+        private PlanningSpreadsheetService Target { get; set; }
 
         [TestInitialize]
         public void BeforeEachTest()
         {
-            Target = new BlogPostFactory();
+            Sheet.Arrange(gs => gs.GetCells(Arg.AnyString)).Returns(AllSpreadsheetRows);
+
+            Target = new PlanningSpreadsheetService(Sheet);
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_A_BlogPost_With_CompanyName_Matching_Column_0()
         {
-            var post = Target.MakePostFromGoogleSheetRow(GoogleSheetRow);
+            var post = Target.GetPosts().First();
 
             post.Blog.CompanyName.ShouldBe(CompanyName);
         }
@@ -43,7 +49,7 @@ namespace ElDorado.Console.Tests.WritingCalendar
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_A_BlogPost_With_Title_Matching_Column_1()
         {
-            var post = Target.MakePostFromGoogleSheetRow(GoogleSheetRow);
+            var post = Target.GetPosts().First();
 
             post.Title.ShouldBe(Title);
         }
@@ -51,14 +57,14 @@ namespace ElDorado.Console.Tests.WritingCalendar
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_A_BlogPost_With_DraftDate_Set_To_Column_6()
         {
-            var post = Target.MakePostFromGoogleSheetRow(GoogleSheetRow);
+            var post = Target.GetPosts().First();
 
             post.DraftDate.ShouldBe(DateTime.Parse(DraftDate));
         }
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_A_BlogPost_With_IsApproved_True_When_Column_17_Is_Yes()
         {
-            var post = Target.MakePostFromGoogleSheetRow(GoogleSheetRow);
+            var post = Target.GetPosts().First();
 
             post.IsApproved.ShouldBe(true);
         }
@@ -66,7 +72,7 @@ namespace ElDorado.Console.Tests.WritingCalendar
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_A_BlogPost_With_IsDoublePost_True_When_Column_18_Is_Yes()
         {
-            var post = Target.MakePostFromGoogleSheetRow(GoogleSheetRow);
+            var post = Target.GetPosts().First();
 
             post.IsDoublePost.ShouldBe(true);
         }
@@ -74,7 +80,7 @@ namespace ElDorado.Console.Tests.WritingCalendar
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_A_Blog_Post_With_Author_Set_To_Column_()
         {
-            var post = Target.MakePostFromGoogleSheetRow(GoogleSheetRow);
+            var post = Target.GetPosts().First();
 
             post.Author.FirstName.ShouldBe(AuthorName);
         }
@@ -82,7 +88,7 @@ namespace ElDorado.Console.Tests.WritingCalendar
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_A_BlogPost_With_FinalizedDate()
         {
-            var post = Target.MakePostFromGoogleSheetRow(GoogleSheetRow);
+            var post = Target.GetPosts().First();
 
             post.TargetFinalizeDate.ShouldBe(DateTime.Parse(FinalizedDate));
         }
@@ -90,9 +96,9 @@ namespace ElDorado.Console.Tests.WritingCalendar
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_A_BlogPost_With_Null_FinalizedDate_When_FinalizedDate_Is_Null()
         {
-            GoogleSheetRow[7] = null;
+            AllSpreadsheetRows[0][7] = null;
 
-            var post = Target.MakePostFromGoogleSheetRow(GoogleSheetRow);
+            var post = Target.GetPosts().First();
 
             post.TargetFinalizeDate.ShouldBe(null);
         }
@@ -100,7 +106,7 @@ namespace ElDorado.Console.Tests.WritingCalendar
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_A_BlogPost_With_TargetPublicationDate_Set()
         {
-            var post = Target.MakePostFromGoogleSheetRow(GoogleSheetRow);
+            var post = Target.GetPosts().First();
 
             post.TargetPublicationDate.ShouldBe(DateTime.Parse(PublicationDate));
         }
@@ -108,7 +114,7 @@ namespace ElDorado.Console.Tests.WritingCalendar
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_A_Blog_Post_With_Keyword_Set()
         {
-            var post = Target.MakePostFromGoogleSheetRow(GoogleSheetRow);
+            var post = Target.GetPosts().First();
 
             post.Keyword.ShouldBe(Keyword);
         }
@@ -116,15 +122,9 @@ namespace ElDorado.Console.Tests.WritingCalendar
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_A_BlogPost_With_Mission_Set()
         {
-            var post = Target.MakePostFromGoogleSheetRow(GoogleSheetRow);
+            var post = Target.GetPosts().First();
 
             post.Mission.ShouldBe(Mission);
-        }
-
-    [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
-        public void Throw_Exception_When_GoogleSheetRow_Is_Too_Short()
-        {
-            Should.Throw<ArgumentException>(() => Target.MakePostFromGoogleSheetRow(new List<object>())).Message.ShouldBe("googleSheetRow");
         }
     }
 }

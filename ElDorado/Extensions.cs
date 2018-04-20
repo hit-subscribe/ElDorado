@@ -16,13 +16,13 @@ namespace ElDorado
             return Convert.ToInt64(ts.TotalSeconds);
         }
 
-        public static IList<IList<object>> Pad(this IList<IList<object>> target)
+        public static IList<IList<object>> Pad(this IList<IList<object>> target, int padding = 0)
         {
-            var maxColumns = target.Max(r => r.Count);
+            var paddingAmount = padding == 0 ? target.Max(r => r.Count) : padding;
 
             foreach (var row in target)
             {
-                for (int i = row.Count; i < maxColumns; i++)
+                for (int i = row.Count; i < paddingAmount; i++)
                     row.Add(string.Empty);
             }
 

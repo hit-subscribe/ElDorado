@@ -30,5 +30,15 @@ namespace ElDorado.Console.Tests.ExtensionTests
 
             paddingResult[0][1].ShouldBe(string.Empty);
         }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Return_A_3_Wide_List_When_3_Is_Explicitly_Specified()
+        {
+            IList<IList<object>> paddingTarget = new List<IList<object>>() { new List<object>() { 1 } };
+
+            var paddingResult = paddingTarget.Pad(3);
+
+            paddingResult[0].Count.ShouldBe(3);
+        }
 }
 }

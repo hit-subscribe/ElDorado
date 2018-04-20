@@ -42,7 +42,7 @@ namespace ElDorado.Menu
             var trelloService = new TrelloWritingCalendarService();
             trelloService.Initialize(new CredentialStore(File.ReadAllText(@"CredFiles\trello.cred")));
 
-            var synchornizer = new BlogPostSynchronizer(trelloService, new PlanningSpreadsheetService());
+            var synchornizer = new BlogPostSynchronizer(trelloService, new PlanningSpreadsheetService(new GoogleSheet()));
             synchornizer.UpdatePlannedInTrello();
         }
 
@@ -50,9 +50,9 @@ namespace ElDorado.Menu
         public static void AddPostsToDatabase()
         {
             var repository = new BlogPostRepository(_context);
-            var spreadsheetService = new PlanningSpreadsheetService();
+            var spreadsheetService = new PlanningSpreadsheetService(new GoogleSheet());
 
-            var posts = spreadsheetService.GetPlannedPosts("Archive!A2:T").ToList();
+            var posts = spreadsheetService.GetPosts("Archive!A2:T").ToList();
             repository.Add(posts);
 
             spreadsheetService.UpdatePostIds(_context.BlogPosts.ToList(), "Archive!A2:T");
