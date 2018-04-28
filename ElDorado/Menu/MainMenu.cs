@@ -49,13 +49,15 @@ namespace ElDorado.Menu
         [MenuMethod("Add posts from spreadsheet to database")]
         public static void AddPostsToDatabase()
         {
+            const string range = "Current!A2:T";
+
             var repository = new BlogPostRepository(_context);
             var spreadsheetService = new PlanningSpreadsheetService(new GoogleSheet());
 
-            var posts = spreadsheetService.GetPosts("Archive!A2:T").ToList();
+            var posts = spreadsheetService.GetPosts(range).ToList();
             repository.Add(posts);
 
-            spreadsheetService.UpdatePostIds(_context.BlogPosts.ToList(), "Archive!A2:T");
+            spreadsheetService.UpdatePostIds(_context.BlogPosts.ToList(), range);
         }
     }
 }

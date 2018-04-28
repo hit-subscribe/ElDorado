@@ -21,10 +21,12 @@ namespace ElDorado.Repository
 
         public void Add(IEnumerable<BlogPost> posts)
         {
-            foreach (var post in posts)
+            var postsToAdd = posts.Where(p => p.Id == 0).ToList();
+
+            foreach (var post in postsToAdd)
                 AssignRelationshipsToPost(post);
 
-            _context.BlogPosts.AddRange(posts);
+            _context.BlogPosts.AddRange(postsToAdd);
             _context.SaveChanges();
         }
 

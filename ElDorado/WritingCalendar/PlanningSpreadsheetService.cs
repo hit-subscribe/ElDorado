@@ -48,12 +48,16 @@ namespace ElDorado.WritingCalendar
                 TargetPublicationDate = sheetRowStrings[8].SafeToDateTime(),
                 Keyword = sheetRowStrings[9],
                 IsApproved = sheetRowStrings[17] == "Yes",
-                IsDoublePost = sheetRowStrings[18] == "Yes"
+                IsDoublePost = sheetRowStrings[18] == "Yes",
+                Id = string.IsNullOrEmpty(sheetRowStrings[19]) ? 0 : int.Parse(sheetRowStrings[19])
             };
         }
         private static bool IsSheetRowValid(IList<object> r)
         {
-            return r.Count > 0 && !string.IsNullOrEmpty(r[0].ToString()) && !string.IsNullOrEmpty(r[6].ToString());
+            return r.Count > 0 && 
+                !string.IsNullOrEmpty(r[0].ToString()) && 
+                !string.IsNullOrEmpty(r[1].ToString()) &&
+                !string.IsNullOrEmpty(r[6].ToString());
         }
     }
 }

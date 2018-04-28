@@ -45,7 +45,7 @@ namespace ElDorado.Console.Tests.DataAccess
             Should.Throw<ArgumentNullException>(() => new BlogPostRepository(null));
         }
 
-    [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Save_Changes_To_The_Context()
         {
             Target.Add(BlogPostToAdd.AsEnumerable());
@@ -61,6 +61,16 @@ namespace ElDorado.Console.Tests.DataAccess
             Context.BlogPosts.ShouldContain(BlogPostToAdd);
         }
 
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Not_Add_A_Blog_Post_That_Already_Has_An_Id()
+        {
+            BlogPostToAdd.Id = 123;
+
+            Target.Add(BlogPostToAdd.AsEnumerable());
+
+            Context.BlogPosts.ShouldNotContain(BlogPostToAdd);
+        }
+    
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Match_The_Post_To_A_Blog_By_Matching_CompanyName()
         {

@@ -23,8 +23,9 @@ namespace ElDorado.Console.Tests.WritingCalendar
         private const string AuthorName = "Erik";
         private const string Keyword = "C# Goodies";
         private const string Mission = "To boldly go where no one has gone before.";
+        private const string Id = "12";
 
-        private readonly IList<IList<object>> AllSpreadsheetRows = new List<IList<object>>() { new List<object>() { CompanyName, Title, null, null, Mission, AuthorName, DraftDate, FinalizedDate, PublicationDate, Keyword, null, null, null, null, null, null, null, "Yes", "Yes" } };
+        private readonly IList<IList<object>> AllSpreadsheetRows = new List<IList<object>>() { new List<object>() { CompanyName, Title, null, null, Mission, AuthorName, DraftDate, FinalizedDate, PublicationDate, Keyword, null, null, null, null, null, null, null, "Yes", "Yes", Id } };
 
         private GoogleSheet Sheet { get; } = Mock.Create<GoogleSheet>();
 
@@ -52,6 +53,16 @@ namespace ElDorado.Console.Tests.WritingCalendar
             var post = Target.GetPosts().First();
 
             post.Title.ShouldBe(Title);
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Skip_Adding_A_Blog_Post_That_Doesnt_Have_A_Title()
+        {
+            AllSpreadsheetRows[0][1] = string.Empty;
+
+            var posts = Target.GetPosts();
+
+            posts.ShouldBeEmpty();
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -125,6 +136,24 @@ namespace ElDorado.Console.Tests.WritingCalendar
             var post = Target.GetPosts().First();
 
             post.Mission.ShouldBe(Mission);
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Return_A_BlogPost_With_Id_Set()
+        {
+            var post = Target.GetPosts().First();
+
+            post.Id.ShouldBe(int.Parse(Id));
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Return_A_BlogPost_With_Id_0_When_Sheet_Is_Empty()
+        {
+            AllSpreadsheetRows[0][19] = string.Empty;
+
+            var post = Target.GetPosts().First();
+
+            post.Id.ShouldBe(0);
         }
     }
 }

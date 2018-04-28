@@ -37,7 +37,7 @@ namespace ElDorado.WritingCalendar
         public virtual void UpdateSpreadsheet(string range, IList<IList<object>> cells)
         {
             var updateRequest = _service.Spreadsheets.Values.Update(new ValueRange() { Values = cells }, MasterSpreadsheetId, range);
-            updateRequest.ValueInputOption = SpreadsheetsResource.ValuesResource.UpdateRequest.ValueInputOptionEnum.RAW;
+            updateRequest.ValueInputOption = SpreadsheetsResource.ValuesResource.UpdateRequest.ValueInputOptionEnum.USERENTERED;
             updateRequest.Execute();
 
         }
