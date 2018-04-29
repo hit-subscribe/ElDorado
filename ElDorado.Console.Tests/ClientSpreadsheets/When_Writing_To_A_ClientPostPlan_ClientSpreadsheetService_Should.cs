@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Telerik.JustMock;
 using Telerik.JustMock.Helpers;
 
-namespace ElDorado.Console.Tests.WritingCalendar
+namespace ElDorado.Console.Tests.ClientSpreadsheets
 {
     [TestClass]
     public class When_Writing_To_A_ClientPostPlan_ClientSpreadsheetService_Should

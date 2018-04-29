@@ -193,6 +193,7 @@
     <Compile Include="WritingCalendar\BlogPostSynchronizer.cs" />
     <Compile Include="WritingCalendar\ClientSpreadsheetService.cs" />
     <Compile Include="WritingCalendar\GoogleSheet.cs" />
+    <Compile Include="WritingCalendar\GoogleSheetRow.cs" />
     <Compile Include="WritingCalendar\PlanningSpreadsheetService.cs" />
     <Compile Include="WritingCalendar\TrelloWritingCalendarService.cs" />
   </ItemGroup>

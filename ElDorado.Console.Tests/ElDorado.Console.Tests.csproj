@@ -179,6 +179,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClientSpreadsheets\When_Retrieving_Posts_From_ClientSpreadsheet_ClientSpreadsheetService_Should.cs" />
     <Compile Include="Repository\When_Writing_BlogPosts_To_The_Database_BlogPostRepository_Should.cs" />
     <Compile Include="ExtensionTests\When_Converting_DateTimes_SafeToDateTime_Should.cs" />
     <Compile Include="ExtensionTests\When_Loose_Matching_LooselyMatches_Should.cs" />
@@ -192,11 +193,12 @@
     <Compile Include="When_Searching_ForAlexaRank_AlexaDataIniquisitor_Should.cs" />
     <Compile Include="When_Searching_For_Subscriber_Count_FeedlyInquisitor_Should.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WritingCalendar\When_Encapsulating_A_Raw_Row_GoogleSheetRow_Should.cs" />
     <Compile Include="WritingCalendar\When_Fetching_A_BlogPost_From_The_PostsSpreadsheet_PlanningSpreadsheetService_Should.cs" />
     <Compile Include="WritingCalendar\When_UpdatingPostIds_On_The_PlanningSpreadsheet_UpdatePostIds_Should.cs" />
     <Compile Include="WritingCalendar\When_Updating_Trello_From_PlanningSpreadsheet_BlogPostSynchronizer_Should.cs" />
     <Compile Include="WritingCalendar\When_Initializing_WritingCalendarSynchronizer_Should.cs" />
-    <Compile Include="WritingCalendar\When_Writing_To_A_ClientPostPlan_ClientSpreadsheetService_Should.cs" />
+    <Compile Include="ClientSpreadsheets\When_Writing_To_A_ClientPostPlan_ClientSpreadsheetService_Should.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -15,6 +15,9 @@ namespace ElDorado.Menu
     [MenuClass("Main Menu")]
     public class MainMenu
     {
+
+        private const string PostPlanningSpreadsheetId = "1BFycG-T2eY3Uh8HWr5c5h-MjYEUJ8eKjqJ8GLxhdh2w";
+
         private static readonly BlogContext _context = new BlogContext();
 
         [MenuMethod("Record blog metrics")]
@@ -42,7 +45,7 @@ namespace ElDorado.Menu
             var trelloService = new TrelloWritingCalendarService();
             trelloService.Initialize(new CredentialStore(File.ReadAllText(@"CredFiles\trello.cred")));
 
-            var synchornizer = new BlogPostSynchronizer(trelloService, new PlanningSpreadsheetService(new GoogleSheet()));
+            var synchornizer = new BlogPostSynchronizer(trelloService, new PlanningSpreadsheetService(new GoogleSheet(PostPlanningSpreadsheetId)));
             synchornizer.UpdatePlannedInTrello();
         }
 
@@ -52,12 +55,26 @@ namespace ElDorado.Menu
             const string range = "Current!A2:T";
 
             var repository = new BlogPostRepository(_context);
-            var spreadsheetService = new PlanningSpreadsheetService(new GoogleSheet());
+            var spreadsheetService = new PlanningSpreadsheetService(new GoogleSheet(PostPlanningSpreadsheetId));
 
             var posts = spreadsheetService.GetPosts(range).ToList();
             repository.Add(posts);
 
             spreadsheetService.UpdatePostIds(_context.BlogPosts.ToList(), range);
+        }
+
+        [MenuMethod("See unconfirmed posts")]
+        public static void SeeUnconfirmedPosts()
+        {
+            var clientSpreadsheetService = new ClientSpreadsheetService(new GoogleSheet("1701JX0uLF65Z-RzCuunn9VY0_2JkDGWEJSD6fS3z2yE"));
+
+            var databasePosts = _context.BlogPosts.ToList();
+            var spreadsheetPosts = clientSpreadsheetService.GetPosts().ToList();
+
+            var postsToShow = spreadsheetPosts.Where(sp => !databasePosts.Any(p => p.Title == sp.Title)).ToList();
+
+            foreach (var post in postsToShow)
+                Console.WriteLine($"{post.Title} --- due {post.TargetPublicationDate}.");
         }
     }
 }

@@ -15,12 +15,13 @@ namespace ElDorado.WritingCalendar
 {
     public class GoogleSheet
     {
-        private const string MasterSpreadsheetId = "1BFycG-T2eY3Uh8HWr5c5h-MjYEUJ8eKjqJ8GLxhdh2w";
+        private readonly string _spreadsheetId;
 
         private readonly SheetsService _service;
 
-        public GoogleSheet()
+        public GoogleSheet(string spreadsheetId)
         {
+            _spreadsheetId = spreadsheetId;
             _service = new SheetsService(new BaseClientService.Initializer()
             {
                 HttpClientInitializer = GetSheetsUserCredential(),
@@ -30,13 +31,13 @@ namespace ElDorado.WritingCalendar
 
         public virtual IList<IList<object>> GetCells(string range)
         {
-            var request = _service.Spreadsheets.Values.Get(MasterSpreadsheetId, range);
+            var request = _service.Spreadsheets.Values.Get(_spreadsheetId, range);
             return request.Execute().Values;
         }
 
         public virtual void UpdateSpreadsheet(string range, IList<IList<object>> cells)
         {
-            var updateRequest = _service.Spreadsheets.Values.Update(new ValueRange() { Values = cells }, MasterSpreadsheetId, range);
+            var updateRequest = _service.Spreadsheets.Values.Update(new ValueRange() { Values = cells }, _spreadsheetId, range);
             updateRequest.ValueInputOption = SpreadsheetsResource.ValuesResource.UpdateRequest.ValueInputOptionEnum.USERENTERED;
             updateRequest.Execute();
 

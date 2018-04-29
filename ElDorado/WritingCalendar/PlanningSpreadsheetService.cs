@@ -16,9 +16,9 @@ namespace ElDorado.WritingCalendar
 
         public virtual IEnumerable<BlogPost> GetPosts(string range = "Current!A2:T")
         {
-            var sheetCells = _plannedPostsSheet.GetCells(range).Pad(20);
+            var rows = _plannedPostsSheet.GetCells(range).Pad(20).Select(r => new GoogleSheetRow(r));
 
-            return sheetCells.Where(r => IsSheetRowValid(r)).Select(r => MakePostFromGoogleSheetRow(r));
+            return rows.Where(r => IsSheetRowValid(r)).Select(r => MakePostFromGoogleSheetRow(r));
         }
 
         public void UpdatePostIds(IEnumerable<BlogPost> blogPosts, string range = "Current!A2:T")
@@ -33,31 +33,29 @@ namespace ElDorado.WritingCalendar
 
             _plannedPostsSheet.UpdateSpreadsheet(range, cells);
         }
-        private BlogPost MakePostFromGoogleSheetRow(IList<object> googleSheetRow)
+        private BlogPost MakePostFromGoogleSheetRow(GoogleSheetRow row)
         {
-            var sheetRowStrings = googleSheetRow.Select(o => o?.ToString()).ToList();
-
             return new BlogPost()
             {
-                Blog = new Blog() { CompanyName = sheetRowStrings[0] },
-                Title = sheetRowStrings[1],
-                Mission = sheetRowStrings[4],
-                Author = new Author() { FirstName = sheetRowStrings[5] },
-                DraftDate = DateTime.Parse(sheetRowStrings[6]),
-                TargetFinalizeDate = sheetRowStrings[7].SafeToDateTime(),
-                TargetPublicationDate = sheetRowStrings[8].SafeToDateTime(),
-                Keyword = sheetRowStrings[9],
-                IsApproved = sheetRowStrings[17] == "Yes",
-                IsDoublePost = sheetRowStrings[18] == "Yes",
-                Id = string.IsNullOrEmpty(sheetRowStrings[19]) ? 0 : int.Parse(sheetRowStrings[19])
+                Blog = new Blog() { CompanyName = row.Item(0) },
+                Title = row.Item(1),
+                Mission = row.Item(4),
+                Author = new Author() { FirstName = row.Item(5) },
+                DraftDate = row.ItemAsDate(6),
+                TargetFinalizeDate = row.ItemAsDate(7),
+                TargetPublicationDate = row.ItemAsDate(8),
+                Keyword = row.Item(9),
+                IsApproved = row.ItemAsBool(17),
+                IsDoublePost = row.ItemAsBool(18),
+                Id = row.ItemAsInt(19)
             };
         }
-        private static bool IsSheetRowValid(IList<object> r)
+        private static bool IsSheetRowValid(GoogleSheetRow row)
         {
-            return r.Count > 0 && 
-                !string.IsNullOrEmpty(r[0].ToString()) && 
-                !string.IsNullOrEmpty(r[1].ToString()) &&
-                !string.IsNullOrEmpty(r[6].ToString());
+            return row.Count > 0 && 
+                !string.IsNullOrEmpty(row.Item(0)) && 
+                !string.IsNullOrEmpty(row.Item(1)) &&
+                !string.IsNullOrEmpty(row.Item(6));
         }
     }
 }

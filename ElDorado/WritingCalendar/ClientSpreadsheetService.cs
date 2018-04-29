@@ -27,5 +27,21 @@ namespace ElDorado.WritingCalendar
 
             _clientSheet.UpdateSpreadsheet("asdf", rows);
         }
+        public IEnumerable<BlogPost> GetPosts(string range = "Planned!A2:T")
+        {
+            var rows = _clientSheet.GetCells(range).Select(r => new GoogleSheetRow(r));
+
+            return rows.Select(r => BuildBlogPostFromRow(r));
+        }
+
+        private static BlogPost BuildBlogPostFromRow(GoogleSheetRow r)
+        {
+            return new BlogPost()
+            {
+                Title = r.Item(0),
+                Mission = r.Item(3),
+                TargetPublicationDate = r.ItemAsDate(4)
+            };
+        }
     }
 }
