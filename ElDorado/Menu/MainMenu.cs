@@ -76,5 +76,19 @@ namespace ElDorado.Menu
             foreach (var post in postsToShow)
                 Console.WriteLine($"{post.Title} --- due {post.TargetPublicationDate}.");
         }
+
+        [MenuMethod("Test adding a post")]
+        public static void TryInsertingAPost()
+        {
+            const string range = "Current!A2:T";
+            var spreadsheetService = new PlanningSpreadsheetService(new GoogleSheet(PostPlanningSpreadsheetId));
+
+            var posts = spreadsheetService.GetPosts(range).ToList();
+
+            posts.Add(new BlogPost() { Title = "Placeholder", DraftDate = new DateTime(2018, 5, 11), Blog = new Blog() { CompanyName = "Scalyr" } });
+
+
+
+        }
     }
 }

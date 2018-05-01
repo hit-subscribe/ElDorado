@@ -33,6 +33,37 @@ namespace ElDorado.WritingCalendar
 
             _plannedPostsSheet.UpdateSpreadsheet(range, cells);
         }
+
+        //This isn't ready for prime-time, but I need to get to bed and the tests are passing.
+        //I need a much more sophisticated scheme to hammer out all of the post adding edge cases
+        public void AddPosts(BlogPost blogPost)
+        {
+            var posts = GetPosts("Current!A2:T").ToList();
+
+            posts.Add(blogPost);
+
+            var sortedPosts = posts.OrderBy(p => p.DraftDate).ThenBy(p => p.BlogCompanyName);
+
+            _plannedPostsSheet.UpdateSpreadsheet("Current!A2:T", sortedPosts.Select(p => TurnPostIntoRow(p)).ToList());
+        }
+
+        private IList<object> TurnPostIntoRow(BlogPost post)
+        {
+            var row = Enumerable.Repeat<object>(null, 20).ToList();
+            row[0] = post.BlogCompanyName;
+            row[1] = post.Title;
+            row[4] = post.Mission;
+            row[5] = post.PostAuthorFirstName;
+            row[6] = post.DraftDate;
+            row[7] = post.TargetFinalizeDate;
+            row[8] = post.TargetPublicationDate;
+            row[9] = post.Keyword;
+            row[17] = post.IsApproved ? "Yes" : null;
+            row[18] = post.IsApproved ? "No" : null;
+            row[19] = post.Id;
+            return row;
+        }
+
         private BlogPost MakePostFromGoogleSheetRow(GoogleSheetRow row)
         {
             return new BlogPost()
@@ -50,6 +81,7 @@ namespace ElDorado.WritingCalendar
                 Id = row.ItemAsInt(19)
             };
         }
+
         private static bool IsSheetRowValid(GoogleSheetRow row)
         {
             return row.Count > 0 && 

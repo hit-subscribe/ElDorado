@@ -193,6 +193,7 @@
     <Compile Include="When_Searching_ForAlexaRank_AlexaDataIniquisitor_Should.cs" />
     <Compile Include="When_Searching_For_Subscriber_Count_FeedlyInquisitor_Should.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WritingCalendar\When_Adding_Posts_To_The_Spreadsheet_AddPosts_Should.cs" />
     <Compile Include="WritingCalendar\When_Encapsulating_A_Raw_Row_GoogleSheetRow_Should.cs" />
     <Compile Include="WritingCalendar\When_Fetching_A_BlogPost_From_The_PostsSpreadsheet_PlanningSpreadsheetService_Should.cs" />
     <Compile Include="WritingCalendar\When_UpdatingPostIds_On_The_PlanningSpreadsheet_UpdatePostIds_Should.cs" />
