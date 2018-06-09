@@ -78,10 +78,10 @@ namespace ElDorado.Console.Tests
         {
             var time = new DateTime(2018, 1, 31);
             Target.CurrentTime = time;
-
+            
             var url = Target.BuildUrl(BaseUrl);
 
-            url.ShouldContain("&Signature=dAm3iMTSkcj3kxwHXODpiWXA7EM%3d");
+            url.ShouldContain("&Signature=Q1F50wJ1tb1w30Jg%2fpGX43Yrd38%3d");
         }
 
 
