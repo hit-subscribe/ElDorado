@@ -12,19 +12,13 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.BlogId)
+            @Html.DisplayNameFor(model => model.Blog.CompanyName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AuthorId)
+            @Html.DisplayNameFor(model => model.Author.FirstName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SeoTitle)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UrlSlug)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Mission)
@@ -50,34 +44,19 @@
         <th>
             @Html.DisplayNameFor(model => model.IsDoublePost)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AuthorTitle)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PostAuthorFirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BlogCompanyName)
-        </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.BlogId)
+            @Html.DisplayFor(modelItem => item.Blog.CompanyName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.AuthorId)
+            @Html.DisplayFor(modelItem => item.Author.FirstName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SeoTitle)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UrlSlug)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Mission)
@@ -102,15 +81,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.IsDoublePost)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AuthorTitle)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PostAuthorFirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BlogCompanyName)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
