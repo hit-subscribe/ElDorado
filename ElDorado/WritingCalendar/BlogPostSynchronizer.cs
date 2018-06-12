@@ -23,7 +23,9 @@ namespace ElDorado.WritingCalendar
             var postsToAdd = _planningSpreadsheetService.GetPosts().Where(bp => ShouldBeAddedToTrello(bp));
 
             foreach (var post in postsToAdd)
+            {
                 _trelloService.AddCard(post);
+            }
         }
 
         private bool ShouldBeAddedToTrello(BlogPost blogPostToConsider)

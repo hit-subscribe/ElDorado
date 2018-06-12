@@ -9,10 +9,16 @@ namespace ElDorado.Gui.Controllers
 {
     public class BlogPostsController : Controller
     {
+        private readonly BlogContext _blogContext;
+
+        public BlogPostsController(BlogContext blogContext)
+        {
+            _blogContext = blogContext;
+        }
+
         public ActionResult Index()
         {
-            var context = new BlogContext();
-            return View(context.BlogPosts);
+            return View(_blogContext.BlogPosts);
         }
     }
 }
