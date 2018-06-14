@@ -1,4 +1,5 @@
 ﻿using ElDorado.Domain;
+using ElDorado.Gui.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,12 @@ namespace ElDorado.Gui.Controllers
         public ActionResult Index()
         {
             return View(_blogContext.BlogPosts);
+        }
+        public ActionResult Edit(int id)
+        {
+            var blogPost = _blogContext.BlogPosts.First(bp => bp.Id == id);
+
+            return View(new BlogPostViewModel(blogPost, _blogContext));
         }
     }
 }

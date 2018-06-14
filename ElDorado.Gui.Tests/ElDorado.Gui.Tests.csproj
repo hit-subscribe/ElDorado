@@ -85,6 +85,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlogPostsControllerTests\When_Editing_BlogPosts_BlogPostsController_Should.cs" />
     <Compile Include="BlogPostsControllerTests\When_Retrieving_The_BlogPostsIndex_BlogPostsController_Should.cs" />
     <Compile Include="MvcTestingExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
