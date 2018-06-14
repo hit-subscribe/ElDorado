@@ -13,6 +13,11 @@ namespace ElDorado.Domain
         public virtual DbSet<BlogPost> BlogPosts { get; set; }
         public virtual DbSet<Author> Authors { get; set; }
 
+        public virtual void SetModified<TEntity>(TEntity entity) where TEntity : class
+        {
+            Entry(entity).State = EntityState.Modified;
+        }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Blog>()
