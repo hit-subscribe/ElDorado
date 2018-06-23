@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ElDorado.Domain.BlogPost>
+﻿@model ElDorado.Gui.ViewModels.BlogPostIndexViewModel
 
 @{
     ViewBag.Title = "Index";
@@ -9,45 +9,59 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+<p>
+
+
+    @using (Html.BeginForm("Index", "BlogPosts", FormMethod.Get))
+    {
+        <table class="navbar-text">
+            <tr>
+                <th>@Html.Label("Blog", htmlAttributes: new { @class = "control-label col-md-2" })</th>
+                <th>@Html.DropDownList("blogId", Model.Blogs, "Choose a Client")</th>
+                <th><input type="submit" value="Filter" /></th>
+            </tr>
+        </table>        
+    }
+    </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Blog.CompanyName)
+            @Html.DisplayNameFor(model => model.BlogPosts.First().Blog.CompanyName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Author.FirstName)
+            @Html.DisplayNameFor(model => model.BlogPosts.First().Author.FirstName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.DisplayNameFor(model => model.BlogPosts.First().Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Mission)
+            @Html.DisplayNameFor(model => model.BlogPosts.First().Mission)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Keyword)
+            @Html.DisplayNameFor(model => model.BlogPosts.First().Keyword)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DraftDate)
+            @Html.DisplayNameFor(model => model.BlogPosts.First().DraftDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TargetFinalizeDate)
+            @Html.DisplayNameFor(model => model.BlogPosts.First().TargetFinalizeDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TargetPublicationDate)
+            @Html.DisplayNameFor(model => model.BlogPosts.First().TargetPublicationDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SubmittedDate)
+            @Html.DisplayNameFor(model => model.BlogPosts.First().SubmittedDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.IsApproved)
+            @Html.DisplayNameFor(model => model.BlogPosts.First().IsApproved)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.IsDoublePost)
+            @Html.DisplayNameFor(model => model.BlogPosts.First().IsDoublePost)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.BlogPosts) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Blog.CompanyName)

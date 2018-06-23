@@ -18,10 +18,20 @@ namespace ElDorado.Gui.Controllers
             _blogContext = blogContext;
         }
 
-        public ActionResult Index()
+        public ActionResult Index(int blogId = 0)
         {
-            return View(_blogContext.BlogPosts);
+            var matchingPosts = _blogContext.BlogPosts;
+
+            if (blogId == 0)
+            {
+                return View(new BlogPostIndexViewModel(matchingPosts, _blogContext));
+            }
+            else
+            {
+                return View(new BlogPostIndexViewModel(matchingPosts.Where(bp => bp.BlogId == blogId).ToList(), _blogContext));
+            }
         }
+
         public ActionResult Edit(int id)
         {
             return View(GetViewModelForId(id));

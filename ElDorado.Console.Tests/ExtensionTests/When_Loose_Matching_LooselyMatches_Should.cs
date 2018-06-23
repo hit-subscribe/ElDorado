@@ -14,37 +14,49 @@ namespace ElDorado.Console.Tests.ExtensionTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_True_For_Empty_And_Empty()
         {
-            string.Empty.LooselyMatches(string.Empty).ShouldBeTrue();
+            string.Empty.TrelloCardLooselyMatches(string.Empty).ShouldBeTrue();
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_False_For_A_And_B()
         {
-            "A".LooselyMatches("B").ShouldBeFalse();
+            "A".TrelloCardLooselyMatches("B").ShouldBeFalse();
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_True_For_Upper_And_Lower_Case_A()
         {
-            "A".LooselyMatches("a").ShouldBeTrue();
+            "A".TrelloCardLooselyMatches("a").ShouldBeTrue();
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_True_For_Upper_And_Lower_Case_A_Reversed()
         {
-            "a".LooselyMatches("A").ShouldBeTrue();
+            "a".TrelloCardLooselyMatches("A").ShouldBeTrue();
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_True_When_The_Target_Contains_The_Match_Candidate()
         {
-            "A ".LooselyMatches("A").ShouldBeTrue();
+            "A ".TrelloCardLooselyMatches("A").ShouldBeTrue();
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_True_Removing_Extraneous_Double_Spaces_From_Candidate()
         {
-            "A Post".LooselyMatches("A  Post").ShouldBeTrue();
+            "A Post".TrelloCardLooselyMatches("A  Post").ShouldBeTrue();
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Return_True_Removing_The_2X_Distinction()
+        {
+            "A Post (2x)".TrelloCardLooselyMatches("A Post").ShouldBeTrue();
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Return_True_When_Spreadsheet_Has_Trailing_Whitespace()
+        {
+            "[N] Barriers to Successful Enterprise Release Management".TrelloCardLooselyMatches("[N] Barriers to Successful Enterprise Release Management");
         }
 
     }

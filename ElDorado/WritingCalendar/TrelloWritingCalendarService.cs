@@ -46,7 +46,7 @@ namespace ElDorado.WritingCalendar
 
         public virtual bool DoesCardExist(string blogPostTitle)
         {
-            return BoardCards.ToList().Any(c => c.Name.LooselyMatches(blogPostTitle));
+            return BoardCards.ToList().Any(c => c.Name.TrelloCardLooselyMatches(blogPostTitle));
         }
 
     }

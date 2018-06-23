@@ -139,14 +139,6 @@ namespace ElDorado.Console.Tests.WritingCalendar
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
-        public void Return_A_BlogPost_With_Id_Set()
-        {
-            var post = Target.GetPosts().First();
-
-            post.Id.ShouldBe(int.Parse(Id));
-        }
-
-        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_A_BlogPost_With_Id_0_When_Sheet_Is_Empty()
         {
             AllSpreadsheetRows[0][19] = string.Empty;

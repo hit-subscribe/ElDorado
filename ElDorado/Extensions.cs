@@ -29,9 +29,9 @@ namespace ElDorado
             return target;
         }
 
-        public static bool LooselyMatches(this string target, string matchCandidate)
+        public static bool TrelloCardLooselyMatches(this string target, string matchCandidate)
         {
-            return target.ToLower().Trim() == matchCandidate.ToLower().Replace("  ", " ");
+            return target.ToLower().Replace("(2x)", string.Empty).Trim() == matchCandidate.ToLower().Replace("  ", " ");
         }
 
         public static DateTime? SafeToDateTime(this object target)

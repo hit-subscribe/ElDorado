@@ -77,8 +77,7 @@ namespace ElDorado.WritingCalendar
                 TargetPublicationDate = row.ItemAsDate(8),
                 Keyword = row.Item(9),
                 IsApproved = row.ItemAsBool(17),
-                IsDoublePost = row.ItemAsBool(18),
-                Id = row.ItemAsInt(19)
+                IsDoublePost = row.ItemAsBool(18)
             };
         }
 
