@@ -59,6 +59,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
@@ -85,6 +86,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlogPostsControllerTests\When_Deleting_BlogPosts_BlogPostsController_Should.cs" />
     <Compile Include="BlogPostsControllerTests\When_Editing_BlogPosts_BlogPostsController_Should.cs" />
     <Compile Include="BlogPostsControllerTests\When_Retrieving_The_BlogPostsIndex_BlogPostsController_Should.cs" />
     <Compile Include="MvcTestingExtensions.cs" />

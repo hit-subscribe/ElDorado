@@ -32,9 +32,17 @@ namespace ElDorado.Gui.Controllers
             }
         }
 
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int postId)
         {
-            return View(GetViewModelForId(id));
+            return View(GetViewModelForId(postId));
+        }
+
+        public ActionResult Delete(int postId)
+        {
+            var post = _blogContext.BlogPosts.First(p => p.Id == postId);
+            _blogContext.BlogPosts.Remove(post);
+            _blogContext.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -45,6 +53,8 @@ namespace ElDorado.Gui.Controllers
             _blogContext.SaveChanges();
             return View(GetViewModelForId(blogPostViewModel.Post.Id));
         }
+
+        
 
         private BlogPostViewModel GetViewModelForId(int id)
         {
