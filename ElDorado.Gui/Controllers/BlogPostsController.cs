@@ -31,19 +31,24 @@ namespace ElDorado.Gui.Controllers
                 return View(new BlogPostIndexViewModel(matchingPosts.Where(bp => bp.BlogId == blogId).ToList(), _blogContext));
             }
         }
+        public ActionResult Create()
+        {
+            return View(new BlogPostViewModel(new BlogPost(), _blogContext));
+        }
+
+        [HttpPost]
+        public ActionResult Create(BlogPost post)
+        {
+            _blogContext.BlogPosts.Add(post);
+            _blogContext.SaveChanges();
+            return RedirectToAction("Edit", new { postId = post.Id });
+        }
 
         public ActionResult Edit(int postId)
         {
             return View(GetViewModelForId(postId));
         }
 
-        public ActionResult Delete(int postId)
-        {
-            var post = _blogContext.BlogPosts.First(p => p.Id == postId);
-            _blogContext.BlogPosts.Remove(post);
-            _blogContext.SaveChanges();
-            return RedirectToAction("Index");
-        }
 
         [HttpPost]
         public ActionResult Edit(BlogPostViewModel blogPostViewModel)
@@ -54,7 +59,13 @@ namespace ElDorado.Gui.Controllers
             return View(GetViewModelForId(blogPostViewModel.Post.Id));
         }
 
-        
+        public ActionResult Delete(int postId)
+        {
+            var post = _blogContext.BlogPosts.First(p => p.Id == postId);
+            _blogContext.BlogPosts.Remove(post);
+            _blogContext.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
         private BlogPostViewModel GetViewModelForId(int id)
         {

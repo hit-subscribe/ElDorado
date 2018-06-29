@@ -59,7 +59,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         {
             var actionResult = Target.Delete(PostId) as RedirectToRouteResult;
 
-            actionResult.RouteValues["action"].ShouldBe("Index");
+            actionResult.ShouldHaveRouteAction("Index");
         }
 
 }
