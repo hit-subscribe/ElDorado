@@ -20,19 +20,19 @@ namespace ElDorado.Gui.Controllers
             _blogContext = blogContext;
         }
 
-        public ActionResult Index(int blogId = 0, int authorId = 0)
+        public ActionResult Index(int blogId = 0, int authorId = 0, bool includeAll = false)
         {
             var postsFromEvaluatedDatabaseQuery = _blogContext.BlogPosts.ToList(); //I like the readability from these filtering methods we're using, and the cost tradeoff here just doesn't matter
 
             var filteredPosts = postsFromEvaluatedDatabaseQuery.Where(bp => bp.BlogId.ZeroMatches(blogId) && bp.AuthorId.ZeroMatches(authorId));
-            var currentPosts = filteredPosts.Where(bp => !bp.IsOlderThan(Today));
+            var currentPosts = filteredPosts.Where(bp => includeAll || !bp.IsOlderThan(Today));
 
             return View(new BlogPostIndexViewModel(currentPosts, _blogContext));
         }
 
         public ActionResult Create()
         {
-            return View(new BlogPostViewModel(new BlogPost(), _blogContext));
+            return View(new BlogPostEditViewModel(new BlogPost(), _blogContext));
         }
 
         [HttpPost]
@@ -50,7 +50,7 @@ namespace ElDorado.Gui.Controllers
 
 
         [HttpPost]
-        public ActionResult Edit(BlogPostViewModel blogPostViewModel)
+        public ActionResult Edit(BlogPostEditViewModel blogPostViewModel)
         {
             _blogContext.BlogPosts.Attach(blogPostViewModel.Post);
             _blogContext.SetModified(blogPostViewModel.Post);
@@ -66,10 +66,10 @@ namespace ElDorado.Gui.Controllers
             return RedirectToAction("Index");
         }
 
-        private BlogPostViewModel GetViewModelForId(int id)
+        private BlogPostEditViewModel GetViewModelForId(int id)
         {
             var blogPost = _blogContext.BlogPosts.First(bp => bp.Id == id);
-            return new BlogPostViewModel(blogPost, _blogContext);
+            return new BlogPostEditViewModel(blogPost, _blogContext);
         }
     }
 }

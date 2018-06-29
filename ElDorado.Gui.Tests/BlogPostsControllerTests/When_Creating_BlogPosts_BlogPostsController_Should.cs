@@ -33,7 +33,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Respond_To_Get_Request_With_BlogPostViewModel_Containing_Empty_BlogPost()
         {
-            var viewModel = Target.Create().GetViewResultModel<BlogPostViewModel>();
+            var viewModel = Target.Create().GetViewResultModel<BlogPostEditViewModel>();
 
             viewModel.Post.Id.ShouldBe(0);
         }
@@ -44,7 +44,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
             Blog blog = new Blog() { CompanyName = "EvilCorp" };
             Context.Blogs.Add(blog);
 
-            var viewModel = Target.Create().GetViewResultModel<BlogPostViewModel>();
+            var viewModel = Target.Create().GetViewResultModel<BlogPostEditViewModel>();
 
             viewModel.Blogs.ShouldContain(item => item.Text == blog.CompanyName);
         }

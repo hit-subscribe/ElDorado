@@ -26,6 +26,10 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
 
         private BlogPost Post => Context.BlogPosts.First();
 
+        private Author Author => Context.Authors.First();
+
+        private Blog Blog => Context.Blogs.First();
+
         private BlogPostsController Target { get; set; }
 
         [TestInitialize]
@@ -41,6 +45,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
 
             Context.BlogPosts.Add(blogPost);
             Context.Authors.Add(new Author());
+            Context.Blogs.Add(new Blog());
 
             Target = new BlogPostsController(Context) { Today = new DateTime(2018, 7, 1) };
         }
@@ -53,7 +58,40 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
             viewModel.Authors.ShouldNotBeEmpty();
         }
 
-    [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Include_Author_First_And_Last_Name()
+        {
+            Author.FirstName = "Erik";
+            Author.LastName = "Dietrich";
+
+            var viewModel = Target.Index().GetViewResultModel<BlogPostIndexViewModel>();
+
+            viewModel.Authors.First().Text.ShouldBe("Erik Dietrich");
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Return_A_ViewModel_With_Authors_Sorted_By_LastName()
+        {
+            Author.LastName = "Zurly";
+            Context.Authors.Add(new Author() { LastName = "Asquith" });
+
+            var viewModel = Target.Index().GetViewResultModel<BlogPostIndexViewModel>();
+
+            viewModel.Authors.First().Text.ShouldBe(" Asquith");
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Return_A_ViewModel_With_Companies_Sorted()
+        {
+            Blog.CompanyName = "Zephyr";
+            Context.Blogs.Add(new Blog() { CompanyName = "Acme" });
+
+            var viewModel = Target.Index().GetViewResultModel<BlogPostIndexViewModel>();
+
+            viewModel.Blogs.First().Text.ShouldBe("Acme");
+        }
+
+       [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_A_ViewModel_Containing_The_BlogPosts_From_Context()
         {
             var viewModel = Target.Index().GetViewResultModel<BlogPostIndexViewModel>();
@@ -164,5 +202,16 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
 
             viewModel.BlogPosts.ShouldNotBeEmpty();
         }
-}
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Return_OutDated_Posts_If_Include_All_Is_True()
+        {
+            Post.TargetPublicationDate = null;
+            Post.DraftDate = Target.Today.AddDays(-1);
+
+            var viewModel = Target.Index(includeAll: true).GetViewResultModel<BlogPostIndexViewModel>();
+
+            viewModel.BlogPosts.ShouldNotBeEmpty();
+        }
+    }
 }

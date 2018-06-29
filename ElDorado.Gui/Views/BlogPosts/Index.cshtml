@@ -20,6 +20,8 @@
             <td>@Html.DropDownList("blogId", Model.Blogs, "Choose a Client")</td>
             <td>@Html.Label("Author", htmlAttributes: new { @class = "control-label col-md-2" })</td>
             <td>@Html.DropDownList("authorId", Model.Authors, "Choose an Author")</td>
+            <td>Show All Posts?</td>
+            <td>@Html.CheckBox("includeAll")</td>
         </tr>
         <tr>
             <td><input type="submit" value="Filter" /></td>

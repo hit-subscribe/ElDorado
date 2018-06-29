@@ -38,7 +38,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_A_View_Containing_A_Single_BlogPost()
         {
-            var viewModel = Target.Edit(PostId).GetViewResultModel<BlogPostViewModel>();
+            var viewModel = Target.Edit(PostId).GetViewResultModel<BlogPostEditViewModel>();
 
             viewModel.Post.Title.ShouldBe(PostTitle);
         }
@@ -49,7 +49,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
             Blog blog = new Blog() { CompanyName = "Acme" };
             Context.Blogs.Add(blog);
 
-            var viewModel = Target.Edit(PostId).GetViewResultModel<BlogPostViewModel>();
+            var viewModel = Target.Edit(PostId).GetViewResultModel<BlogPostEditViewModel>();
 
             viewModel.Blogs.ShouldContain(item => item.Text == blog.CompanyName);
         }
@@ -57,12 +57,12 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_A_ViewModel_With_All_Authors()
         {
-            var author = new Author() { FirstName = "Erik" };
+            var author = new Author() { Id = 12 };
             Context.Authors.Add(author);
 
-            var viewModel = Target.Edit(PostId).GetViewResultModel<BlogPostViewModel>();
+            var viewModel = Target.Edit(PostId).GetViewResultModel<BlogPostEditViewModel>();
 
-            viewModel.Authors.ShouldContain(item => item.Text == author.FirstName);
+            viewModel.Authors.ShouldContain(item => item.Value == author.Id.ToString());
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -71,7 +71,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
             bool wasCalled = false; //Not sure why I can't validate the mock with Context.Assert(ctx => ctx.SaveCahnges(), Occurs.Once()), but that didn't work and it's late and I'm tired.
             Context.Arrange(ctx => ctx.SaveChanges()).DoInstead(() => wasCalled = true);
 
-            Target.Edit(new BlogPostViewModel(Post, Context));
+            Target.Edit(new BlogPostEditViewModel(Post, Context));
 
             wasCalled.ShouldBe(true);
         }
@@ -79,7 +79,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_A_ViewModel_With_Same_Id_On_Post()
         {
-            var viewModel = Target.Edit(new BlogPostViewModel(Post, Context)).GetViewResultModel<BlogPostViewModel>();
+            var viewModel = Target.Edit(new BlogPostEditViewModel(Post, Context)).GetViewResultModel<BlogPostEditViewModel>();
 
             viewModel.Post.Id.ShouldBe(PostId);
         }
