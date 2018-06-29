@@ -14,13 +14,17 @@
 
     @using (Html.BeginForm("Index", "BlogPosts", FormMethod.Get))
     {
-        <table class="navbar-text">
-            <tr>
-                <th>@Html.Label("Blog", htmlAttributes: new { @class = "control-label col-md-2" })</th>
-                <th>@Html.DropDownList("blogId", Model.Blogs, "Choose a Client")</th>
-                <th><input type="submit" value="Filter" /></th>
-            </tr>
-        </table>        
+    <table class="navbar-text">
+        <tr>
+            <td>@Html.Label("Blog", htmlAttributes: new { @class = "control-label col-md-2" })</td>
+            <td>@Html.DropDownList("blogId", Model.Blogs, "Choose a Client")</td>
+            <td>@Html.Label("Author", htmlAttributes: new { @class = "control-label col-md-2" })</td>
+            <td>@Html.DropDownList("authorId", Model.Authors, "Choose an Author")</td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Filter" /></td>
+        </tr>
+    </table>        
     }
     </p>
 <table class="table">

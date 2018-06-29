@@ -41,5 +41,15 @@ namespace ElDorado.Domain
 
         [NotMapped]
         public string BlogCompanyName => Blog?.CompanyName;
+
+        public bool IsOlderThan(DateTime target)
+        {
+            if (TargetPublicationDate != null)
+                return TargetPublicationDate < target;
+            else if (TargetFinalizeDate != null)
+                return TargetFinalizeDate < target;
+            else
+                return DraftDate < target;
+        }
     }
 }

@@ -13,24 +13,23 @@ namespace ElDorado.Gui.Controllers
     {
         private readonly BlogContext _blogContext;
 
+        public DateTime Today { get; set; } = DateTime.Now;
+
         public BlogPostsController(BlogContext blogContext)
         {
             _blogContext = blogContext;
         }
 
-        public ActionResult Index(int blogId = 0)
+        public ActionResult Index(int blogId = 0, int authorId = 0)
         {
-            var matchingPosts = _blogContext.BlogPosts;
+            var postsFromEvaluatedDatabaseQuery = _blogContext.BlogPosts.ToList(); //I like the readability from these filtering methods we're using, and the cost tradeoff here just doesn't matter
 
-            if (blogId == 0)
-            {
-                return View(new BlogPostIndexViewModel(matchingPosts, _blogContext));
-            }
-            else
-            {
-                return View(new BlogPostIndexViewModel(matchingPosts.Where(bp => bp.BlogId == blogId).ToList(), _blogContext));
-            }
+            var filteredPosts = postsFromEvaluatedDatabaseQuery.Where(bp => bp.BlogId.ZeroMatches(blogId) && bp.AuthorId.ZeroMatches(authorId));
+            var currentPosts = filteredPosts.Where(bp => !bp.IsOlderThan(Today));
+
+            return View(new BlogPostIndexViewModel(currentPosts, _blogContext));
         }
+
         public ActionResult Create()
         {
             return View(new BlogPostViewModel(new BlogPost(), _blogContext));
