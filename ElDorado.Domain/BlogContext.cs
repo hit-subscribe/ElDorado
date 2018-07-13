@@ -1,10 +1,11 @@
 namespace ElDorado.Domain
 {
+    using Microsoft.AspNet.Identity.EntityFramework;
     using System;
     using System.Data.Entity;
     using System.Linq;
 
-    public partial class BlogContext : DbContext
+    public partial class BlogContext : IdentityDbContext<AppUser>
     {
         public BlogContext() : base("name=BlogContext") { }
 
@@ -20,6 +21,8 @@ namespace ElDorado.Domain
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Blog>()
                 .HasMany(b => b.BlogMetrics)
                 .WithRequired(b => b.Blog)

@@ -1,7 +1,9 @@
 using ElDorado.Domain;
+using ElDorado.Gui.Controllers;
 using System;
 using System.Data.Entity;
 using Unity;
+using Unity.Injection;
 
 namespace ElDorado.Gui
 {
@@ -45,6 +47,8 @@ namespace ElDorado.Gui
             // container.RegisterType<IProductRepository, ProductRepository>();
 
             container.RegisterType<BlogContext, BlogContext>();
+            container.RegisterType<AccountController>(new InjectionConstructor());
+            container.RegisterType<ManageController>(new InjectionConstructor());
         }
     }
 }
