@@ -14,6 +14,7 @@ namespace ElDorado.WritingCalendar
             _plannedPostsSheet = plannedPostsSheet;
         }
 
+        //This should be useful once we move away from the master sheet and use to push from DB to client sheets
         public virtual IEnumerable<BlogPost> GetPosts(string range = "Current!A2:T")
         {
             var rows = _plannedPostsSheet.GetCells(range).Pad(20).Select(r => new GoogleSheetRow(r));
@@ -21,6 +22,7 @@ namespace ElDorado.WritingCalendar
             return rows.Where(r => IsSheetRowValid(r)).Select(r => MakePostFromGoogleSheetRow(r));
         }
 
+        //We probably don't need this at all.  No need to track IDs -- we can just blast away with wholesale updates for changes
         public void UpdatePostIds(IEnumerable<BlogPost> blogPosts, string range = "Current!A2:T")
         {
             var cells = _plannedPostsSheet.GetCells(range).Pad(20);
@@ -34,11 +36,10 @@ namespace ElDorado.WritingCalendar
             _plannedPostsSheet.UpdateSpreadsheet(range, cells);
         }
 
-        //This isn't ready for prime-time, but I need to get to bed and the tests are passing.
-        //I need a much more sophisticated scheme to hammer out all of the post adding edge cases
+        //This one we'll need if we're going to push from the database to the client spreadsheet.
         public void AddPosts(BlogPost blogPost)
         {
-            var posts = GetPosts("Current!A2:T").ToList();
+            var posts = GetPosts().ToList();
 
             posts.Add(blogPost);
 

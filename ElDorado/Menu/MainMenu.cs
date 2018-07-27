@@ -59,8 +59,6 @@ namespace ElDorado.Menu
 
             var posts = spreadsheetService.GetPosts(range).ToList();
             repository.Add(posts);
-
-            spreadsheetService.UpdatePostIds(_context.BlogPosts.ToList(), range);
         }
 
         [MenuMethod("See unconfirmed posts")]
