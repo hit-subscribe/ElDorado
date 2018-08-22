@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Telerik.JustMock;
 using Telerik.JustMock.EntityFramework;
 using Telerik.JustMock.Helpers;
 
@@ -38,12 +39,11 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Should_Save_The_Context_To_Capture_Delete()
         {
-            bool wasCalled = false;
-            Context.Arrange(ctx => ctx.SaveChanges()).DoInstead(() => wasCalled = true);
+            Context.Arrange(ctx => ctx.SaveChanges());
 
             Target.Delete(PostId);
 
-            wasCalled.ShouldBe(true);
+            Context.Assert(ctx => ctx.SaveChanges(), Occurs.Once());
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]

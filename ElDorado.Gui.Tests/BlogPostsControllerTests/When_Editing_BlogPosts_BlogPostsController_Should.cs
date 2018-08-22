@@ -68,12 +68,11 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Save_To_Context_On_Post()
         {
-            bool wasCalled = false; //Not sure why I can't validate the mock with Context.Assert(ctx => ctx.SaveCahnges(), Occurs.Once()), but that didn't work and it's late and I'm tired.
-            Context.Arrange(ctx => ctx.SaveChanges()).DoInstead(() => wasCalled = true);
+            Context.Arrange(ctx => ctx.SaveChanges());
 
             Target.Edit(new BlogPostEditViewModel(Post, Context));
 
-            wasCalled.ShouldBe(true);
+            Context.Assert(ctx => ctx.SaveChanges());
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]

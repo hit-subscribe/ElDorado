@@ -6,6 +6,7 @@ using Shouldly;
 using System;
 using System.Linq;
 using System.Web.Mvc;
+using Telerik.JustMock;
 using Telerik.JustMock.EntityFramework;
 using Telerik.JustMock.Helpers;
 
@@ -39,7 +40,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
-        public void Respond_To_Get_Request_With_A_ViewMode_Containing_All_Blogs()
+        public void Respond_To_Get_Request_With_A_ViewModel_Containing_All_Blogs()
         {
             Blog blog = new Blog() { CompanyName = "EvilCorp" };
             Context.Blogs.Add(blog);
@@ -60,12 +61,11 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Save_On_Postback()
         {
-            bool wasCalled = false; 
-            Context.Arrange(ctx => ctx.SaveChanges()).DoInstead(() => wasCalled = true);
+            Context.Arrange(ctx => ctx.SaveChanges());
 
             Target.Create(Post);
 
-            wasCalled.ShouldBeTrue();
+            Context.Assert(ctx => ctx.SaveChanges(), Occurs.Once());
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]

@@ -92,7 +92,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthorControllerTests\When_Retrieving_The_AuthorIndex_AuthorControllerShould.cs" />
+    <Compile Include="AuthorControllerTests\When_Performing_CRUD_Operations_On_Authors_AuthorControllerShould.cs" />
     <Compile Include="BlogPostsControllerTests\When_Creating_BlogPosts_BlogPostsController_Should.cs" />
     <Compile Include="BlogPostsControllerTests\When_Deleting_BlogPosts_BlogPostsController_Should.cs" />
     <Compile Include="BlogPostsControllerTests\When_Editing_BlogPosts_BlogPostsController_Should.cs" />
