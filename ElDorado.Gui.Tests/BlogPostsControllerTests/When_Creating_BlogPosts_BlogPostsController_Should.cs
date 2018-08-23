@@ -1,10 +1,12 @@
 ﻿using ElDorado.Domain;
 using ElDorado.Gui.Controllers;
 using ElDorado.Gui.ViewModels;
+using ElDorado.WritingCalendar;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shouldly;
 using System;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using Telerik.JustMock;
 using Telerik.JustMock.EntityFramework;
@@ -20,6 +22,8 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
 
         private BlogContext Context { get; } = EntityFrameworkMock.Create<BlogContext>();
 
+        private TrelloWritingCalendarService TrelloService = Mock.Create<TrelloWritingCalendarService>();
+
         private BlogPost Post { get; set; } = new BlogPost() { Id = PostId, Title = PostTitle };
 
         private BlogPostsController Target { get; set; }
@@ -28,7 +32,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         [TestInitialize]
         public void BeforeEachTest()
         {
-            Target = new BlogPostsController(Context);
+            Target = new BlogPostsController(Context, TrelloService) { MapPath = "somepath" };
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -83,5 +87,15 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
 
             actionResult.ShouldHaveRouteParameter("postId", PostId);
         }
-    }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Invoke_The_TrelloService_Initialize()
+        {
+            TrelloService.Arrange(ts => ts.Initialize(Arg.AnyString));
+
+            Target.Create(Post);
+
+            TrelloService.Assert(ts => ts.Initialize(Arg.AnyString));
+        }
+}
 }

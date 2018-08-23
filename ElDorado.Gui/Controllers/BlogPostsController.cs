@@ -1,5 +1,6 @@
 ﻿using ElDorado.Domain;
 using ElDorado.Gui.ViewModels;
+using ElDorado.WritingCalendar;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -12,11 +13,15 @@ namespace ElDorado.Gui.Controllers
     public class BlogPostsController : Controller
     {
         private readonly BlogContext _blogContext;
+        private readonly TrelloWritingCalendarService _trelloService;
 
         public DateTime Today { get; set; } = DateTime.Now;
 
-        public BlogPostsController(BlogContext blogContext)
+        public string MapPath { get; set; }
+
+        public BlogPostsController(BlogContext blogContext, TrelloWritingCalendarService trelloService)
         {
+            _trelloService = trelloService;
             _blogContext = blogContext;
         }
 
@@ -40,6 +45,10 @@ namespace ElDorado.Gui.Controllers
         {
             _blogContext.BlogPosts.Add(post);
             _blogContext.SaveChanges();
+
+            _trelloService.Initialize(MapPath ?? Server.MapPath(@"~/App_Data/trello.cred"));
+            _trelloService.AddCard(post);
+
             return RedirectToAction("Edit", new { postId = post.Id });
         }
 
@@ -55,6 +64,7 @@ namespace ElDorado.Gui.Controllers
             _blogContext.BlogPosts.Attach(blogPostViewModel.Post);
             _blogContext.SetModified(blogPostViewModel.Post);
             _blogContext.SaveChanges();
+
             return View(GetViewModelForId(blogPostViewModel.Post.Id));
         }
 

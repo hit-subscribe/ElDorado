@@ -1,6 +1,7 @@
 ﻿using ElDorado.Domain;
 using ElDorado.Gui.Controllers;
 using ElDorado.Gui.ViewModels;
+using ElDorado.WritingCalendar;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shouldly;
 using System;
@@ -47,7 +48,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
             Context.Authors.Add(new Author());
             Context.Blogs.Add(new Blog());
 
-            Target = new BlogPostsController(Context) { Today = new DateTime(2018, 7, 1) };
+            Target = new BlogPostsController(Context, Mock.Create<TrelloWritingCalendarService>()) { Today = new DateTime(2018, 7, 1) };
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]

@@ -113,6 +113,10 @@
       <Project>{648f53da-ebd4-4786-bc95-9628ffc08fe4}</Project>
       <Name>ElDorado.Gui</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ElDorado\ElDorado.Console.csproj">
+      <Project>{0E3D0F5E-C657-4544-BBB0-DE1ABAEAFF1C}</Project>
+      <Name>ElDorado.Console</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

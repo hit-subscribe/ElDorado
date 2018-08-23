@@ -4,6 +4,7 @@ using Manatee.Trello.ManateeJson;
 using Manatee.Trello.WebApi;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace ElDorado.WritingCalendar
@@ -24,7 +25,13 @@ namespace ElDorado.WritingCalendar
         private CardCollection PlannedPostCards => WritingCalendar.Lists.First(l => l.Name == PlannedPostTrelloListName).Cards;
         private IList<Card> BoardCards => WritingCalendar.Cards.ToList();
 
-        public void Initialize(CredentialStore credentialStore)
+        public virtual void Initialize(string filePath)
+        {
+            var credentialStore = new CredentialStore(File.ReadAllText(filePath));
+            Initialize(credentialStore);
+        }
+
+        public virtual void Initialize(CredentialStore credentialStore)
         {
             var serializer = new ManateeSerializer();
             TrelloConfiguration.Serializer = serializer;

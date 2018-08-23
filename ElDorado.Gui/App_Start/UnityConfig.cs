@@ -1,5 +1,6 @@
 using ElDorado.Domain;
 using ElDorado.Gui.Controllers;
+using ElDorado.WritingCalendar;
 using System;
 using System.Data.Entity;
 using Unity;
@@ -49,6 +50,7 @@ namespace ElDorado.Gui
             container.RegisterType<BlogContext, BlogContext>();
             container.RegisterType<AccountController>(new InjectionConstructor());
             container.RegisterType<ManageController>(new InjectionConstructor());
+            container.RegisterType<TrelloWritingCalendarService, TrelloWritingCalendarService>();
         }
     }
 }
