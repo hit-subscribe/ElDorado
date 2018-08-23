@@ -63,6 +63,7 @@
     <Compile Include="BlogContext.cs" />
     <Compile Include="BlogMetric.cs" />
     <Compile Include="BlogPost.cs" />
+    <Compile Include="IHaveIdentity.cs" />
     <Compile Include="Migrations\201802210846572_CreatedBlogEntity.cs" />
     <Compile Include="Migrations\201802210846572_CreatedBlogEntity.Designer.cs">
       <DependentUpon>201802210846572_CreatedBlogEntity.cs</DependentUpon>

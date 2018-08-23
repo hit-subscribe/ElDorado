@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ElDorado.Domain
 {
-    public class Blog
+    public class Blog : IHaveIdentity
     {
         public int Id { get; set; }
 

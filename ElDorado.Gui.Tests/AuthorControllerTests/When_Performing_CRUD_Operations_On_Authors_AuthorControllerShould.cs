@@ -93,6 +93,7 @@ namespace ElDorado.Gui.Tests.AuthorControllerTests
         public void Save_To_Model_On_Postback_For_Edit()
         {
             Context.Arrange(ctx => ctx.SaveChanges());
+            Context.Arrange(ctx => ctx.Set<Author>()).Returns(Context.Authors);
 
             Target.Edit(Author);
 
@@ -121,6 +122,7 @@ namespace ElDorado.Gui.Tests.AuthorControllerTests
         public void Set_Author_As_Modified_On_Postback()
         {
             Context.Arrange(ctx => ctx.SetModified(Arg.IsAny<Author>()));
+            Context.Arrange(ctx => ctx.Set<Author>()).Returns(Context.Authors);
 
             Target.Edit(Author);
 
@@ -139,6 +141,7 @@ namespace ElDorado.Gui.Tests.AuthorControllerTests
         public void Result_In_Saved_Context_On_Delete()
         {
             Context.Arrange(ctx => ctx.SaveChanges());
+            Context.Arrange(ctx => ctx.Set<Author>()).Returns(Context.Authors);
 
             Target.Delete(AuthorId);
 
