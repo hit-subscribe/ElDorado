@@ -8,13 +8,11 @@ namespace ElDorado.Domain.Migrations
         public override void Up()
         {
             AddColumn("dbo.BlogPosts", "TrellId", c => c.String());
-            DropColumn("dbo.BlogPosts", "TrelloId");
         }
         
         public override void Down()
         {
             AddColumn("dbo.BlogPosts", "TrelloId", c => c.String());
-            DropColumn("dbo.BlogPosts", "TrellId");
         }
     }
 }
