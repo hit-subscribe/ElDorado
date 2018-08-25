@@ -112,6 +112,10 @@
     <Compile Include="Migrations\201807130334330_AddingAuth.Designer.cs">
       <DependentUpon>201807130334330_AddingAuth.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808252211342_AddingTrelloId.cs" />
+    <Compile Include="Migrations\201808252211342_AddingTrelloId.Designer.cs">
+      <DependentUpon>201808252211342_AddingTrelloId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -155,6 +159,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201807130334330_AddingAuth.resx">
       <DependentUpon>201807130334330_AddingAuth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808252211342_AddingTrelloId.resx">
+      <DependentUpon>201808252211342_AddingTrelloId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

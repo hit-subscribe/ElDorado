@@ -32,7 +32,7 @@ namespace ElDorado.Domain
         public DateTime? SubmittedDate { get; set; }
         public bool IsApproved { get; set; }
         public bool IsDoublePost { get; set; }
-
+        public string TrellId { get; set; }
         [NotMapped]
         public string AuthorTitle => $"{Title}{(IsDoublePost ? " (2x)" : string.Empty)}";
 
