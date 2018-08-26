@@ -69,7 +69,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
 
             Target.Create(Post);
 
-            Context.Assert(ctx => ctx.SaveChanges(), Occurs.Once());
+            Context.Assert(ctx => ctx.SaveChanges(), Occurs.Exactly(2));
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]

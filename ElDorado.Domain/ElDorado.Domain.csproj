@@ -116,6 +116,10 @@
     <Compile Include="Migrations\201808252211342_AddingTrelloId.Designer.cs">
       <DependentUpon>201808252211342_AddingTrelloId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808260510102_FixedSpellingOfTrelloId.cs" />
+    <Compile Include="Migrations\201808260510102_FixedSpellingOfTrelloId.Designer.cs">
+      <DependentUpon>201808260510102_FixedSpellingOfTrelloId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -162,6 +166,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808252211342_AddingTrelloId.resx">
       <DependentUpon>201808252211342_AddingTrelloId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808260510102_FixedSpellingOfTrelloId.resx">
+      <DependentUpon>201808260510102_FixedSpellingOfTrelloId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

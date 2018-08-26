@@ -49,6 +49,8 @@ namespace ElDorado.Gui.Controllers
             _trelloService.Initialize(MapPath ?? Server.MapPath(@"~/App_Data/trello.cred"));
             _trelloService.AddCard(post);
 
+            _blogContext.SaveChanges();
+
             return RedirectToAction("Edit", new { postId = post.Id });
         }
 

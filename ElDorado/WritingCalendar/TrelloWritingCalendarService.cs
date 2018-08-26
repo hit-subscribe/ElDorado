@@ -45,10 +45,11 @@ namespace ElDorado.WritingCalendar
         public virtual void AddCard(BlogPost postToAdd)
         {
             var members = WritingCalendar.Members.Where(m => !string.IsNullOrEmpty(postToAdd.PostAuthorFirstName) && m.FullName.Contains(postToAdd.PostAuthorFirstName));
-
             var clientLabels = WritingCalendar.Labels.Where(l => l.Name == postToAdd.BlogCompanyName);
 
-            PlannedPostCards.Add(name: postToAdd.AuthorTitle, dueDate: postToAdd.DraftDate.Value.AddHours(12), members: members, labels: clientLabels);
+            var card = PlannedPostCards.Add(name: postToAdd.AuthorTitle, dueDate: postToAdd.DraftDate.Value.AddHours(12), members: members, labels: clientLabels);
+
+            postToAdd.TrelloId = card.Id;
         }
 
         public virtual bool DoesCardExist(string blogPostTitle)
