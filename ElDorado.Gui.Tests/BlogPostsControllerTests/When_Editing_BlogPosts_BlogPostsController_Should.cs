@@ -23,7 +23,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
 
         private BlogContext Context { get; } = EntityFrameworkMock.Create<BlogContext>();
 
-
+        private TrelloWritingCalendarService Service { get; set; } = Mock.Create<TrelloWritingCalendarService>();
 
         private BlogPost Post { get; set; } = new BlogPost() { Id = PostId, Title = PostTitle };
 
@@ -35,7 +35,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         {
             Context.BlogPosts.Add(Post);
 
-            Target = new BlogPostsController(Context, Mock.Create<TrelloWritingCalendarService>());
+            Target = new BlogPostsController(Context, Service);
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -84,6 +84,16 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
             var viewModel = Target.Edit(new BlogPostEditViewModel(Post, Context)).GetViewResultModel<BlogPostEditViewModel>();
 
             viewModel.Post.Id.ShouldBe(PostId);
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Update_The_Card_In_The_TrelloService()
+        {
+            Service.Arrange(s => s.EditCard(Post));
+
+            Target.Edit(new BlogPostEditViewModel(Post, Context));
+
+            Service.Assert(s => s.EditCard(Post), Occurs.Once());
         }
 }
 }

@@ -67,14 +67,21 @@ namespace ElDorado.Gui.Controllers
             _blogContext.SetModified(blogPostViewModel.Post);
             _blogContext.SaveChanges();
 
+            _trelloService.EditCard(blogPostViewModel.Post);
+
             return View(GetViewModelForId(blogPostViewModel.Post.Id));
         }
 
         public ActionResult Delete(int postId)
         {
             var post = _blogContext.BlogPosts.First(p => p.Id == postId);
+            string trelloId = post.TrelloId;
+
             _blogContext.BlogPosts.Remove(post);
             _blogContext.SaveChanges();
+
+            _trelloService.DeleteCard(trelloId);
+
             return RedirectToAction("Index");
         }
 

@@ -24,6 +24,8 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
 
         private BlogContext Context { get; } = EntityFrameworkMock.Create<BlogContext>();
 
+        private TrelloWritingCalendarService Service { get; set; } = Mock.Create<TrelloWritingCalendarService>();
+
         private BlogPost Post { get; set; } = new BlogPost() { Id = PostId, Title = PostTitle };
 
         private BlogPostsController Target { get; set; }
@@ -34,7 +36,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         {
             Context.BlogPosts.Add(Post);
 
-            Target = new BlogPostsController(Context, Mock.Create<TrelloWritingCalendarService>());
+            Target = new BlogPostsController(Context, Service);
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -61,6 +63,16 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
             var actionResult = Target.Delete(PostId) as RedirectToRouteResult;
 
             actionResult.ShouldHaveRouteAction("Index");
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Delete_The_Card_From_The_Trello_Service()
+        {
+            Service.Arrange(s => s.DeleteCard(Post.TrelloId));
+
+            Target.Delete(PostId);
+
+            Service.Assert(s => s.DeleteCard(Post.TrelloId), Occurs.Once());
         }
 
 }

@@ -57,5 +57,22 @@ namespace ElDorado.WritingCalendar
             return BoardCards.ToList().Any(c => c.Name.TrelloCardLooselyMatches(blogPostTitle));
         }
 
+        public virtual void EditCard(BlogPost post)
+        {
+            var card = WritingCalendar.Cards.FirstOrDefault(c => c.Id == post.TrelloId);
+            if(card != null)
+            {
+                card.Name = post.AuthorTitle;
+                card.DueDate = post.DraftDate.Value.AddHours(12);
+            }
+            
+        }
+        public virtual void DeleteCard(string trelloId)
+        {
+            var card = WritingCalendar.Cards.FirstOrDefault(c => c.Id == trelloId);
+            if(card != null)
+                card.Delete();
+        }
+
     }
 }
