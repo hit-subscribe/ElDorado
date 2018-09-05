@@ -38,6 +38,11 @@ namespace ElDorado
         {
             return DateTime.TryParse(target?.ToString(), out DateTime result) ? result : (DateTime?)null;
         }
+
+        public static DateTime? SafeAddHours(this DateTime? target, int hours)
+        {
+            return target.HasValue ? target.Value.AddHours(hours) : (DateTime?)null;
+        }
             
     }
 }

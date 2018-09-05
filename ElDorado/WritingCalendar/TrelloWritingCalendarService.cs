@@ -47,7 +47,7 @@ namespace ElDorado.WritingCalendar
             var members = WritingCalendar.Members.Where(m => !string.IsNullOrEmpty(postToAdd.PostAuthorFirstName) && m.FullName.Contains(postToAdd.PostAuthorFirstName));
             var clientLabels = WritingCalendar.Labels.Where(l => l.Name == postToAdd.BlogCompanyName);
 
-            var card = PlannedPostCards.Add(name: postToAdd.AuthorTitle, dueDate: postToAdd.DraftDate.Value.AddHours(12), members: members, labels: clientLabels);
+            var card = PlannedPostCards.Add(name: postToAdd.AuthorTitle, dueDate: postToAdd.DraftDate.SafeAddHours(12), members: members, labels: clientLabels);
 
             postToAdd.TrelloId = card.Id;
         }
@@ -63,7 +63,7 @@ namespace ElDorado.WritingCalendar
             if(card != null)
             {
                 card.Name = post.AuthorTitle;
-                card.DueDate = post.DraftDate.Value.AddHours(12);
+                card.DueDate = post.DraftDate.SafeAddHours(12);
             }
             
         }

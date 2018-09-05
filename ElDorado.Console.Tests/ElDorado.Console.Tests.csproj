@@ -186,6 +186,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientSpreadsheets\When_Retrieving_Posts_From_ClientSpreadsheet_ClientSpreadsheetService_Should.cs" />
+    <Compile Include="ExtensionTests\When_Adding_Hours_To_NullableDate_SafeAddHours_Should.cs" />
     <Compile Include="Repository\When_Writing_BlogPosts_To_The_Database_BlogPostRepository_Should.cs" />
     <Compile Include="ExtensionTests\When_Converting_DateTimes_SafeToDateTime_Should.cs" />
     <Compile Include="ExtensionTests\When_Loose_Matching_LooselyMatches_Should.cs" />

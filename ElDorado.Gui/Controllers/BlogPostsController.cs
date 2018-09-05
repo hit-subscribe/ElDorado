@@ -45,8 +45,9 @@ namespace ElDorado.Gui.Controllers
         {
             _blogContext.BlogPosts.Add(post);
             _blogContext.SaveChanges();
+            _blogContext.UpdateBlogPostDependencies(post);
 
-            _trelloService.Initialize(MapPath ?? Server.MapPath(@"~/App_Data/trello.cred"));
+            InitializeTrelloService();
             _trelloService.AddCard(post);
 
             _blogContext.SaveChanges();
@@ -67,6 +68,7 @@ namespace ElDorado.Gui.Controllers
             _blogContext.SetModified(blogPostViewModel.Post);
             _blogContext.SaveChanges();
 
+            InitializeTrelloService();
             _trelloService.EditCard(blogPostViewModel.Post);
 
             return View(GetViewModelForId(blogPostViewModel.Post.Id));
@@ -80,6 +82,7 @@ namespace ElDorado.Gui.Controllers
             _blogContext.BlogPosts.Remove(post);
             _blogContext.SaveChanges();
 
+            InitializeTrelloService();
             _trelloService.DeleteCard(trelloId);
 
             return RedirectToAction("Index");
@@ -89,6 +92,11 @@ namespace ElDorado.Gui.Controllers
         {
             var blogPost = _blogContext.BlogPosts.First(bp => bp.Id == id);
             return new BlogPostEditViewModel(blogPost, _blogContext);
+        }
+
+        private void InitializeTrelloService()
+        {
+            _trelloService.Initialize(MapPath ?? Server.MapPath(@"~/App_Data/trello.cred"));
         }
     }
 }

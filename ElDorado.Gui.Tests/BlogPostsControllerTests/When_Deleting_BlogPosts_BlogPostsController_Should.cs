@@ -36,7 +36,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         {
             Context.BlogPosts.Add(Post);
 
-            Target = new BlogPostsController(Context, Service);
+            Target = new BlogPostsController(Context, Service) { MapPath = "Doesn't matter" };
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
