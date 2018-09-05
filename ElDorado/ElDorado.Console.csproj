@@ -65,6 +65,7 @@
     </Reference>
     <Reference Include="Manatee.Trello, Version=2.0.0.0, Culture=neutral, PublicKeyToken=f502fcc17fc907d6, processorArchitecture=MSIL">
       <HintPath>..\packages\Manatee.Trello.2.0.0\lib\netstandard1.3\Manatee.Trello.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Manatee.Trello.ManateeJson, Version=2.0.0.0, Culture=neutral, PublicKeyToken=fbb8336f4f768592, processorArchitecture=MSIL">
       <HintPath>..\packages\Manatee.Trello.ManateeJson.2.0.0\lib\netstandard1.3\Manatee.Trello.ManateeJson.dll</HintPath>
