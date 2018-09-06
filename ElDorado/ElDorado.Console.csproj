@@ -183,6 +183,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\OrphanedBlogPostException.cs" />
+    <Compile Include="ManateeExtensions.cs" />
     <Compile Include="Menu\MainMenu.cs" />
     <Compile Include="Metrics\AlexaDataInquisitor.cs" />
     <Compile Include="Metrics\BlogMetricsRecorder.cs" />

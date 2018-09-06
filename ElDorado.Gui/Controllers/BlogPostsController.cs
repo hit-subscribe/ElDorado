@@ -67,6 +67,7 @@ namespace ElDorado.Gui.Controllers
             _blogContext.BlogPosts.Attach(blogPostViewModel.Post);
             _blogContext.SetModified(blogPostViewModel.Post);
             _blogContext.SaveChanges();
+            _blogContext.UpdateBlogPostDependencies(blogPostViewModel.Post);
 
             InitializeTrelloService();
             _trelloService.EditCard(blogPostViewModel.Post);
