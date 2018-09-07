@@ -229,6 +229,7 @@
     <Compile Include="Controllers\CrudController`1.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -240,6 +241,7 @@
     <Compile Include="ViewModels\BlogPostIndexViewModel.cs" />
     <Compile Include="ViewModels\BlogPostEditViewModel.cs" />
     <Compile Include="ViewModels\BlogPostViewModel.cs" />
+    <Compile Include="ViewModels\PostHustlingViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -312,6 +314,7 @@
     <Content Include="Views\Blogs\Index.cshtml" />
     <Content Include="Views\Blogs\Edit.cshtml" />
     <Content Include="Views\Blogs\Create.cshtml" />
+    <Content Include="Views\Reports\PostHustling.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

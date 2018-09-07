@@ -1,0 +1,34 @@
+﻿@model ElDorado.Gui.ViewModels.PostHustlingViewModel
+
+@{
+    ViewBag.Title = "PostHustling";
+}
+
+<h2>Post Hustling Report</h2>
+
+<table class="table">
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.UnclaimedPosts.First().Blog.CompanyName)</th>
+        <th>@Html.DisplayNameFor(model => model.UnclaimedPosts.First().Title)</th>
+        <th>@Html.DisplayNameFor(model => model.UnclaimedPosts.First().Mission)</th>
+        <th>@Html.DisplayNameFor(model => model.UnclaimedPosts.First().DraftDate)</th>
+        <th>@Html.DisplayNameFor(model => model.UnclaimedPosts.First().IsApproved)</th>
+        <th>@Html.DisplayNameFor(model => model.UnclaimedPosts.First().IsDoublePost)</th>
+        <th>Actions</th>
+    </tr>
+
+@foreach (var item in Model.UnclaimedPosts) {
+    <tr>
+        <td>@Html.DisplayFor(modelItem => item.Blog.CompanyName)</td>
+        <td>@Html.DisplayFor(modelItem => item.Title)</td>
+        <td>@Html.DisplayFor(modelItem => item.Mission)</td>
+        <td>@Html.DisplayFor(modelItem => item.DraftDate)</td>
+        <td>@Html.DisplayFor(modelItem => item.IsApproved)</td>
+        <td>@Html.DisplayFor(modelItem => item.IsDoublePost)</td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", "BlogPosts", new { postId=item.Id }, null)
+        </td>
+    </tr>
+}
+
+</table>
