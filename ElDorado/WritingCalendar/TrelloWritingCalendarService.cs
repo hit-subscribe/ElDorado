@@ -45,7 +45,7 @@ namespace ElDorado.WritingCalendar
         public virtual void AddCard(BlogPost postToAdd)
         {
             var card = PlannedPostCards.Add(name: postToAdd.AuthorTitle, dueDate: postToAdd.DraftDate.SafeAddHours(12), 
-                members: GetMembersWithName(postToAdd.PostAuthorFirstName), labels: GetLabelsForCompany(postToAdd.BlogCompanyName));
+                members: GetMemberWithUserName(postToAdd.AuthorTrelloUserName), labels: GetLabelsForCompany(postToAdd.BlogCompanyName));
 
             postToAdd.TrelloId = card.Id;
         }
@@ -63,7 +63,7 @@ namespace ElDorado.WritingCalendar
                 card.Name = post.AuthorTitle;
                 card.DueDate = post.DraftDate.SafeAddHours(12);
                 card.UpdateLabels(GetLabelsForCompany(post.BlogCompanyName));
-                card.UpdateMembers(GetMembersWithName(post.PostAuthorFirstName));
+                card.UpdateMembers(GetMemberWithUserName(post.AuthorTrelloUserName));
             }
             
         }
@@ -79,9 +79,9 @@ namespace ElDorado.WritingCalendar
             return WritingCalendar.Labels.Where(l => l.Name == companyName);
         }
 
-        private IEnumerable<Member> GetMembersWithName(string authorFirstName)
+        private IEnumerable<Member> GetMemberWithUserName(string trelloUserName)
         {
-            return WritingCalendar.Members.Where(m => !string.IsNullOrEmpty(authorFirstName) && m.FullName.Contains(authorFirstName));
+            return WritingCalendar.Members.Where(m => m.UserName == trelloUserName);
         }
     }
 }

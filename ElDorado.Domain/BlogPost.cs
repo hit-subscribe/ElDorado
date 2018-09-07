@@ -42,6 +42,9 @@ namespace ElDorado.Domain
         [NotMapped]
         public string BlogCompanyName => Blog?.CompanyName;
 
+        [NotMapped]
+        public string AuthorTrelloUserName => Author?.TrelloId;
+
         public bool IsOlderThan(DateTime target)
         {
             if (TargetPublicationDate != null)
