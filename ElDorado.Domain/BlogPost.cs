@@ -45,14 +45,7 @@ namespace ElDorado.Domain
         [NotMapped]
         public string AuthorTrelloUserName => Author?.TrelloId;
 
-        public bool IsOlderThan(DateTime target)
-        {
-            if (TargetPublicationDate != null)
-                return TargetPublicationDate < target;
-            else if (TargetFinalizeDate != null)
-                return TargetFinalizeDate < target;
-            else
-                return DraftDate < target;
-        }
+        [NotMapped]
+        public bool HasBeenSubmitted => SubmittedDate.HasValue; 
     }
 }

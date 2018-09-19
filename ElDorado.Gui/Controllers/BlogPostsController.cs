@@ -15,8 +15,6 @@ namespace ElDorado.Gui.Controllers
         private readonly BlogContext _blogContext;
         private readonly TrelloWritingCalendarService _trelloService;
 
-        public DateTime Today { get; set; } = DateTime.Now;
-
         public string MapPath { get; set; }
 
         public BlogPostsController(BlogContext blogContext, TrelloWritingCalendarService trelloService)
@@ -30,7 +28,7 @@ namespace ElDorado.Gui.Controllers
             var postsFromEvaluatedDatabaseQuery = _blogContext.BlogPosts.ToList(); //I like the readability from these filtering methods we're using, and the cost tradeoff here just doesn't matter
 
             var filteredPosts = postsFromEvaluatedDatabaseQuery.Where(bp => bp.BlogId.ZeroMatches(blogId) && bp.AuthorId.ZeroMatches(authorId));
-            var currentPosts = filteredPosts.Where(bp => includeAll || !bp.IsOlderThan(Today));
+            var currentPosts = filteredPosts.Where(bp => includeAll || !bp.HasBeenSubmitted);
             var orderedPosts = currentPosts.OrderBy(p => p.DraftDate);
 
             return View(new BlogPostIndexViewModel(orderedPosts, _blogContext));

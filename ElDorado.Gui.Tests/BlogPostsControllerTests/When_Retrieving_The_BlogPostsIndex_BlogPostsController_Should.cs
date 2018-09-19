@@ -33,6 +33,8 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
 
         private BlogPostsController Target { get; set; }
 
+        private static readonly DateTime Today = new DateTime(2018, 8, 1);
+
         [TestInitialize]
         public void BeforeEachTest()
         {
@@ -41,15 +43,14 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
                 Title = Title,
                 BlogId = BlogId,
                 AuthorId = AuthorId,
-                TargetPublicationDate = new DateTime(2018, 8, 1),
-                DraftDate = new DateTime(2018, 8, 1)
+                DraftDate = Today
             };
 
             Context.BlogPosts.Add(blogPost);
             Context.Authors.Add(new Author());
             Context.Blogs.Add(new Blog());
 
-            Target = new BlogPostsController(Context, Mock.Create<TrelloWritingCalendarService>()) { Today = new DateTime(2018, 7, 1) };
+            Target = new BlogPostsController(Context, Mock.Create<TrelloWritingCalendarService>());
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -163,31 +164,9 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
-        public void Filter_Out_Archived_Posts()
+        public void Filter_Out_Submitted_Posts()
         {
-            Post.TargetPublicationDate = Target.Today.AddDays(-1);
-
-            var viewModel = Target.Index(BlogId).GetViewResultModel<BlogPostIndexViewModel>();
-
-            viewModel.BlogPosts.ShouldBeEmpty();
-        }
-
-        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
-        public void Filter_Out_Archived_Posts_Based_On_FinalizedDate_When_No_Pub_Date_Exists()
-        {
-            Post.TargetPublicationDate = null;
-            Post.TargetFinalizeDate = Target.Today.AddDays(+1);
-
-            var viewModel = Target.Index(BlogId).GetViewResultModel<BlogPostIndexViewModel>();
-
-            viewModel.BlogPosts.ShouldNotBeEmpty();
-        }
-
-        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
-        public void Filter_Out_Archived_Posts_Based_On_DraftDate_When_No_Pub_Or_Final_Date_Exists()
-        {
-            Post.TargetPublicationDate = null;
-            Post.DraftDate = Target.Today.AddDays(-1);
+            Post.SubmittedDate = Today.AddDays(-1);
 
             var viewModel = Target.Index(BlogId).GetViewResultModel<BlogPostIndexViewModel>();
 
@@ -208,7 +187,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         public void Return_OutDated_Posts_If_Include_All_Is_True()
         {
             Post.TargetPublicationDate = null;
-            Post.DraftDate = Target.Today.AddDays(-1);
+            Post.DraftDate = Today.AddDays(-1);
 
             var viewModel = Target.Index(includeAll: true).GetViewResultModel<BlogPostIndexViewModel>();
 
