@@ -31,8 +31,9 @@ namespace ElDorado.Gui.Controllers
 
             var filteredPosts = postsFromEvaluatedDatabaseQuery.Where(bp => bp.BlogId.ZeroMatches(blogId) && bp.AuthorId.ZeroMatches(authorId));
             var currentPosts = filteredPosts.Where(bp => includeAll || !bp.IsOlderThan(Today));
+            var orderedPosts = currentPosts.OrderBy(p => p.DraftDate);
 
-            return View(new BlogPostIndexViewModel(currentPosts, _blogContext));
+            return View(new BlogPostIndexViewModel(orderedPosts, _blogContext));
         }
 
         public ActionResult Create()

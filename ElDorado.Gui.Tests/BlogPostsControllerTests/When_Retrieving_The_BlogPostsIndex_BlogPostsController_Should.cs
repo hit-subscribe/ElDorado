@@ -41,7 +41,8 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
                 Title = Title,
                 BlogId = BlogId,
                 AuthorId = AuthorId,
-                TargetPublicationDate = new DateTime(2018, 8, 1)
+                TargetPublicationDate = new DateTime(2018, 8, 1),
+                DraftDate = new DateTime(2018, 8, 1)
             };
 
             Context.BlogPosts.Add(blogPost);
@@ -164,7 +165,6 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Filter_Out_Archived_Posts()
         {
-
             Post.TargetPublicationDate = Target.Today.AddDays(-1);
 
             var viewModel = Target.Index(BlogId).GetViewResultModel<BlogPostIndexViewModel>();
@@ -214,5 +214,18 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
 
             viewModel.BlogPosts.ShouldNotBeEmpty();
         }
-    }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Order_Posts_By_DraftDate()
+        {
+            const string title = "A Post Title";
+            var moreRecentPost = new BlogPost() { Title = title, DraftDate = Post.DraftDate.Value.AddDays(-1) };
+
+            Context.BlogPosts.Add(moreRecentPost);
+
+            var viewModel = Target.Index().GetViewResultModel<BlogPostIndexViewModel>();
+
+            viewModel.BlogPosts.First().Title.ShouldBe(title);
+        }
+}
 }
