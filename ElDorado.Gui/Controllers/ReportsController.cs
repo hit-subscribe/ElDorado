@@ -23,7 +23,9 @@ namespace ElDorado.Gui.Controllers
             var allBlogPosts = _context.BlogPosts.ToList();
             var matchingPosts = allBlogPosts.Where(p => ShouldPostAppearInPostHustlingReport(p));
 
-            return View(new PostHustlingViewModel(matchingPosts.OrderBy(p => p.DraftDate)));
+            var pairingsByDate = matchingPosts.Select(mp => new PostAuthorPairing(mp, _context.Authors)).OrderBy(p => p.DraftDate);
+
+            return View(new PostHustlingViewModel(pairingsByDate));
         }
 
         private bool ShouldPostAppearInPostHustlingReport(BlogPost post)

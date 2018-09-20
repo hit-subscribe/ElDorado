@@ -241,6 +241,7 @@
     <Compile Include="ViewModels\BlogPostIndexViewModel.cs" />
     <Compile Include="ViewModels\BlogPostEditViewModel.cs" />
     <Compile Include="ViewModels\BlogPostViewModel.cs" />
+    <Compile Include="ViewModels\PostAuthorPairing.cs" />
     <Compile Include="ViewModels\PostHustlingViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

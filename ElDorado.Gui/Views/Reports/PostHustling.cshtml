@@ -8,25 +8,25 @@
 
 <table class="table">
     <tr>
-        <th>@Html.DisplayNameFor(model => model.UnclaimedPosts.First().Blog.CompanyName)</th>
+        <th>@Html.DisplayNameFor(model => model.UnclaimedPosts.First().CompanyName)</th>
         <th>@Html.DisplayNameFor(model => model.UnclaimedPosts.First().Title)</th>
-        <th>@Html.DisplayNameFor(model => model.UnclaimedPosts.First().Mission)</th>
         <th>@Html.DisplayNameFor(model => model.UnclaimedPosts.First().DraftDate)</th>
         <th>@Html.DisplayNameFor(model => model.UnclaimedPosts.First().IsApproved)</th>
         <th>@Html.DisplayNameFor(model => model.UnclaimedPosts.First().IsDoublePost)</th>
+        <th>Available Authors</th>
         <th>Actions</th>
     </tr>
 
 @foreach (var item in Model.UnclaimedPosts) {
     <tr>
-        <td>@Html.DisplayFor(modelItem => item.Blog.CompanyName)</td>
+        <td>@Html.DisplayFor(modelItem => item.CompanyName)</td>
         <td>@Html.DisplayFor(modelItem => item.Title)</td>
-        <td>@Html.DisplayFor(modelItem => item.Mission)</td>
         <td>@Html.DisplayFor(modelItem => item.DraftDate)</td>
         <td>@Html.DisplayFor(modelItem => item.IsApproved)</td>
         <td>@Html.DisplayFor(modelItem => item.IsDoublePost)</td>
+        <td>@Html.DisplayFor(modelItem => item.Authors)</td>
         <td>
-            @Html.ActionLink("Edit", "Edit", "BlogPosts", new { postId=item.Id }, null)
+            @Html.ActionLink("Edit", "Edit", "BlogPosts", new { postId = item.Id }, null)
         </td>
     </tr>
 }

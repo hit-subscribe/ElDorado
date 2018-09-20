@@ -27,5 +27,10 @@ namespace ElDorado.Domain
 
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BlogPost> BlogPosts { get; set; }
+
+        public bool HasPostsDue(DateTime dueDate)
+        {
+            return BlogPosts != null && BlogPosts.Any(bp => bp.DraftDate.Value.Date == dueDate.Date);
+        }
     }
 }

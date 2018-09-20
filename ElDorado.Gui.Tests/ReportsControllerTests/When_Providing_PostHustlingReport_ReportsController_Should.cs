@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shouldly;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -82,6 +83,44 @@ namespace ElDorado.Gui.Tests.ReportsControllerTests
             var viewModel = GetPostHustlingViewModel();
 
             viewModel.UnclaimedPosts.First().DraftDate.ShouldBe(firstChronologicalPost.DraftDate);
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Return_A_ViewModel_With_Available_Authors_For_A_Post()
+        {
+            Context.BlogPosts.Add(new BlogPost() { DraftDate = Target.Today.AddDays(1), IsApproved = true });
+
+            var viewModel = GetPostHustlingViewModel();
+
+            viewModel.UnclaimedPosts.First().Authors.ShouldBeEmpty();
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Return_A_ViewModel_With_An_Author_Who_Doesnt_Have_A_Post_On_That_DueDate()
+        {
+            Context.Authors.Add(new Author() { FirstName = "Erik", LastName = "Dietrich" });
+            Context.BlogPosts.Add(new BlogPost() { DraftDate = Target.Today.AddDays(1), IsApproved = true });
+
+            var viewModel = GetPostHustlingViewModel();
+
+            viewModel.UnclaimedPosts.First().Authors.ShouldBe("Erik Dietrich");
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Return_A_ViewModel_Where_PostAuthorPairings_Omit_Authors_With_A_Post_Due_That_Date()
+        {
+            var erik = new Author() { FirstName = "Erik", LastName = "Dietrich" };
+            var erikAssignedPost = new BlogPost() { DraftDate = Target.Today.AddDays(1), IsApproved = true, Author = erik };
+            erik.BlogPosts = new Collection<BlogPost>();
+            erik.BlogPosts.Add(erikAssignedPost);
+
+            Context.Authors.Add(erik);
+            Context.BlogPosts.Add(new BlogPost() { DraftDate = Target.Today.AddDays(1), IsApproved = true });
+            Context.BlogPosts.Add(erikAssignedPost);
+
+            var viewModel = GetPostHustlingViewModel();
+
+            viewModel.UnclaimedPosts.First().Authors.ShouldBeEmpty();
         }
 }
 }

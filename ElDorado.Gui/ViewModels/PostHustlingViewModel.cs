@@ -8,9 +8,9 @@ namespace ElDorado.Gui.ViewModels
 {
     public class PostHustlingViewModel
     {
-        public IEnumerable<BlogPost> UnclaimedPosts { get; private set; } = Enumerable.Empty<BlogPost>();
+        public IEnumerable<PostAuthorPairing> UnclaimedPosts { get; private set; } = Enumerable.Empty<PostAuthorPairing>();
 
-        public PostHustlingViewModel(IEnumerable<BlogPost> blogPosts)
+        public PostHustlingViewModel(IEnumerable<PostAuthorPairing> blogPosts)
         {
             UnclaimedPosts = blogPosts;
         }
