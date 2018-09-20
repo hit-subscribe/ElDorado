@@ -98,6 +98,14 @@
     </div>
 
     <div class="form-group">
+        @Html.LabelFor(model => model.Post.DraftCompleteDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Post.DraftCompleteDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Post.DraftCompleteDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
         @Html.LabelFor(model => model.Post.SubmittedDate, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Post.SubmittedDate, new { htmlAttributes = new { @class = "form-control" } })

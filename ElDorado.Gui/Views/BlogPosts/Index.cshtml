@@ -41,9 +41,6 @@
             @Html.DisplayNameFor(model => model.BlogPosts.First().Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.BlogPosts.First().Mission)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.BlogPosts.First().Keyword)
         </th>
         <th>
@@ -54,6 +51,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.BlogPosts.First().TargetPublicationDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BlogPosts.First().DraftCompleteDate)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.BlogPosts.First().SubmittedDate)
@@ -79,9 +79,6 @@
             @Html.DisplayFor(modelItem => item.Title)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Mission)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Keyword)
         </td>
         <td>
@@ -94,6 +91,9 @@
             @Html.DisplayFor(modelItem => item.TargetPublicationDate)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.DraftCompleteDate)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.SubmittedDate)
         </td>
         <td>
@@ -103,8 +103,8 @@
             @Html.DisplayFor(modelItem => item.IsDoublePost)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { postId=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { postId=item.Id })
+            @Html.ActionLink("Edit", "Edit", new { postId = item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { postId = item.Id })
         </td>
     </tr>
 }
