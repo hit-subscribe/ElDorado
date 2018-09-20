@@ -21,9 +21,10 @@ namespace ElDorado.Gui.Controllers
         public ActionResult PostHustling()
         {
             var allBlogPosts = _context.BlogPosts.ToList();
+            var allAuthors = _context.Authors.ToList();
             var matchingPosts = allBlogPosts.Where(p => ShouldPostAppearInPostHustlingReport(p));
 
-            var pairingsByDate = matchingPosts.Select(mp => new PostAuthorPairing(mp, _context.Authors)).OrderBy(p => p.DraftDate);
+            var pairingsByDate = matchingPosts.Select(mp => new PostAuthorPairing(mp, allAuthors)).OrderBy(p => p.DraftDate);
 
             return View(new PostHustlingViewModel(pairingsByDate));
         }
