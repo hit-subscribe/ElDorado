@@ -121,6 +121,10 @@
     <Compile Include="Migrations\201808260510102_FixedSpellingOfTrelloId.Designer.cs">
       <DependentUpon>201808260510102_FixedSpellingOfTrelloId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809200006498_Adding DraftCompleteData.cs" />
+    <Compile Include="Migrations\201809200006498_Adding DraftCompleteData.Designer.cs">
+      <DependentUpon>201809200006498_Adding DraftCompleteData.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -170,6 +174,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808260510102_FixedSpellingOfTrelloId.resx">
       <DependentUpon>201808260510102_FixedSpellingOfTrelloId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809200006498_Adding DraftCompleteData.resx">
+      <DependentUpon>201809200006498_Adding DraftCompleteData.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

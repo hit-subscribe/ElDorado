@@ -30,9 +30,12 @@ namespace ElDorado.Domain
         public DateTime? TargetFinalizeDate { get; set; }
         public DateTime? TargetPublicationDate { get; set; }
         public DateTime? SubmittedDate { get; set; }
+        public DateTime? DraftCompleteDate { get; set; }
         public bool IsApproved { get; set; }
         public bool IsDoublePost { get; set; }
         public string TrelloId { get; set; }
+
+
         [NotMapped]
         public string AuthorTitle => $"{Title}{(IsDoublePost ? " (2x)" : string.Empty)}";
 
