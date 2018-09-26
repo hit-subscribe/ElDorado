@@ -62,7 +62,6 @@ namespace ElDorado.WritingCalendar
             if (card == null)
                 return;
 
-            card.Refresh();
             card.Name = post.AuthorTitle;
             card.SetKeyword(post.Keyword);
             if (card.List.Name == "Planned Posts")
