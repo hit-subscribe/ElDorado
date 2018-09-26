@@ -58,9 +58,12 @@ namespace ElDorado.WritingCalendar
         public virtual void EditCard(BlogPost post)
         {
             var card = WritingCalendar.Cards.FirstOrDefault(c => c.Id == post.TrelloId);
-            if(card != null)
+            if (card == null)
+                return;
+
+            card.Name = post.AuthorTitle;
+            if (card.List.Name == "Planned Posts")
             {
-                card.Name = post.AuthorTitle;
                 card.DueDate = post.DraftDate.SafeAddHours(12);
                 card.UpdateLabels(GetLabelsForCompany(post.BlogCompanyName));
                 card.UpdateMembers(GetMemberWithUserName(post.AuthorTrelloUserName));
