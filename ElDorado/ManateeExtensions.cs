@@ -26,5 +26,17 @@ namespace ElDorado
             foreach (var label in labels)
                 target.Labels.Add(label);
         }
+
+        public static void SetKeyword(this Card target, string keyword)
+        {
+            string commentText = $"Keyword: {keyword}";
+
+            var keywordComment = target.Comments.FirstOrDefault(c => c.Data != null && c.Data.Text != null && c.Data.Text.Contains("Keyword"));
+
+            if (keywordComment != null && keywordComment.Data != null)
+                keywordComment.Data.Text = commentText;
+            else
+                target.Comments.Add(commentText);
+        }
     }
 }

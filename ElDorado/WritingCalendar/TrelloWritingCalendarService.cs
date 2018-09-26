@@ -46,6 +46,7 @@ namespace ElDorado.WritingCalendar
         {
             var card = PlannedPostCards.Add(name: postToAdd.AuthorTitle, dueDate: postToAdd.DraftDate.SafeAddHours(12), 
                 members: GetMemberWithUserName(postToAdd.AuthorTrelloUserName), labels: GetLabelsForCompany(postToAdd.BlogCompanyName));
+            card.SetKeyword(postToAdd.Keyword);
 
             postToAdd.TrelloId = card.Id;
         }
@@ -61,7 +62,9 @@ namespace ElDorado.WritingCalendar
             if (card == null)
                 return;
 
+            card.Refresh();
             card.Name = post.AuthorTitle;
+            card.SetKeyword(post.Keyword);
             if (card.List.Name == "Planned Posts")
             {
                 card.DueDate = post.DraftDate.SafeAddHours(12);
