@@ -4,6 +4,7 @@ using Manatee.Trello.ManateeJson;
 using Manatee.Trello.WebApi;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 
@@ -23,7 +24,8 @@ namespace ElDorado.WritingCalendar
         
 
         private CardCollection PlannedPostCards => WritingCalendar.Lists.First(l => l.Name == PlannedPostTrelloListName).Cards;
-        private IList<Card> BoardCards => WritingCalendar.Cards.ToList();
+
+        private IList<Card> BoardCards => WritingCalendar.Cards.Filter(CardFilter.All).ToList();
 
         public virtual void Initialize(string filePath)
         {
@@ -47,34 +49,36 @@ namespace ElDorado.WritingCalendar
             var card = PlannedPostCards.Add(name: postToAdd.AuthorTitle, dueDate: postToAdd.DraftDate.SafeAddHours(12), 
                 members: GetMemberWithUserName(postToAdd.AuthorTrelloUserName), labels: GetLabelsForCompany(postToAdd.BlogCompanyName));
             card.SetKeyword(postToAdd.Keyword);
+            card.IsArchived = !postToAdd.IsApproved;
 
             postToAdd.TrelloId = card.Id;
         }
 
         public virtual bool DoesCardExist(string blogPostTitle)
         {
-            return BoardCards.ToList().Any(c => c.Name.TrelloCardLooselyMatches(blogPostTitle));
+            return BoardCards.Any(c => c.Name.TrelloCardLooselyMatches(blogPostTitle));
         }
 
-        public virtual void EditCard(BlogPost post)
+        public virtual void EditCard(BlogPost postToEdit)
         {
-            var card = WritingCalendar.Cards.FirstOrDefault(c => c.Id == post.TrelloId);
+            var card = BoardCards.FirstOrDefault(c => c.Id == postToEdit.TrelloId);
             if (card == null)
                 return;
 
-            card.Name = post.AuthorTitle;
-            card.SetKeyword(post.Keyword);
+            card.Name = postToEdit.AuthorTitle;
+            card.IsArchived = !postToEdit.IsApproved;
+            card.SetKeyword(postToEdit.Keyword);
             if (card.List.Name == "Planned Posts")
             {
-                card.DueDate = post.DraftDate.SafeAddHours(12);
-                card.UpdateLabels(GetLabelsForCompany(post.BlogCompanyName));
-                card.UpdateMembers(GetMemberWithUserName(post.AuthorTrelloUserName));
+                card.DueDate = postToEdit.DraftDate.SafeAddHours(12);
+                card.UpdateLabels(GetLabelsForCompany(postToEdit.BlogCompanyName));
+                card.UpdateMembers(GetMemberWithUserName(postToEdit.AuthorTrelloUserName));
             }
             
         }
         public virtual void DeleteCard(string trelloId)
         {
-            var card = WritingCalendar.Cards.FirstOrDefault(c => c.Id == trelloId);
+            var card = BoardCards.FirstOrDefault(c => c.Id == trelloId);
             if(card != null)
                 card.Delete();
         }
