@@ -31,7 +31,7 @@ namespace ElDorado.WritingCalendar
 
         private bool ShouldBeAddedToTrello(BlogPost blogPostToConsider)
         {
-            return blogPostToConsider.IsApproved && !_trelloService.DoesCardExist(blogPostToConsider.Title);
+            return blogPostToConsider.IsApproved && !_trelloService.DoesCardExistWithTitle(blogPostToConsider.Title);
         }
     }
 }

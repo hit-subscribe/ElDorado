@@ -47,7 +47,7 @@ namespace ElDorado.Trello
             postToAdd.TrelloId = card.Id;
         }
 
-        public virtual bool DoesCardExist(string blogPostTitle)
+        public virtual bool DoesCardExistWithTitle(string blogPostTitle)
         {
             return _board.AllCards.Any(c => c.Name.TrelloCardLooselyMatches(blogPostTitle));
         }

@@ -26,7 +26,7 @@ namespace ElDorado.Console.Tests.WritingCalendar
         public void BeforeEachTest()
         {
             PlanningSpreadsheetService.Arrange(pss => pss.GetPosts(Arg.AnyString)).Returns(new List<BlogPost>() { UnapprovedPostFromSpreadsheet, AprpovedPostFromSpreadsheet, PostThatAlreadyExistsInTrello });
-            TrelloWritingCalendarService.Arrange(twcs => twcs.DoesCardExist(PostThatAlreadyExistsInTrello.Title)).Returns(true);
+            TrelloWritingCalendarService.Arrange(twcs => twcs.DoesCardExistWithTitle(PostThatAlreadyExistsInTrello.Title)).Returns(true);
 
             Target = new BlogPostSynchronizer(TrelloWritingCalendarService, PlanningSpreadsheetService);
         }
