@@ -1,4 +1,4 @@
-﻿using ElDorado.WritingCalendar;
+﻿using ElDorado.Trello;
 using Manatee.Trello;
 using Manatee.Trello.ManateeJson;
 using Manatee.Trello.WebApi;
@@ -7,7 +7,7 @@ using Shouldly;
 using System;
 using System.Linq;
 
-namespace ElDorado.Console.Tests.WritingCalendar
+namespace ElDorado.Console.Tests.TrelloTests
 {
     [TestClass]
     public class When_Initializing_WritingCalendarSynchronizer_Should

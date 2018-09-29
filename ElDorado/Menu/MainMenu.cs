@@ -1,6 +1,7 @@
 ﻿using ElDorado.Domain;
 using ElDorado.Metrics;
 using ElDorado.Repository;
+using ElDorado.Trello;
 using ElDorado.WritingCalendar;
 using Gold.ConsoleMenu;
 using System;

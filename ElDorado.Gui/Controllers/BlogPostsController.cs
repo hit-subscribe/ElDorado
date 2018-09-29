@@ -1,6 +1,6 @@
 ﻿using ElDorado.Domain;
 using ElDorado.Gui.ViewModels;
-using ElDorado.WritingCalendar;
+using ElDorado.Trello;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;

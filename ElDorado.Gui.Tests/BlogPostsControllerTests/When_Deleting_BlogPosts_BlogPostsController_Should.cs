@@ -1,7 +1,6 @@
 ﻿using ElDorado.Domain;
 using ElDorado.Gui.Controllers;
-using ElDorado.Gui.ViewModels;
-using ElDorado.WritingCalendar;
+using ElDorado.Trello;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shouldly;
 using System;

@@ -1,7 +1,4 @@
-﻿using ElDorado.Domain;
-using ElDorado.Metrics;
-using ElDorado.WritingCalendar;
-using Gold.ConsoleMenu;
+﻿using Gold.ConsoleMenu;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.Sheets.v4;

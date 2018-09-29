@@ -8,7 +8,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 
-namespace ElDorado.WritingCalendar
+namespace ElDorado.Trello
 {
     public class TrelloWritingCalendarService
     {
@@ -18,14 +18,21 @@ namespace ElDorado.WritingCalendar
 
         private TrelloAuthorization Auth => TrelloAuthorization.Default;
 
-        private Lazy<Board> LazyWritingCalendar = new Lazy<Board>(() => new Board(TrelloBoardId));
+        //private Lazy<Board> LazyWritingCalendar = new Lazy<Board>(() => new Board(TrelloBoardId));
 
-        private Board WritingCalendar => LazyWritingCalendar.Value;
-        
+        //private Board WritingCalendar => LazyWritingCalendar.Value;
+        //
 
-        private CardCollection PlannedPostCards => WritingCalendar.Lists.First(l => l.Name == PlannedPostTrelloListName).Cards;
+        //private CardCollection PlannedPostCards => WritingCalendar.Lists.First(l => l.Name == PlannedPostTrelloListName).Cards;
 
-        private IList<Card> BoardCards => WritingCalendar.Cards.Filter(CardFilter.All).ToList();
+        //private IList<Card> BoardCards => WritingCalendar.Cards.Filter(CardFilter.All).ToList();
+
+        private IWritingCalendarBoard _board;
+
+        public TrelloWritingCalendarService(IWritingCalendarBoard board = null)
+        {
+            _board = board ?? new WritingCalendarBoard();
+        }
 
         public virtual void Initialize(string filePath)
         {
@@ -46,8 +53,7 @@ namespace ElDorado.WritingCalendar
         }
         public virtual void AddCard(BlogPost postToAdd)
         {
-            var card = PlannedPostCards.Add(name: postToAdd.AuthorTitle, dueDate: postToAdd.DraftDate.SafeAddHours(12), 
-                members: GetMemberWithUserName(postToAdd.AuthorTrelloUserName), labels: GetLabelsForCompany(postToAdd.BlogCompanyName));
+            var card = _board.AddPlannedPostCard(name: postToAdd.AuthorTitle, dueDate: postToAdd.DraftDate.SafeAddHours(12), trelloUserName: postToAdd.AuthorTrelloUserName, companyName: postToAdd.BlogCompanyName);
             card.SetKeyword(postToAdd.Keyword);
             card.IsArchived = !postToAdd.IsApproved;
 
@@ -56,41 +62,31 @@ namespace ElDorado.WritingCalendar
 
         public virtual bool DoesCardExist(string blogPostTitle)
         {
-            return BoardCards.Any(c => c.Name.TrelloCardLooselyMatches(blogPostTitle));
+            return _board.AllCards.Any(c => c.Name.TrelloCardLooselyMatches(blogPostTitle));
         }
 
         public virtual void EditCard(BlogPost postToEdit)
         {
-            var card = BoardCards.FirstOrDefault(c => c.Id == postToEdit.TrelloId);
+            var card = _board.AllCards.FirstOrDefault(c => c.Id == postToEdit.TrelloId);
             if (card == null)
                 return;
 
             card.Name = postToEdit.AuthorTitle;
             card.IsArchived = !postToEdit.IsApproved;
             card.SetKeyword(postToEdit.Keyword);
-            if (card.List.Name == "Planned Posts")
+            if (card.ListName == "Planned Posts")
             {
                 card.DueDate = postToEdit.DraftDate.SafeAddHours(12);
-                card.UpdateLabels(GetLabelsForCompany(postToEdit.BlogCompanyName));
-                card.UpdateMembers(GetMemberWithUserName(postToEdit.AuthorTrelloUserName));
+                card.UpdateLabels(_board.GetLabelsForCompany(postToEdit.BlogCompanyName));
+                card.UpdateMembers(_board.GetMemberWithUserName(postToEdit.AuthorTrelloUserName));
             }
             
         }
         public virtual void DeleteCard(string trelloId)
         {
-            var card = BoardCards.FirstOrDefault(c => c.Id == trelloId);
+            var card = _board.AllCards.FirstOrDefault(c => c.Id == trelloId);
             if(card != null)
                 card.Delete();
-        }
-
-        private IEnumerable<Label> GetLabelsForCompany(string companyName)
-        {
-            return WritingCalendar.Labels.Where(l => l.Name == companyName);
-        }
-
-        private IEnumerable<Member> GetMemberWithUserName(string trelloUserName)
-        {
-            return WritingCalendar.Members.Where(m => m.UserName == trelloUserName);
         }
     }
 }

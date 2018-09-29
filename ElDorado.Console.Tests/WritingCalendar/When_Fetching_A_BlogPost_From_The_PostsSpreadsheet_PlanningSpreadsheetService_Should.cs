@@ -1,5 +1,4 @@
-﻿using ElDorado.Domain;
-using ElDorado.WritingCalendar;
+﻿using ElDorado.WritingCalendar;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shouldly;
 using System;

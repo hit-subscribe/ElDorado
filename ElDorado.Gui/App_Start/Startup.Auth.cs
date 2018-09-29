@@ -4,7 +4,6 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
-using ElDorado.Gui.Models;
 using ElDorado.Domain;
 
 namespace ElDorado.Gui

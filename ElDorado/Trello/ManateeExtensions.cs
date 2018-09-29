@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ElDorado
+namespace ElDorado.Trello
 {
     public static class ManateeExtensions
     {
