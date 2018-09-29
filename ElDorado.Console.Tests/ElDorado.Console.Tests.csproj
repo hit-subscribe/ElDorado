@@ -192,6 +192,7 @@
     <Compile Include="ExtensionTests\When_Loose_Matching_LooselyMatches_Should.cs" />
     <Compile Include="ExtensionTests\When_Padding_The_Results_Of_A_GoogleSheet_Pad_Should.cs" />
     <Compile Include="TestingExtensions.cs" />
+    <Compile Include="TrelloTests\When_Adding_Cards_To_Trello_TrelloCalendarWritingService_Should.cs" />
     <Compile Include="When_Building_The_Moz_Query_Url_MozInquisitor_Should.cs" />
     <Compile Include="When_Initializing_BlogStatsRecord_Should.cs" />
     <Compile Include="When_Modeling_Credentials_CredentialStore_Should.cs" />

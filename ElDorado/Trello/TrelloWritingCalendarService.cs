@@ -12,20 +12,7 @@ namespace ElDorado.Trello
 {
     public class TrelloWritingCalendarService
     {
-        public const string PlannedPostTrelloListName = "Planned Posts";
-        public const string TrelloBoardId = "AhqnpUJD";
-
-
         private TrelloAuthorization Auth => TrelloAuthorization.Default;
-
-        //private Lazy<Board> LazyWritingCalendar = new Lazy<Board>(() => new Board(TrelloBoardId));
-
-        //private Board WritingCalendar => LazyWritingCalendar.Value;
-        //
-
-        //private CardCollection PlannedPostCards => WritingCalendar.Lists.First(l => l.Name == PlannedPostTrelloListName).Cards;
-
-        //private IList<Card> BoardCards => WritingCalendar.Cards.Filter(CardFilter.All).ToList();
 
         private IWritingCalendarBoard _board;
 
