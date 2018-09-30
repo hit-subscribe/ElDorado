@@ -16,5 +16,6 @@ namespace ElDorado.Trello
         string Name { get; set; }
         bool? IsArchived { get; set; }
         string Id { get; }
+        string Description { get; set; }
     }
 }

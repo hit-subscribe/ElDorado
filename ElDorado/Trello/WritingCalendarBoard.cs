@@ -20,7 +20,7 @@ namespace ElDorado.Trello
 
         public ITrelloCard AddPlannedPostCard(string name, string description = null, DateTime? dueDate = null, string companyName = null, string trelloUserName = null)
         {
-            var card = PlannedPostCards.Add(name: name, dueDate: dueDate, members: GetMemberWithUserName(trelloUserName), labels: GetLabelsForCompany(companyName));
+            var card = PlannedPostCards.Add(name: name, description: description, dueDate: dueDate, members: GetMemberWithUserName(trelloUserName), labels: GetLabelsForCompany(companyName));
             return new TrelloCard(card);
         }
 

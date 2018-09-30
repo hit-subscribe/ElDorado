@@ -33,6 +33,12 @@ namespace ElDorado.Trello
             set => _card.DueDate = value;
         }
 
+        public string Description
+        {
+            get => _card.Description;
+            set => _card.Description = value;
+        }
+
         public TrelloCard(Card card)
         {
             _card = card;

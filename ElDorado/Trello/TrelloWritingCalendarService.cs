@@ -14,6 +14,7 @@ namespace ElDorado.Trello
     {
         private TrelloAuthorization Auth => TrelloAuthorization.Default;
 
+        public const string PlannedPostsListName = "Planned Posts";
         private IWritingCalendarBoard _board;
 
         public TrelloWritingCalendarService(IWritingCalendarBoard board = null)
@@ -40,7 +41,7 @@ namespace ElDorado.Trello
         }
         public virtual void AddCard(BlogPost postToAdd)
         {
-            var card = _board.AddPlannedPostCard(name: postToAdd.AuthorTitle, dueDate: postToAdd.DraftDate.SafeAddHours(12), trelloUserName: postToAdd.AuthorTrelloUserName, companyName: postToAdd.BlogCompanyName);
+            var card = _board.AddPlannedPostCard(name: postToAdd.AuthorTitle, description: postToAdd.Mission, dueDate: postToAdd.DraftDate.SafeAddHours(12), trelloUserName: postToAdd.AuthorTrelloUserName, companyName: postToAdd.BlogCompanyName);
             card.SetKeyword(postToAdd.Keyword);
             card.IsArchived = !postToAdd.IsApproved;
 
@@ -54,14 +55,15 @@ namespace ElDorado.Trello
 
         public virtual void EditCard(BlogPost postToEdit)
         {
-            var card = _board.AllCards.FirstOrDefault(c => c.Id == postToEdit.TrelloId);
+            var card = _board.AllCards.FirstOrDefault(c => c.Id == postToEdit?.TrelloId);
             if (card == null)
                 return;
 
             card.Name = postToEdit.AuthorTitle;
+            card.Description = postToEdit.Mission; 
             card.IsArchived = !postToEdit.IsApproved;
             card.SetKeyword(postToEdit.Keyword);
-            if (card.ListName == "Planned Posts")
+            if (card.ListName == PlannedPostsListName)
             {
                 card.DueDate = postToEdit.DraftDate.SafeAddHours(12);
                 card.UpdateLabels(_board.GetLabelsForCompany(postToEdit.BlogCompanyName));
