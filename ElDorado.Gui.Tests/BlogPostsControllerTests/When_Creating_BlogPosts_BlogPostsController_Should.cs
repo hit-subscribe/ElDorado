@@ -55,6 +55,16 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Respond_To_Get_Request_With_BlogId_Specified_By_Setting_Post_BlogId()
+        {
+            const int blogId = 6;
+            var viewModel = Target.Create(blogId).GetViewResultModel<BlogPostEditViewModel>();
+
+            viewModel.Post.BlogId.ShouldBe(blogId);
+
+        }
+
+    [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Add_To_Context_On_Postback()
         {
             Target.Create(Post);
@@ -97,5 +107,24 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
 
             TrelloService.Assert(ts => ts.Initialize(Arg.AnyString));
         }
-}
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Redirect_To_CreateGet_When_CreateNew_Is_Set_To_CreateandAddAnother()
+        {
+            var actionResult = Target.Create(Post, "Create and Add Another") as RedirectToRouteResult;
+
+            actionResult.ShouldHaveRouteAction("Create");
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Redirect_To_CreateGet_With_BlogId_Parameter_When_CreateNew_Is_Set_To_CreateandAddAnother()
+        {
+            const int blogId = 4;
+            Post.BlogId = blogId;
+
+            var actionResult = Target.Create(Post, "Create and Add Another") as RedirectToRouteResult;
+
+            actionResult.ShouldHaveRouteParameter("blogId", blogId);
+        }
+    }
 }

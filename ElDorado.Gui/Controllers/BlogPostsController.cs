@@ -34,13 +34,13 @@ namespace ElDorado.Gui.Controllers
             return View(new BlogPostIndexViewModel(orderedPosts, _blogContext));
         }
 
-        public ActionResult Create()
+        public ActionResult Create(int blogId = 0)
         {
-            return View(new BlogPostEditViewModel(new BlogPost(), _blogContext));
+            return View(new BlogPostEditViewModel(new BlogPost() { BlogId = blogId }, _blogContext));
         }
 
         [HttpPost]
-        public ActionResult Create(BlogPost post)
+        public ActionResult Create(BlogPost post, string createNew = null)
         {
             _blogContext.BlogPosts.Add(post);
             _blogContext.SaveChanges();
@@ -50,6 +50,9 @@ namespace ElDorado.Gui.Controllers
             _trelloService.AddCard(post);
 
             _blogContext.SaveChanges();
+
+            if (createNew == "Create and Add Another")
+                return RedirectToAction("Create", new { blogId = post.BlogId });
 
             return RedirectToAction("Edit", new { postId = post.Id });
         }
