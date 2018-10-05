@@ -31,6 +31,7 @@ namespace ElDorado.Domain
         public DateTime? TargetPublicationDate { get; set; }
         public DateTime? SubmittedDate { get; set; }
         public DateTime? DraftCompleteDate { get; set; }
+        public DateTime? PublishedDate { get; set; }
         public bool IsApproved { get; set; }
         public bool IsDoublePost { get; set; }
         public string TrelloId { get; set; }

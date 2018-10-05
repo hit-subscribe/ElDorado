@@ -59,6 +59,9 @@
             @Html.DisplayNameFor(model => model.BlogPosts.First().SubmittedDate)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.BlogPosts.First().PublishedDate)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.BlogPosts.First().IsApproved)
         </th>
         <th>
@@ -95,6 +98,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.SubmittedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PublishedDate)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.IsApproved)
