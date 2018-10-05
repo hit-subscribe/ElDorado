@@ -11,15 +11,10 @@
 </p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Url)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CompanyName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FeedlyUrl)
-        </th>
+        <th>@Html.DisplayNameFor(model => model.Url)</th>
+        <th>@Html.DisplayNameFor(model => model.CompanyName)</th>
+        <th>@Html.DisplayNameFor(model => model.FeedlyUrl)</th>
+        <th>@Html.DisplayNameFor(model => model.DoWePublish)</th>
         <th></th>
     </tr>
 
@@ -35,8 +30,11 @@
             @Html.DisplayFor(modelItem => item.FeedlyUrl)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.DisplayFor(modelItem => item.DoWePublish)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
         </td>
     </tr>
 }

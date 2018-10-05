@@ -129,6 +129,10 @@
     <Compile Include="Migrations\201810051427185_Adding Published Date.Designer.cs">
       <DependentUpon>201810051427185_Adding Published Date.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810051536437_AddingDoWePublishField.cs" />
+    <Compile Include="Migrations\201810051536437_AddingDoWePublishField.Designer.cs">
+      <DependentUpon>201810051536437_AddingDoWePublishField.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -184,6 +188,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810051427185_Adding Published Date.resx">
       <DependentUpon>201810051427185_Adding Published Date.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810051536437_AddingDoWePublishField.resx">
+      <DependentUpon>201810051536437_AddingDoWePublishField.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

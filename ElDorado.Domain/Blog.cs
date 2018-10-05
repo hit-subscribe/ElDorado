@@ -18,6 +18,8 @@ namespace ElDorado.Domain
 
         public string FeedlyUrl { get; set; }
 
+        public bool DoWePublish { get; set; }
+
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BlogMetric> BlogMetrics { get; set; }
 

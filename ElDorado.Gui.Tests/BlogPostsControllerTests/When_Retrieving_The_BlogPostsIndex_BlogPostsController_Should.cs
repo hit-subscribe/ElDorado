@@ -195,6 +195,17 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Include_Posts_Submitted_But_Not_Published_If_We_Publish_On_Their_Blog()
+        {
+            Post.SubmittedDate = new DateTime(2019, 12, 1);
+            Post.Blog = new Blog() { DoWePublish = true };
+
+            var viewModel = Target.Index(BlogId).GetViewResultModel<BlogPostIndexViewModel>();
+
+            viewModel.BlogPosts.ShouldNotBeEmpty();
+        }
+
+    [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Order_Posts_By_DraftDate()
         {
             const string title = "A Post Title";

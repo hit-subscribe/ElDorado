@@ -50,6 +50,9 @@ namespace ElDorado.Domain
         public string AuthorTrelloUserName => Author?.TrelloId;
 
         [NotMapped]
-        public bool HasBeenSubmitted => SubmittedDate.HasValue; 
+        public bool HasBeenSubmitted => SubmittedDate.HasValue;
+
+        [NotMapped]
+        public bool IsHitSubscribeFinished => Blog?.DoWePublish ?? false  ? PublishedDate.HasValue : SubmittedDate.HasValue;
     }
 }
