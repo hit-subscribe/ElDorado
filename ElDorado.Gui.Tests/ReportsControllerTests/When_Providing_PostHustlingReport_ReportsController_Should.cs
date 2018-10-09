@@ -122,5 +122,5 @@ namespace ElDorado.Gui.Tests.ReportsControllerTests
 
             viewModel.UnclaimedPosts.First().Authors.ShouldBeEmpty();
         }
-}
+    }
 }

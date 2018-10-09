@@ -30,7 +30,7 @@ namespace ElDorado.Domain
 
         public bool HasPostsDue(DateTime dueDate)
         {
-            return BlogPosts != null && BlogPosts.Any(bp => bp.DraftDate.Value.Date == dueDate.Date);
+            return BlogPosts != null && BlogPosts.Any(bp => bp.DraftDate.GetValueOrDefault() == dueDate.Date);
         }
     }
 }
