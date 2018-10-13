@@ -49,6 +49,9 @@ namespace ElDorado.Domain
         public string BlogCompanyName => Blog?.CompanyName;
 
         [NotMapped]
+        public string ClientNotes => Blog?.ClientPostNotes ?? string.Empty;
+
+        [NotMapped]
         public string AuthorTrelloUserName => Author?.TrelloId;
 
         [NotMapped]
