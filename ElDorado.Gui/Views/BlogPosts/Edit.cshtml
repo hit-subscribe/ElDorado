@@ -83,6 +83,14 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.Post.Persona, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Post.Persona, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Post.Persona, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.Post.DraftDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Post.DraftDate, new { htmlAttributes = new { @class = "form-control datepicker" } })
@@ -146,6 +154,15 @@
                 <div class="checkbox">
                     @Html.EditorFor(model => model.Post.IsDoublePost)
                     @Html.ValidationMessageFor(model => model.Post.IsDoublePost, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Post.IsGhostwritten, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Post.IsGhostwritten)
+                    @Html.ValidationMessageFor(model => model.Post.IsGhostwritten, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>

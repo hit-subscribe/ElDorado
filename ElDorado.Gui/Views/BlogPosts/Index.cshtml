@@ -67,6 +67,9 @@
         <th>
             @Html.DisplayNameFor(model => model.BlogPosts.First().IsDoublePost)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BlogPosts.First().IsGhostwritten)
+        </th>
         <th></th>
     </tr>
 
@@ -107,6 +110,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.IsDoublePost)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsGhostwritten)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { postId = item.Id }) |

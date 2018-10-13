@@ -41,8 +41,8 @@ namespace ElDorado.Trello
         }
         public virtual void AddCard(BlogPost postToAdd)
         {
-            var card = _board.AddPlannedPostCard(name: postToAdd.AuthorTitle, description: postToAdd.Mission, dueDate: postToAdd.DraftDate.SafeAddHours(12), trelloUserName: postToAdd.AuthorTrelloUserName, companyName: postToAdd.BlogCompanyName);
-            card.SetKeyword(postToAdd.Keyword);
+            var card = _board.AddPlannedPostCard(name: postToAdd.AuthorTitle, dueDate: postToAdd.DraftDate.SafeAddHours(12), trelloUserName: postToAdd.AuthorTrelloUserName, companyName: postToAdd.BlogCompanyName);
+            card.BuildDescriptionFromBlogPost(postToAdd);
             card.IsArchived = !postToAdd.IsApproved;
 
             postToAdd.TrelloId = card.Id;
@@ -60,22 +60,28 @@ namespace ElDorado.Trello
                 return;
 
             card.Name = postToEdit.AuthorTitle;
-            card.Description = postToEdit.Mission; 
+            card.BuildDescriptionFromBlogPost(postToEdit);
             card.IsArchived = !postToEdit.IsApproved;
-            card.SetKeyword(postToEdit.Keyword);
+
+            UpdatePlannedPostPropertiesIfApplicable(postToEdit, card);
+
+        }
+
+        public virtual void DeleteCard(string trelloId)
+        {
+            var card = _board.AllCards.FirstOrDefault(c => c.Id == trelloId);
+            if(card != null)
+                card.Delete();
+        }
+
+        private void UpdatePlannedPostPropertiesIfApplicable(BlogPost postToEdit, ITrelloCard card)
+        {
             if (card.ListName == PlannedPostsListName)
             {
                 card.DueDate = postToEdit.DraftDate.SafeAddHours(12);
                 card.UpdateLabels(_board.GetLabelsForCompany(postToEdit.BlogCompanyName));
                 card.UpdateMembers(_board.GetMemberWithUserName(postToEdit.AuthorTrelloUserName));
             }
-            
-        }
-        public virtual void DeleteCard(string trelloId)
-        {
-            var card = _board.AllCards.FirstOrDefault(c => c.Id == trelloId);
-            if(card != null)
-                card.Delete();
         }
     }
 }

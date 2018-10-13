@@ -133,6 +133,14 @@
     <Compile Include="Migrations\201810051536437_AddingDoWePublishField.Designer.cs">
       <DependentUpon>201810051536437_AddingDoWePublishField.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810130041334_HandfulOfAdditions.cs" />
+    <Compile Include="Migrations\201810130041334_HandfulOfAdditions.Designer.cs">
+      <DependentUpon>201810130041334_HandfulOfAdditions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810130048479_AddingPersonaForBlogPost.cs" />
+    <Compile Include="Migrations\201810130048479_AddingPersonaForBlogPost.Designer.cs">
+      <DependentUpon>201810130048479_AddingPersonaForBlogPost.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -191,6 +199,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810051536437_AddingDoWePublishField.resx">
       <DependentUpon>201810051536437_AddingDoWePublishField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810130041334_HandfulOfAdditions.resx">
+      <DependentUpon>201810130041334_HandfulOfAdditions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810130048479_AddingPersonaForBlogPost.resx">
+      <DependentUpon>201810130048479_AddingPersonaForBlogPost.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

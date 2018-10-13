@@ -20,6 +20,8 @@ namespace ElDorado.Domain
 
         public bool DoWePublish { get; set; }
 
+        public string ClientPostNotes { get; set; }
+
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BlogMetric> BlogMetrics { get; set; }
 

@@ -69,14 +69,6 @@ namespace ElDorado.Console.Tests.TrelloTests
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
-        public void Set_The_Card_Keyword_To_Post_Keyword()
-        {
-            Target.EditCard(Post);
-
-            Mock.AssertSet(() => Card.SetKeyword(Post.Keyword), Occurs.Once());
-        }
-
-        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Set_The_Card_DueDate_To_Post_Draft_Date_Plus_12_Hours()
         {
             Target.EditCard(Post);
@@ -131,11 +123,14 @@ namespace ElDorado.Console.Tests.TrelloTests
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
-        public void Update_The_Mission_For_The_Card()
+        public void Update_The_Card_Description()
         {
+            var dummyCard = Mock.Create<ITrelloCard>();
+            dummyCard.BuildDescriptionFromBlogPost(Post);
+
             Target.EditCard(Post);
 
-            Mock.AssertSet(() => Card.Description = Post.Mission, Occurs.Once());
+            Mock.AssertSet(() => Card.Description = dummyCard.Description, Occurs.Once());
         }
 }
 }

@@ -196,6 +196,7 @@
     <Compile Include="TrelloTests\When_Checking_If_Card_Exists_TrelloWritingCalendarService_Should.cs" />
     <Compile Include="TrelloTests\When_Deleting_Cards_TrelloWritingCalendarService_Should.cs" />
     <Compile Include="TrelloTests\When_Editing_Cards_TrelloCalendarWritingService_Should.cs" />
+    <Compile Include="TrelloTests\When_Setting_Card_Description_BuildDescriptionFromBlogPost_Should.cs" />
     <Compile Include="When_Building_The_Moz_Query_Url_MozInquisitor_Should.cs" />
     <Compile Include="When_Initializing_BlogStatsRecord_Should.cs" />
     <Compile Include="When_Modeling_Credentials_CredentialStore_Should.cs" />

@@ -44,18 +44,6 @@ namespace ElDorado.Trello
             _card = card;
         }
 
-        public void SetKeyword(string keyword)
-        {
-            string commentText = $"Keyword: {keyword}";
-
-            var keywordComment = _card.Comments.FirstOrDefault(c => c.Data != null && c.Data.Text != null && c.Data.Text.Contains("Keyword"));
-
-            if (keywordComment != null && keywordComment.Data != null)
-                keywordComment.Data.Text = commentText;
-            else
-                _card.Comments.Add(commentText);
-        }
-
         public void UpdateMembers(IEnumerable<Member> members)
         {
             foreach (var member in _card.Members.ToList())

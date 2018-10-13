@@ -72,14 +72,6 @@ namespace ElDorado.Console.Tests.TrelloTests
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
-        public void Set_The_Card_Keyword()
-        {
-            Target.AddCard(Post);
-
-            Card.Assert(c => c.SetKeyword(Post.Keyword));
-        }
-
-        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Set_Is_Archived_To_False_When_Post_IsApproved()
         {
             Post.IsApproved = true;
@@ -103,9 +95,12 @@ namespace ElDorado.Console.Tests.TrelloTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Set_Description_To_Be_Post_Mission()
         {
+            var dummyCard = Mock.Create<ITrelloCard>();
+            dummyCard.BuildDescriptionFromBlogPost(Post);
+
             Target.AddCard(Post);
 
-            Board.Assert(b => b.AddPlannedPostCard(Arg.AnyString, Post.Mission, Arg.IsAny<DateTime?>(), Post.BlogCompanyName, Arg.AnyString));
+            Mock.AssertSet(() => Card.Description = dummyCard.Description, Occurs.Once());
         }
 }
 }

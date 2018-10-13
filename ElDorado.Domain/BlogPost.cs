@@ -26,6 +26,7 @@ namespace ElDorado.Domain
         public string UrlSlug { get; set; }
         public string Mission { get; set; }
         public string Keyword { get; set; }
+        public string Persona { get; set; }
         public DateTime? DraftDate { get; set; }
         public DateTime? TargetFinalizeDate { get; set; }
         public DateTime? TargetPublicationDate { get; set; }
@@ -34,6 +35,7 @@ namespace ElDorado.Domain
         public DateTime? PublishedDate { get; set; }
         public bool IsApproved { get; set; }
         public bool IsDoublePost { get; set; }
+        public bool IsGhostwritten { get; set; }
         public string TrelloId { get; set; }
 
 

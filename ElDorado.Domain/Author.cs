@@ -25,6 +25,8 @@ namespace ElDorado.Domain
 
         public string TrelloId { get; set; }
 
+        public bool IsActive { get; set; }
+
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BlogPost> BlogPosts { get; set; }
 

@@ -201,6 +201,7 @@
     <Compile Include="Repository\BlogPostRepository.cs" />
     <Compile Include="SimpleWebClient.cs" />
     <Compile Include="Trello\TrelloCard.cs" />
+    <Compile Include="Trello\TrelloWrapperInterfaceExtensions.cs" />
     <Compile Include="Trello\WritingCalendarBoard.cs" />
     <Compile Include="WritingCalendar\BlogPostSynchronizer.cs" />
     <Compile Include="WritingCalendar\ClientSpreadsheetService.cs" />

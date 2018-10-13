@@ -41,6 +41,14 @@
     </div>
 
     <div class="form-group">
+        @Html.LabelFor(model => model.ClientPostNotes, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.ClientPostNotes, new { @cols = "35", @rows = "10", @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ClientPostNotes, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
         @Html.LabelFor(model => model.DoWePublish, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <div class="checkbox">
