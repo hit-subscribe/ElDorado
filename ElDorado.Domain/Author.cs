@@ -27,6 +27,8 @@ namespace ElDorado.Domain
 
         public bool IsActive { get; set; }
 
+        public bool IsInOurSystems { get; set; }
+
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BlogPost> BlogPosts { get; set; }
 

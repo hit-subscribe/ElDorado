@@ -11,47 +11,27 @@
 </p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Bio)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BlogUrl)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EmailAddress)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TrelloId)
-        </th>
+        <th>@Html.DisplayNameFor(model => model.FirstName)</th>
+        <th>@Html.DisplayNameFor(model => model.LastName)</th>
+        <th>@Html.DisplayNameFor(model => model.Bio)</th>
+        <th>@Html.DisplayNameFor(model => model.BlogUrl)</th>
+        <th>@Html.DisplayNameFor(model => model.EmailAddress)</th>
+        <th>@Html.DisplayNameFor(model => model.TrelloId)</th>
+        <th>@Html.DisplayNameFor(model => model.IsActive)</th>
+        <th>@Html.DisplayNameFor(model => model.IsInOurSystems)</th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Bio)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BlogUrl)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EmailAddress)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TrelloId)
-        </td>
+        <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
+        <td>@Html.DisplayFor(modelItem => item.LastName)</td>
+        <td>@Html.DisplayFor(modelItem => item.Bio)</td>
+        <td>@Html.DisplayFor(modelItem => item.BlogUrl)</td>
+        <td>@Html.DisplayFor(modelItem => item.EmailAddress)</td>
+        <td>@Html.DisplayFor(modelItem => item.TrelloId)</td>
+        <td>@Html.DisplayFor(modelItem => item.IsActive)</td>
+        <td>@Html.DisplayFor(modelItem => item.IsInOurSystems)</td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.Id })
