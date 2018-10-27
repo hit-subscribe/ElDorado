@@ -20,6 +20,7 @@ namespace ElDorado.Console.Tests.TrelloTests
         {
             Mission = "To be a great post",
             Keyword = "great post",
+            PostNotes = "Some things you should keep in mind about this post",
             Blog = new Blog() { ClientPostNotes = "Some Post Notes!"}
         };
 
@@ -59,6 +60,14 @@ namespace ElDorado.Console.Tests.TrelloTests
             Card.BuildDescriptionFromBlogPost(Post);
 
             Card.Description.ShouldContain($"**Persona**: {Post.Persona}");
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Add_Post_Notes_Colon_And_PostNotes()
+        {
+            Card.BuildDescriptionFromBlogPost(Post);
+
+            Card.Description.ShouldContain($"**Post Notes**: {Post.PostNotes}");
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -139,7 +148,7 @@ namespace ElDorado.Console.Tests.TrelloTests
         {
             Card.BuildDescriptionFromBlogPost(Post);
 
-            Card.Description.Count(c => c == '\n').ShouldBe(4);
+            Card.Description.Count(c => c == '\n').ShouldBe(5);
         }
 }
 }

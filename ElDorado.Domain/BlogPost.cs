@@ -27,6 +27,7 @@ namespace ElDorado.Domain
         public string Mission { get; set; }
         public string Keyword { get; set; }
         public string Persona { get; set; }
+        public string PostNotes { get; set; }
         public DateTime? DraftDate { get; set; }
         public DateTime? TargetFinalizeDate { get; set; }
         public DateTime? TargetPublicationDate { get; set; }

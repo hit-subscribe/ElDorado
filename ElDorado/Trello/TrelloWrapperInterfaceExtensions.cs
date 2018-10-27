@@ -17,9 +17,12 @@ namespace ElDorado.Trello
 
             var specialConsiderationText = GenerateCommaSeparatedList(ghostwrittenText, doublePostText);
 
-            target.Description = SeparateIntoLines($"**Mission**: {post.Mission}", $"**Keyword**: {post.Keyword}", 
-                $"**Persona**: {post.Persona}", $"**Client Notes**: {post.ClientNotes}",
-                $"**Special Considerations**: {specialConsiderationText}");
+            target.Description = SeparateIntoLines($"{Bold("Mission")}: {post.Mission}",
+                                                   $"{Bold("Keyword")}: {post.Keyword}", 
+                                                   $"{Bold("Persona")}: {post.Persona}", 
+                                                   $"{Bold("Post Notes")}: {post.PostNotes}", 
+                                                   $"{Bold("Client Notes")}: {post.ClientNotes}",
+                                                   $"{Bold("Special Considerations")}: {specialConsiderationText}");
         }
 
         private static string SeparateIntoLines(params string[] args)
@@ -30,6 +33,11 @@ namespace ElDorado.Trello
         private static string GenerateCommaSeparatedList(params string[] args)
         {
             return string.Join(", ", args.Where(a => !string.IsNullOrEmpty(a)));
+        }
+
+        private static string Bold(string textToBold)
+        {
+            return $"**{textToBold}**";
         }
     }
 }

@@ -141,6 +141,10 @@
     <Compile Include="Migrations\201810130048479_AddingPersonaForBlogPost.Designer.cs">
       <DependentUpon>201810130048479_AddingPersonaForBlogPost.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810270614114_AddingPostNotes.cs" />
+    <Compile Include="Migrations\201810270614114_AddingPostNotes.Designer.cs">
+      <DependentUpon>201810270614114_AddingPostNotes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -205,6 +209,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810130048479_AddingPersonaForBlogPost.resx">
       <DependentUpon>201810130048479_AddingPersonaForBlogPost.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810270614114_AddingPostNotes.resx">
+      <DependentUpon>201810270614114_AddingPostNotes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

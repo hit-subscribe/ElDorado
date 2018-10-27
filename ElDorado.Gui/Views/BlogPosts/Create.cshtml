@@ -90,6 +90,14 @@
     </div>
 
     <div class="form-group">
+        @Html.LabelFor(model => model.Post.PostNotes, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Post.PostNotes, new { @cols = "35", @rows = "10", @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Post.PostNotes, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
         @Html.LabelFor(model => model.Post.DraftDate, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Post.DraftDate, new { htmlAttributes = new { @class = "form-control datepicker" } })
