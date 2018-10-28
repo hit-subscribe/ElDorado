@@ -23,6 +23,9 @@ namespace ElDorado.Gui.ViewModels
 
         protected IEnumerable<SelectListItem> BuildAuthorsList(BlogContext context, Func<Author, bool> selectionCriteria)
         {
+            if (context == null)
+                return Enumerable.Empty<SelectListItem>();
+
             return context.Authors.Where(selectionCriteria).OrderBy(a => a.LastName).ToList().Select(a => new SelectListItem() { Text = $"{a.FirstName} {a.LastName}", Value = a.Id.ToString() });
         }
     }

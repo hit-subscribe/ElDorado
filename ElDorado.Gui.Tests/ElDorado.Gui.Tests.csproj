@@ -108,6 +108,7 @@
     <Compile Include="MvcTestingExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportsControllerTests\When_Providing_PostHustlingReport_ReportsController_Should.cs" />
+    <Compile Include="ViewModelTests\When_Initializing_BlogPostEditViewModel_Should.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
