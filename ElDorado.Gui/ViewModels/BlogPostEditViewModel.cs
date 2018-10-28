@@ -17,7 +17,7 @@ namespace ElDorado.Gui.ViewModels
         public BlogPostEditViewModel(BlogPost post, BlogContext context) : base(context)
         {
             Post = post;
-            
+            Authors = BuildAuthorsList(context, a => a.IsActive && a.IsInOurSystems);
         }
     }
 }

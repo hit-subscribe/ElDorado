@@ -10,17 +10,20 @@ namespace ElDorado.Gui.ViewModels
     {
         public IEnumerable<SelectListItem> Blogs { get; private set; } = Enumerable.Empty<SelectListItem>();
 
-        public IEnumerable<SelectListItem> Authors { get; private set; } = Enumerable.Empty<SelectListItem>();
+        public IEnumerable<SelectListItem> Authors { get; protected set; } = Enumerable.Empty<SelectListItem>();
 
         public BlogPostViewModel(BlogContext context)
         {
             if (context != null)
             {
                 Blogs = context.Blogs.OrderBy(b => b.CompanyName).ToList().Select(b => new SelectListItem() { Text = b.CompanyName, Value = b.Id.ToString() });
-                Authors = context.Authors.OrderBy(a => a.LastName).ToList().Select(a => new SelectListItem() { Text = $"{a.FirstName} {a.LastName}", Value = a.Id.ToString() });
+                Authors = BuildAuthorsList(context, a => a.IsInOurSystems);
             }
         }
 
-
+        protected IEnumerable<SelectListItem> BuildAuthorsList(BlogContext context, Func<Author, bool> selectionCriteria)
+        {
+            return context.Authors.Where(selectionCriteria).OrderBy(a => a.LastName).ToList().Select(a => new SelectListItem() { Text = $"{a.FirstName} {a.LastName}", Value = a.Id.ToString() });
+        }
     }
 }

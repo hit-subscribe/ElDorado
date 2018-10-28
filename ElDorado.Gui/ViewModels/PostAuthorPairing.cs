@@ -25,7 +25,12 @@ namespace ElDorado.Gui.ViewModels
             IsApproved = post.IsApproved;
             IsDoublePost = post.IsDoublePost;
 
-            Authors = String.Join(", ", authors.Where(a => !a.HasPostsDue(post.DraftDate.Value)).Select(a => $"{a.FirstName} {a.LastName}"));
+            Authors = String.Join(", ", authors.Where(a => ShouldAuthorAppearForPost(a, post.DraftDate.Value)).Select(a => $"{a.FirstName} {a.LastName}"));
+        }
+
+        private static bool ShouldAuthorAppearForPost(Author author, DateTime date)
+        {
+            return author.IsActive && author.IsInOurSystems && !author.HasPostsDue(date);
         }
     }
 }

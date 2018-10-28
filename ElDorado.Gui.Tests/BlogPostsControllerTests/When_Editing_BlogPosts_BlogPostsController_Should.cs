@@ -23,6 +23,8 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
 
         private BlogContext Context { get; } = EntityFrameworkMock.Create<BlogContext>();
 
+        private Author Author => Context.Authors.First();
+
         private TrelloWritingCalendarService Service { get; set; } = Mock.Create<TrelloWritingCalendarService>();
 
         private BlogPost Post { get; set; } = new BlogPost() { Id = PostId, Title = PostTitle };
@@ -33,6 +35,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         [TestInitialize]
         public void BeforeEachTest()
         {
+            Context.Authors.Add(new Author());
             Context.BlogPosts.Add(Post);
 
             Target = new BlogPostsController(Context, Service) { MapPath = "asdf" };
@@ -55,6 +58,16 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
             var viewModel = Target.Edit(PostId).GetViewResultModel<BlogPostEditViewModel>();
 
             viewModel.Blogs.ShouldContain(item => item.Text == blog.CompanyName);
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Filter_InactiveAuthors_Out_Of_AuthorsList()
+        {
+            Author.IsActive = false;
+
+            var viewModel = Target.Edit(PostId).GetViewResultModel<BlogPostEditViewModel>();
+
+            viewModel.Authors.ShouldBeEmpty();
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]

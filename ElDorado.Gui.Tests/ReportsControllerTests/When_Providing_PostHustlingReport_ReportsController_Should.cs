@@ -54,13 +54,26 @@ namespace ElDorado.Gui.Tests.ReportsControllerTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Filter_Out_InactiveAuthors()
         {
-            Context.Authors.Add(new Author() { FirstName = "Erik", LastName = "Dietrich" });
+            Context.Authors.Add(new Author() { FirstName = "Erik", LastName = "Dietrich", IsActive = false });
             Context.BlogPosts.Add(new BlogPost() { DraftDate = Target.Today.AddDays(1), IsApproved = true });
 
+            var viewModel = GetPostHustlingViewModel();
 
+            viewModel.UnclaimedPosts.First().Authors.ShouldBeEmpty();
         }
 
-    [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Filter_Out_Authors_Not_In_Our_System()
+        {
+            Context.Authors.Add(new Author() { FirstName = "Erik", LastName = "Dietrich", IsInOurSystems = false });
+            Context.BlogPosts.Add(new BlogPost() { DraftDate = Target.Today.AddDays(1), IsApproved = true });
+
+            var viewModel = GetPostHustlingViewModel();
+
+            viewModel.UnclaimedPosts.First().Authors.ShouldBeEmpty();
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_A_ViewModel_With_Past_Posts_Filtered_Out()
         {
             Context.BlogPosts.Add(new BlogPost() { DraftDate = Target.Today.AddDays(-1) } );

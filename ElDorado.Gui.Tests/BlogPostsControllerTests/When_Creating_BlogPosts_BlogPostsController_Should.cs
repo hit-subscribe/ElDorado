@@ -24,6 +24,8 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
 
         private TrelloWritingCalendarService TrelloService = Mock.Create<TrelloWritingCalendarService>();
 
+        private Author Author => Context.Authors.First();
+
         private BlogPost Post { get; set; } = new BlogPost() { Id = PostId, Title = PostTitle };
 
         private BlogPostsController Target { get; set; }
@@ -32,6 +34,8 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         [TestInitialize]
         public void BeforeEachTest()
         {
+            Context.Authors.Add(new Author());
+
             Target = new BlogPostsController(Context, TrelloService) { MapPath = "somepath" };
         }
 
@@ -55,6 +59,16 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Filter_InactiveAuthors_Out_Of_AuthorsList()
+        {
+            Author.IsActive = false;
+
+            var viewModel = Target.Create().GetViewResultModel<BlogPostEditViewModel>();
+
+            viewModel.Authors.ShouldBeEmpty();
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Respond_To_Get_Request_With_BlogId_Specified_By_Setting_Post_BlogId()
         {
             const int blogId = 6;
@@ -64,7 +78,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
 
         }
 
-    [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Add_To_Context_On_Postback()
         {
             Target.Create(Post);

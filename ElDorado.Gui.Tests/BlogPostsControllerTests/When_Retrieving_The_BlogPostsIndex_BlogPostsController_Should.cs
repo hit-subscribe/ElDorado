@@ -84,6 +84,26 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Not_Filter_Out_Inactive_Authors()
+        {
+            Author.IsActive = false;
+
+            var viewModel = Target.Index().GetViewResultModel<BlogPostIndexViewModel>();
+
+            viewModel.Authors.ShouldNotBeEmpty();
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Filter_Out_Authors_Not_In_Our_System()
+        {
+            Author.IsInOurSystems = false;
+
+            var viewModel = Target.Index().GetViewResultModel<BlogPostIndexViewModel>();
+
+            viewModel.Authors.ShouldBeEmpty();
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_A_ViewModel_With_Companies_Sorted()
         {
             Blog.CompanyName = "Zephyr";
