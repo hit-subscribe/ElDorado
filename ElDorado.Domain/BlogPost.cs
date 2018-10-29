@@ -53,7 +53,7 @@ namespace ElDorado.Domain
         public string ClientNotes => Blog?.ClientPostNotes ?? string.Empty;
 
         [NotMapped]
-        public string AuthorTrelloUserName => Author?.TrelloId;
+        public string AuthorTrelloUserName => Author?.TrelloId?.Trim();
 
         [NotMapped]
         public bool HasBeenSubmitted => SubmittedDate.HasValue;

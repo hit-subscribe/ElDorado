@@ -113,6 +113,16 @@ namespace ElDorado.Console.Tests.TrelloTests
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Remove_Whitespace_When_Checking_For_Trello_Author_Match()
+        {
+            Post.Author.TrelloId = "erik ";
+
+            Target.EditCard(Post);
+
+            Board.Assert(b => b.GetMemberWithUserName("erik"));
+        }
+
+    [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Not_Update_Members_In_Other_Columns()
         {
             Card.Arrange(c => c.ListName).Returns("asdf");
