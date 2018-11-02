@@ -7,17 +7,18 @@ namespace ElDorado.Gui
 {
     public static class Extensions
     {
-        public static bool ZeroMatches(this int target, int valueToCheck)
+      
+        public static bool DefaultMatches<T>(this T target, T valueToCheck)
         {
-            return target == valueToCheck || valueToCheck == 0;
+            return target.Equals(valueToCheck) || valueToCheck.Equals(default(T));
         }
 
-        public static bool ZeroMatches(this int? target, int valueToCheck)
+        public static bool DefaultMatches<T>(this T? target, T valueToCheck) where T : struct
         {
             if (target == null)
-                return valueToCheck == 0;
+                return valueToCheck.Equals(default(T));
 
-            return ZeroMatches(target.Value, valueToCheck);
+            return DefaultMatches(target.Value, valueToCheck);
         }
     }
 }

@@ -23,11 +23,11 @@ namespace ElDorado.Gui.Controllers
             _blogContext = blogContext;
         }
 
-        public ActionResult Index(int blogId = 0, int authorId = 0, bool includeAll = false)
+        public ActionResult Index(int blogId = 0, int authorId = 0, DateTime? draftDate = null, bool includeAll = false)
         {
             var postsFromEvaluatedDatabaseQuery = _blogContext.BlogPosts.ToList(); //I like the readability from these filtering methods we're using, and the cost tradeoff here just doesn't matter
 
-            var filteredPosts = postsFromEvaluatedDatabaseQuery.Where(bp => bp.BlogId.ZeroMatches(blogId) && bp.AuthorId.ZeroMatches(authorId));
+            var filteredPosts = postsFromEvaluatedDatabaseQuery.Where(bp => bp.BlogId.DefaultMatches(blogId) && bp.AuthorId.DefaultMatches(authorId) && bp.DraftDate.DefaultMatches(draftDate));
             var currentPosts = filteredPosts.Where(bp => includeAll || !bp.IsHitSubscribeFinished);
             var orderedPosts = currentPosts.OrderBy(p => p.DraftDate);
 

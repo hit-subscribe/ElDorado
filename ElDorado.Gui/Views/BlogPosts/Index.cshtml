@@ -4,6 +4,17 @@
     ViewBag.Title = "Index";
 }
 
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        $('.datepicker').datepicker({
+            autoclose: true,
+        }); //Initialise any date pickers
+
+    </script>
+}
+
 <h2>Index</h2>
 
 <p>
@@ -14,21 +25,23 @@
 
     @using (Html.BeginForm("Index", "BlogPosts", FormMethod.Get))
     {
-    <table class="navbar-text">
-        <tr>
-            <td>@Html.Label("Blog", htmlAttributes: new { @class = "control-label col-md-2" })</td>
-            <td>@Html.DropDownList("blogId", Model.Blogs, "Choose a Client")</td>
-            <td>@Html.Label("Author", htmlAttributes: new { @class = "control-label col-md-2" })</td>
-            <td>@Html.DropDownList("authorId", Model.Authors, "Choose an Author")</td>
-            <td>Show All Posts?</td>
-            <td>@Html.CheckBox("includeAll")</td>
-        </tr>
-        <tr>
-            <td><input type="submit" value="Filter" /></td>
-        </tr>
-    </table>        
+        <table class="navbar-text">
+            <tr>
+                <td>@Html.Label("Blog", htmlAttributes: new { @class = "control-label col-md-2" })</td>
+                <td>@Html.DropDownList("blogId", Model.Blogs, "Choose a Client")</td>
+                <td>@Html.Label("Author", htmlAttributes: new { @class = "control-label col-md-2" })</td>
+                <td>@Html.DropDownList("authorId", Model.Authors, "Choose an Author")</td>
+                <td>@Html.Label("Draft Date")</td>
+                <td>@Html.Editor("draftDate", new { htmlAttributes = new { @class = "form-control datepicker" } })</td>
+                <td>Show All Posts?</td>
+                <td>@Html.CheckBox("includeAll")</td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Filter" /></td>
+            </tr>
+        </table>
     }
-    </p>
+</p>
 <table class="table">
     <tr>
         <th>
@@ -73,52 +86,53 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model.BlogPosts) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Blog.CompanyName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Author.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Keyword)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DraftDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TargetFinalizeDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TargetPublicationDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DraftCompleteDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SubmittedDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PublishedDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsApproved)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsDoublePost)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsGhostwritten)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { postId = item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { postId = item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model.BlogPosts)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Blog.CompanyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Keyword)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DraftDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TargetFinalizeDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TargetPublicationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DraftCompleteDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubmittedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PublishedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsApproved)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsDoublePost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsGhostwritten)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { postId = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { postId = item.Id })
+            </td>
+        </tr>
+    }
 
 </table>

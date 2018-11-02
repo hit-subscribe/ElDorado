@@ -225,7 +225,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
             viewModel.BlogPosts.ShouldNotBeEmpty();
         }
 
-    [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Order_Posts_By_DraftDate()
         {
             const string title = "A Post Title";
@@ -236,6 +236,17 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
             var viewModel = Target.Index().GetViewResultModel<BlogPostIndexViewModel>();
 
             viewModel.BlogPosts.First().Title.ShouldBe(title);
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Filter_Out_Posts_Not_Matching_DraftDate()
+        {
+            DateTime draftDate = new DateTime(2018, 12, 1);
+            Post.DraftDate = draftDate;
+
+            var viewModel = Target.Index(draftDate: draftDate.AddDays(2)).GetViewResultModel<BlogPostIndexViewModel>();
+
+            viewModel.BlogPosts.ShouldBeEmpty();
         }
 }
 }
