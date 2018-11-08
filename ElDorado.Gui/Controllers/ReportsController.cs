@@ -29,6 +29,12 @@ namespace ElDorado.Gui.Controllers
             return View(new PostHustlingViewModel(pairingsByDate));
         }
 
+        public ActionResult AuthorTimeliness()
+        {
+            var authors = _context.Authors.ToList();
+            return View(authors.Select(a => new AuthorTimelinessRecord(a)));
+        }
+
         private bool ShouldPostAppearInPostHustlingReport(BlogPost post)
         {
             return post.Author == null && post.DraftDate > Today && post.IsApproved;
