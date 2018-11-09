@@ -149,6 +149,10 @@
     <Compile Include="Migrations\201810272235254_AddingInOurSystems.Designer.cs">
       <DependentUpon>201810272235254_AddingInOurSystems.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811090111240_Adding Author Pay.cs" />
+    <Compile Include="Migrations\201811090111240_Adding Author Pay.Designer.cs">
+      <DependentUpon>201811090111240_Adding Author Pay.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -219,6 +223,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810272235254_AddingInOurSystems.resx">
       <DependentUpon>201810272235254_AddingInOurSystems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811090111240_Adding Author Pay.resx">
+      <DependentUpon>201811090111240_Adding Author Pay.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

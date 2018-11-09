@@ -29,6 +29,8 @@ namespace ElDorado.Domain
 
         public bool IsInOurSystems { get; set; } = true;
 
+        public decimal BaseRate { get; set; } = 100;
+
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BlogPost> BlogPosts { get; set; }
 

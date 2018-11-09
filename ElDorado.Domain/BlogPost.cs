@@ -38,6 +38,7 @@ namespace ElDorado.Domain
         public bool IsDoublePost { get; set; }
         public bool IsGhostwritten { get; set; }
         public string TrelloId { get; set; }
+        public decimal AuthorPay { get; set; }
 
 
         [NotMapped]
@@ -60,5 +61,18 @@ namespace ElDorado.Domain
 
         [NotMapped]
         public bool IsHitSubscribeFinished => Blog?.DoWePublish ?? false  ? PublishedDate.HasValue : SubmittedDate.HasValue;
+
+        public void SetAuthorPay()
+        {
+            var baseRate = Author?.BaseRate ?? 0;
+
+            AuthorPay = baseRate;
+
+            if (IsGhostwritten)
+                AuthorPay += baseRate;
+
+            if (IsDoublePost)
+                AuthorPay += baseRate;
+        }
     }
 }

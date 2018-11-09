@@ -26,7 +26,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
 
         private Author Author => Context.Authors.First();
 
-        private BlogPost Post { get; set; } = new BlogPost() { Id = PostId, Title = PostTitle };
+        private BlogPost Post { get; set; } = new BlogPost() { Id = PostId, Title = PostTitle, AuthorId = 1 };
 
         private BlogPostsController Target { get; set; }
 
@@ -34,7 +34,8 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         [TestInitialize]
         public void BeforeEachTest()
         {
-            Context.Authors.Add(new Author());
+            Context.Authors.Add(new Author() { Id = 1 });
+            Context.Arrange(ctx => ctx.UpdateBlogPostDependencies(Arg.IsAny<BlogPost>())).DoInstead((BlogPost bp) => bp.Author = Context.Authors.First(a => a.Id == bp.AuthorId));
 
             Target = new BlogPostsController(Context, TrelloService) { MapPath = "somepath" };
         }
@@ -140,5 +141,41 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
 
             actionResult.ShouldHaveRouteParameter("blogId", blogId);
         }
-    }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Set_AuthorPay_To_Base_Author_Rate_For_Normal_Post()
+        {
+            Author.BaseRate = 100;
+            Target.Create(new BlogPost() { AuthorId = Author.Id });
+
+            Context.BlogPosts.First().AuthorPay.ShouldBe(100);
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Set_Author_Pay_Double_For_GhostPost()
+        {
+            Author.BaseRate = 100;
+            Target.Create(new BlogPost() { AuthorId = Author.Id, IsGhostwritten = true });
+
+            Context.BlogPosts.First().AuthorPay.ShouldBe(200);
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Set_Author_Pay_Double_For_2x_Post()
+        {
+            Author.BaseRate = 100;
+            Target.Create(new BlogPost() { AuthorId = Author.Id, IsDoublePost = true });
+
+            Context.BlogPosts.First().AuthorPay.ShouldBe(200);
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Set_Author_Pay_To_Three_Hundred_For_Ghostwritten_Double_Post()
+        {
+            Author.BaseRate = 150;
+            Target.Create(new BlogPost() { AuthorId = Author.Id, IsDoublePost = true, IsGhostwritten = true });
+
+            Context.BlogPosts.First().AuthorPay.ShouldBe(450);
+        }
+}
 }

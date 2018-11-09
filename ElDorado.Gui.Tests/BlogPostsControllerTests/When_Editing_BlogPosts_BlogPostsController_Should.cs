@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 using Telerik.JustMock;
 using Telerik.JustMock.EntityFramework;
 using Telerik.JustMock.Helpers;
@@ -27,7 +28,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
 
         private TrelloWritingCalendarService Service { get; set; } = Mock.Create<TrelloWritingCalendarService>();
 
-        private BlogPost Post { get; set; } = new BlogPost() { Id = PostId, Title = PostTitle };
+        private BlogPost Post { get; set; } = new BlogPost() { Id = PostId, Title = PostTitle, AuthorId = 1 };
 
         private BlogPostsController Target { get; set; }
 
@@ -35,8 +36,10 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         [TestInitialize]
         public void BeforeEachTest()
         {
-            Context.Authors.Add(new Author());
+            Context.Authors.Add(new Author() { Id = 1 });
             Context.BlogPosts.Add(Post);
+
+            Context.Arrange(ctx => ctx.UpdateBlogPostDependencies(Arg.IsAny<BlogPost>())).DoInstead((BlogPost bp) => bp.Author = Context.Authors.First(a => a.Id == bp.AuthorId));
 
             Target = new BlogPostsController(Context, Service) { MapPath = "asdf" };
         }
@@ -92,11 +95,11 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
-        public void Return_A_ViewModel_With_Same_Id_On_Post()
+        public void Redirect_To_Edit_On_Postback()
         {
-            var viewModel = Target.Edit(new BlogPostEditViewModel(Post, Context)).GetViewResultModel<BlogPostEditViewModel>();
+            var actionResult = Target.Edit(new BlogPostEditViewModel(Post, Context)) as RedirectToRouteResult;
 
-            viewModel.Post.Id.ShouldBe(PostId);
+            actionResult.ShouldHaveRouteAction("Edit");
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -107,6 +110,15 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
             Target.Edit(new BlogPostEditViewModel(Post, Context));
 
             Service.Assert(s => s.EditCard(Post), Occurs.Once());
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Update_Author_Pay()
+        {
+            Author.BaseRate = 150;
+            Target.Edit(new BlogPostEditViewModel(new BlogPost() { AuthorId = Author.Id, IsDoublePost = true, IsGhostwritten = true }, Context));
+
+            Context.BlogPosts.Last().AuthorPay.ShouldBe(450);
         }
 }
 }

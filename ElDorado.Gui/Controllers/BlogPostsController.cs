@@ -48,6 +48,7 @@ namespace ElDorado.Gui.Controllers
 
             InitializeTrelloService();
             _trelloService.AddCard(post);
+            post.SetAuthorPay();
 
             _blogContext.SaveChanges();
 
@@ -68,13 +69,14 @@ namespace ElDorado.Gui.Controllers
         {
             _blogContext.BlogPosts.Attach(blogPostViewModel.Post);
             _blogContext.SetModified(blogPostViewModel.Post);
-            _blogContext.SaveChanges();
             _blogContext.UpdateBlogPostDependencies(blogPostViewModel.Post);
+            blogPostViewModel.Post.SetAuthorPay();
+            _blogContext.SaveChanges();
 
             InitializeTrelloService();
             _trelloService.EditCard(blogPostViewModel.Post);
 
-            return View(GetViewModelForId(blogPostViewModel.Post.Id));
+            return RedirectToAction("Edit", new { postId = blogPostViewModel.Post.Id });
         }
 
         public ActionResult Delete(int postId)
