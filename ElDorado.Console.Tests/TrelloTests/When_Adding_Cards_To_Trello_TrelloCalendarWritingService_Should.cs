@@ -52,7 +52,7 @@ namespace ElDorado.Console.Tests.TrelloTests
         {
             Target.AddCard(Post);
 
-            Board.Assert(b => b.AddPlannedPostCard(Arg.AnyString, Arg.AnyString, Post.DraftDate.SafeAddHours(12), Arg.AnyString, Arg.AnyString));
+            Board.Assert(b => b.AddPlannedPostCard(Arg.AnyString, Arg.AnyString, Post.DraftDate.SafeToMidnightEastern(), Arg.AnyString, Arg.AnyString));
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]

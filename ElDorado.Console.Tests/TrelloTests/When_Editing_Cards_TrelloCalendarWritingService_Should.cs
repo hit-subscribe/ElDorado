@@ -69,21 +69,36 @@ namespace ElDorado.Console.Tests.TrelloTests
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
-        public void Set_The_Card_DueDate_To_Post_Draft_Date_Plus_12_Hours()
+        public void Set_The_Card_DueDate_To_Post_DraftDate_At_1159_PM_Eastern()
         {
             Target.EditCard(Post);
 
-            Mock.AssertSet(() => Card.DueDate = Post.DraftDate.SafeAddHours(12), Occurs.Once());
+            var draftDate = Post.DraftDate.Value;
+            var nearMidnight = new DateTime(draftDate.Year, draftDate.Month, draftDate.Day, 23, 59, 59);
+            TimeSpan easternTimeUtcOffset = new TimeSpan(-5, 0, 0);
+            var nearMidnightOffset = new DateTimeOffset(nearMidnight, easternTimeUtcOffset);
+
+            Mock.AssertSet(() => Card.DueDate = nearMidnightOffset.DateTime, Occurs.Once());
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Not_Set_DueDate_When_There_Is_No_Draft_Date()
+        {
+            Post.DraftDate = null;
+
+            Target.EditCard(Post);
+
+            Mock.AssertSet(() => Card.DueDate = Arg.IsAny<DateTime>(), Occurs.Never());
+        }
+
+    [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Not_Set_Card_Due_Date_When_Card_Is_In_A_Different_Column()
         {
             Card.Arrange(c => c.ListName).Returns("asdf");
 
             Target.EditCard(Post);
 
-            Mock.AssertSet(() => Card.DueDate = Post.DraftDate.SafeAddHours(12), Occurs.Never());
+            Mock.AssertSet(() => Card.DueDate = Arg.IsAny<DateTime>(), Occurs.Never());
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]

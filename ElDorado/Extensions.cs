@@ -38,11 +38,17 @@ namespace ElDorado
         {
             return DateTime.TryParse(target?.ToString(), out DateTime result) ? result : (DateTime?)null;
         }
-
-        public static DateTime? SafeAddHours(this DateTime? target, int hours)
+         
+        public static DateTime? SafeToMidnightEastern(this DateTime? target)
         {
-            return target.HasValue ? target.Value.AddHours(hours) : (DateTime?)null;
+            if (!target.HasValue)
+                return null;
+
+            var draftDate = target.Value;
+            var nearMidnight = new DateTime(draftDate.Year, draftDate.Month, draftDate.Day, 23, 59, 59);
+            var easternTimeUtcOffset = new TimeSpan(-5, 0, 0);
+
+            return new DateTimeOffset(nearMidnight, easternTimeUtcOffset).DateTime;
         }
-            
     }
 }

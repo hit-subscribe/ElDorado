@@ -41,7 +41,7 @@ namespace ElDorado.Trello
         }
         public virtual void AddCard(BlogPost postToAdd)
         {
-            var card = _board.AddPlannedPostCard(name: postToAdd.AuthorTitle, dueDate: postToAdd.DraftDate.SafeAddHours(12), trelloUserName: postToAdd.AuthorTrelloUserName, companyName: postToAdd.BlogCompanyName);
+            var card = _board.AddPlannedPostCard(name: postToAdd.AuthorTitle, dueDate: postToAdd.DraftDate.SafeToMidnightEastern(), trelloUserName: postToAdd.AuthorTrelloUserName, companyName: postToAdd.BlogCompanyName);
             card.BuildDescriptionFromBlogPost(postToAdd);
             card.IsArchived = !postToAdd.IsApproved;
 
@@ -78,7 +78,7 @@ namespace ElDorado.Trello
         {
             if (card.ListName == PlannedPostsListName)
             {
-                card.DueDate = postToEdit.DraftDate.SafeAddHours(12);
+                card.DueDate = postToEdit.DraftDate.SafeToMidnightEastern();
                 card.UpdateLabels(_board.GetLabelsForCompany(postToEdit.BlogCompanyName));
                 card.UpdateMembers(_board.GetMemberWithUserName(postToEdit.AuthorTrelloUserName));
             }
