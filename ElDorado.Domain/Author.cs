@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
@@ -33,6 +34,9 @@ namespace ElDorado.Domain
 
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BlogPost> BlogPosts { get; set; }
+
+        [NotMapped]
+        public string FullName => $"{FirstName} {LastName}";
 
         public bool HasPostsDue(DateTime dueDate)
         {

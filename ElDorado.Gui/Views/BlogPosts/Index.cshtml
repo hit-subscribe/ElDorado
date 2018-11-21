@@ -44,90 +44,38 @@
 </p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.BlogPosts.First().Blog.CompanyName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BlogPosts.First().Author.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BlogPosts.First().Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BlogPosts.First().Keyword)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BlogPosts.First().DraftDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BlogPosts.First().TargetFinalizeDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BlogPosts.First().TargetPublicationDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BlogPosts.First().DraftCompleteDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BlogPosts.First().SubmittedDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BlogPosts.First().PublishedDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BlogPosts.First().IsApproved)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BlogPosts.First().IsDoublePost)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BlogPosts.First().IsGhostwritten)
-        </th>
-        <th></th>
+        <th>@Html.DisplayNameFor(model => model.BlogPosts.First().Blog.CompanyName)</th>
+        <th>Author</th>
+        <th>@Html.DisplayNameFor(model => model.BlogPosts.First().Title)</th>
+        <th>@Html.DisplayNameFor(model => model.BlogPosts.First().Keyword)</th>
+        <th>@Html.DisplayNameFor(model => model.BlogPosts.First().DraftDate)</th>
+        <th>@Html.DisplayNameFor(model => model.BlogPosts.First().TargetFinalizeDate)</th>
+        <th>@Html.DisplayNameFor(model => model.BlogPosts.First().TargetPublicationDate)</th>
+        <th>@Html.DisplayNameFor(model => model.BlogPosts.First().DraftCompleteDate)</th>
+        <th>@Html.DisplayNameFor(model => model.BlogPosts.First().SubmittedDate)</th>
+        <th>@Html.DisplayNameFor(model => model.BlogPosts.First().PublishedDate)</th>
+        <th>@Html.DisplayNameFor(model => model.BlogPosts.First().IsApproved)</th>
+        <th>@Html.DisplayNameFor(model => model.BlogPosts.First().IsDoublePost)</th>
+        <th>@Html.DisplayNameFor(model => model.BlogPosts.First().IsGhostwritten)</th>
+        <th>Actions</th>
     </tr>
 
     @foreach (var item in Model.BlogPosts)
     {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Blog.CompanyName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Author.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Keyword)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DraftDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TargetFinalizeDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TargetPublicationDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DraftCompleteDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SubmittedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PublishedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsApproved)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsDoublePost)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsGhostwritten)
-            </td>
+            <td>@Html.DisplayFor(modelItem => item.Blog.CompanyName)</td>
+            <td>@Html.DisplayFor(modelItem => item.Author.FullName)</td>
+            <td>@Html.DisplayFor(modelItem => item.Title)</td>
+            <td>@Html.DisplayFor(modelItem => item.Keyword)</td>
+            <td>@Html.DisplayFor(modelItem => item.DraftDate)</td>
+            <td>@Html.DisplayFor(modelItem => item.TargetFinalizeDate)</td>
+            <td>@Html.DisplayFor(modelItem => item.TargetPublicationDate)</td>
+            <td>@Html.DisplayFor(modelItem => item.DraftCompleteDate)</td>
+            <td>@Html.DisplayFor(modelItem => item.SubmittedDate)</td>
+            <td>@Html.DisplayFor(modelItem => item.PublishedDate)</td>
+            <td>@Html.DisplayFor(modelItem => item.IsApproved)</td>
+            <td>@Html.DisplayFor(modelItem => item.IsDoublePost)</td>
+            <td>@Html.DisplayFor(modelItem => item.IsGhostwritten)</td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { postId = item.Id }) |
                 @Html.ActionLink("Delete", "Delete", new { postId = item.Id })
