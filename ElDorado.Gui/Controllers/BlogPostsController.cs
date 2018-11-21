@@ -28,7 +28,7 @@ namespace ElDorado.Gui.Controllers
             var postsFromEvaluatedDatabaseQuery = _blogContext.BlogPosts.ToList(); //I like the readability from these filtering methods we're using, and the cost tradeoff here just doesn't matter
 
             var filteredPosts = postsFromEvaluatedDatabaseQuery.Where(bp => bp.BlogId.DefaultMatches(blogId) && bp.AuthorId.DefaultMatches(authorId) && bp.DraftDate.DefaultMatches(draftDate));
-            var currentPosts = filteredPosts.Where(bp => includeAll || !bp.IsHitSubscribeFinished);
+            var currentPosts = filteredPosts.Where(bp => includeAll || (!bp.IsHitSubscribeFinished && bp.IsApproved));
             var orderedPosts = currentPosts.OrderBy(p => p.DraftDate);
 
             return View(new BlogPostIndexViewModel(orderedPosts, _blogContext));

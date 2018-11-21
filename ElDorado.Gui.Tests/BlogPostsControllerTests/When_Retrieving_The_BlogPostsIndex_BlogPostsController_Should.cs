@@ -43,7 +43,8 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
                 Title = Title,
                 BlogId = BlogId,
                 AuthorId = AuthorId,
-                DraftDate = Today
+                DraftDate = Today,
+                IsApproved = true
             };
 
             Context.BlogPosts.Add(blogPost);
@@ -121,7 +122,27 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
 
             viewModel.BlogPosts.First().Title.ShouldBe(Title);
         }
-    
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Filter_Out_Posts_That_Are_Not_Approved()
+        {
+            Post.IsApproved = false;
+
+            var viewModel = Target.Index().GetViewResultModel<BlogPostIndexViewModel>();
+
+            viewModel.BlogPosts.ShouldBeEmpty();
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Not_Filter_Out_UnapprovedPosts_When_IncludeAll_Is_Checked()
+        {
+            Post.IsApproved = false;
+
+            var viewModel = Target.Index(includeAll: true).GetViewResultModel<BlogPostIndexViewModel>();
+
+            viewModel.BlogPosts.ShouldNotBeEmpty();
+        }
+
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Filter_Out_Posts_From_Non_Matching_Blogs_When_Filter_Index_Is_Invoked()
         {
@@ -229,7 +250,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         public void Order_Posts_By_DraftDate()
         {
             const string title = "A Post Title";
-            var moreRecentPost = new BlogPost() { Title = title, DraftDate = Post.DraftDate.Value.AddDays(-1) };
+            var moreRecentPost = new BlogPost() { Title = title, DraftDate = Post.DraftDate.Value.AddDays(-1), IsApproved = true };
 
             Context.BlogPosts.Add(moreRecentPost);
 
