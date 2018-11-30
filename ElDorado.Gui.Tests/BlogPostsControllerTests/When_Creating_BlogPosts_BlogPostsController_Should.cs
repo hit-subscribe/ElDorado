@@ -43,7 +43,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Respond_To_Get_Request_With_BlogPostViewModel_Containing_Empty_BlogPost()
         {
-            var viewModel = Target.Create().GetViewResultModel<BlogPostEditViewModel>();
+            var viewModel = Target.Create().GetResult<BlogPostEditViewModel>();
 
             viewModel.Post.Id.ShouldBe(0);
         }
@@ -54,7 +54,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
             Blog blog = new Blog() { CompanyName = "EvilCorp" };
             Context.Blogs.Add(blog);
 
-            var viewModel = Target.Create().GetViewResultModel<BlogPostEditViewModel>();
+            var viewModel = Target.Create().GetResult<BlogPostEditViewModel>();
 
             viewModel.Blogs.ShouldContain(item => item.Text == blog.CompanyName);
         }
@@ -64,7 +64,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         {
             Author.IsActive = false;
 
-            var viewModel = Target.Create().GetViewResultModel<BlogPostEditViewModel>();
+            var viewModel = Target.Create().GetResult<BlogPostEditViewModel>();
 
             viewModel.Authors.ShouldBeEmpty();
         }
@@ -73,7 +73,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         public void Respond_To_Get_Request_With_BlogId_Specified_By_Setting_Post_BlogId()
         {
             const int blogId = 6;
-            var viewModel = Target.Create(blogId).GetViewResultModel<BlogPostEditViewModel>();
+            var viewModel = Target.Create(blogId).GetResult<BlogPostEditViewModel>();
 
             viewModel.Post.BlogId.ShouldBe(blogId);
 

@@ -35,7 +35,7 @@ namespace ElDorado.Gui.Tests.ReportsControllerTests
             }
         };
 
-        private IEnumerable<AuthorTimelinessRecord> GetRecords() => Target.AuthorTimeliness().GetViewResultModel<IEnumerable<AuthorTimelinessRecord>>();
+        private IEnumerable<AuthorTimelinessRecord> GetRecords() => Target.AuthorTimeliness().GetResult<IEnumerable<AuthorTimelinessRecord>>();
 
         [TestInitialize]
         public void BeforeEachTest()

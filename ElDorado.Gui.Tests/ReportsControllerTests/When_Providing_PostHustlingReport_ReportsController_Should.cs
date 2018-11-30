@@ -22,7 +22,7 @@ namespace ElDorado.Gui.Tests.ReportsControllerTests
 
         private ReportsController Target { get; set; }
 
-        private PostHustlingViewModel GetPostHustlingViewModel() => Target.PostHustling().GetViewResultModel<PostHustlingViewModel>();
+        private PostHustlingViewModel GetPostHustlingViewModel() => Target.PostHustling().GetResult<PostHustlingViewModel>();
 
         [TestInitialize]
         public void BeforeEachTest()

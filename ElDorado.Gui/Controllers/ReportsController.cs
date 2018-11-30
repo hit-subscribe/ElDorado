@@ -35,6 +35,22 @@ namespace ElDorado.Gui.Controllers
             return View(authors.Select(a => new AuthorTimelinessRecord(a)));
         }
 
+        public ActionResult AccountsReceivable(int year = 2018, int month = 3)
+        {
+            var authors = _context.Authors.ToList();
+            var accountsPayableAuthorsForTheMonth = authors.Where(a => a.BlogPosts.Any(bp => bp.DraftCompleteDate.MatchesYearAndMonth(year, month)));
+            var viewModel = new AccountsReceivableViewModel()
+            {
+                AuthorLedgers = accountsPayableAuthorsForTheMonth.Select(a => 
+                new AuthorLedgerViewModel()
+                {
+                    Name = $"{a.FirstName} {a.LastName}",
+                    Posts = a.BlogPosts.Where(bp => bp.DraftCompleteDate.MatchesYearAndMonth(year, month)).Select(bp => new PostLineItemViewModel(bp))
+                }),
+            };
+            return View(viewModel);
+        }
+
         private bool ShouldPostAppearInPostHustlingReport(BlogPost post)
         {
             return post.Author == null && post.DraftDate > Today && post.IsApproved;

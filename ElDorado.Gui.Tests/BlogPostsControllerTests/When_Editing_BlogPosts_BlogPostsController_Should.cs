@@ -47,7 +47,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_A_View_Containing_A_Single_BlogPost()
         {
-            var viewModel = Target.Edit(PostId).GetViewResultModel<BlogPostEditViewModel>();
+            var viewModel = Target.Edit(PostId).GetResult<BlogPostEditViewModel>();
 
             viewModel.Post.Title.ShouldBe(PostTitle);
         }
@@ -58,7 +58,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
             Blog blog = new Blog() { CompanyName = "Acme" };
             Context.Blogs.Add(blog);
 
-            var viewModel = Target.Edit(PostId).GetViewResultModel<BlogPostEditViewModel>();
+            var viewModel = Target.Edit(PostId).GetResult<BlogPostEditViewModel>();
 
             viewModel.Blogs.ShouldContain(item => item.Text == blog.CompanyName);
         }
@@ -68,7 +68,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         {
             Author.IsActive = false;
 
-            var viewModel = Target.Edit(PostId).GetViewResultModel<BlogPostEditViewModel>();
+            var viewModel = Target.Edit(PostId).GetResult<BlogPostEditViewModel>();
 
             viewModel.Authors.ShouldBeEmpty();
         }
@@ -79,7 +79,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
             var author = new Author() { Id = 12 };
             Context.Authors.Add(author);
 
-            var viewModel = Target.Edit(PostId).GetViewResultModel<BlogPostEditViewModel>();
+            var viewModel = Target.Edit(PostId).GetResult<BlogPostEditViewModel>();
 
             viewModel.Authors.ShouldContain(item => item.Value == author.Id.ToString());
         }

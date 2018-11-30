@@ -238,12 +238,15 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\AccountsReceivableViewModel.cs" />
+    <Compile Include="ViewModels\AuthorLedgerViewModel.cs" />
     <Compile Include="ViewModels\AuthorTimelinessRecord.cs" />
     <Compile Include="ViewModels\BlogPostIndexViewModel.cs" />
     <Compile Include="ViewModels\BlogPostEditViewModel.cs" />
     <Compile Include="ViewModels\BlogPostViewModel.cs" />
     <Compile Include="ViewModels\PostAuthorPairing.cs" />
     <Compile Include="ViewModels\PostHustlingViewModel.cs" />
+    <Compile Include="ViewModels\PostLineItemViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Contents\bootstrap-datepicker.css" />
@@ -414,6 +417,7 @@
     <Content Include="Views\Blogs\Create.cshtml" />
     <Content Include="Views\Reports\PostHustling.cshtml" />
     <Content Include="Views\Reports\AuthorTimeliness.cshtml" />
+    <Content Include="Views\Reports\AccountsReceivable.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

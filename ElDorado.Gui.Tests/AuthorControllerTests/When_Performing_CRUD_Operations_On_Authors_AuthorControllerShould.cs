@@ -42,7 +42,7 @@ namespace ElDorado.Gui.Tests.AuthorControllerTests
             var authorsInContext = new List<Author>() { new Author(), new Author(), new Author() };
             Context.Authors.AddRange(authorsInContext);
 
-            var authors = Target.Index().GetViewResultModel<IEnumerable<Author>>();
+            var authors = Target.Index().GetResult<IEnumerable<Author>>();
 
             authors.Count().ShouldBe(authorsInContext.Count() + originalAuthorCount);
         }
@@ -50,7 +50,7 @@ namespace ElDorado.Gui.Tests.AuthorControllerTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Respond_To_Create_Get_Request_With_Empty_Author()
         {
-            var author = Target.Create().GetViewResultModel<Author>();
+            var author = Target.Create().GetResult<Author>();
 
             author.Id.ShouldBe(0);
         }
@@ -84,7 +84,7 @@ namespace ElDorado.Gui.Tests.AuthorControllerTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_Author_From_Context_On_Edit_Get_Request()
         {
-            var result = Target.Edit(AuthorId).GetViewResultModel<Author>();
+            var result = Target.Edit(AuthorId).GetResult<Author>();
 
             result.FirstName.ShouldBe(AuthorName);
         }
@@ -103,7 +103,7 @@ namespace ElDorado.Gui.Tests.AuthorControllerTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_Author_With_Same_Id_On_Postback()
         {
-            var result = Target.Edit(Author).GetViewResultModel<Author>();
+            var result = Target.Edit(Author).GetResult<Author>();
 
             result.Id.ShouldBe(AuthorId);
         }

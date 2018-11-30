@@ -57,7 +57,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_A_ViewModel_Containing_Authors_For_Selection()
         {
-            var viewModel = Target.Index().GetViewResultModel<BlogPostIndexViewModel>();
+            var viewModel = Target.Index().GetResult<BlogPostIndexViewModel>();
 
             viewModel.Authors.ShouldNotBeEmpty();
         }
@@ -68,7 +68,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
             Author.FirstName = "Erik";
             Author.LastName = "Dietrich";
 
-            var viewModel = Target.Index().GetViewResultModel<BlogPostIndexViewModel>();
+            var viewModel = Target.Index().GetResult<BlogPostIndexViewModel>();
 
             viewModel.Authors.First().Text.ShouldBe("Erik Dietrich");
         }
@@ -79,7 +79,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
             Author.LastName = "Zurly";
             Context.Authors.Add(new Author() { LastName = "Asquith" });
 
-            var viewModel = Target.Index().GetViewResultModel<BlogPostIndexViewModel>();
+            var viewModel = Target.Index().GetResult<BlogPostIndexViewModel>();
 
             viewModel.Authors.First().Text.ShouldBe(" Asquith");
         }
@@ -89,7 +89,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         {
             Author.IsActive = false;
 
-            var viewModel = Target.Index().GetViewResultModel<BlogPostIndexViewModel>();
+            var viewModel = Target.Index().GetResult<BlogPostIndexViewModel>();
 
             viewModel.Authors.ShouldNotBeEmpty();
         }
@@ -99,7 +99,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         {
             Author.IsInOurSystems = false;
 
-            var viewModel = Target.Index().GetViewResultModel<BlogPostIndexViewModel>();
+            var viewModel = Target.Index().GetResult<BlogPostIndexViewModel>();
 
             viewModel.Authors.ShouldBeEmpty();
         }
@@ -110,7 +110,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
             Blog.CompanyName = "Zephyr";
             Context.Blogs.Add(new Blog() { CompanyName = "Acme" });
 
-            var viewModel = Target.Index().GetViewResultModel<BlogPostIndexViewModel>();
+            var viewModel = Target.Index().GetResult<BlogPostIndexViewModel>();
 
             viewModel.Blogs.First().Text.ShouldBe("Acme");
         }
@@ -118,7 +118,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_A_ViewModel_Containing_The_BlogPosts_From_Context()
         {
-            var viewModel = Target.Index().GetViewResultModel<BlogPostIndexViewModel>();
+            var viewModel = Target.Index().GetResult<BlogPostIndexViewModel>();
 
             viewModel.BlogPosts.First().Title.ShouldBe(Title);
         }
@@ -128,7 +128,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         {
             Post.IsApproved = false;
 
-            var viewModel = Target.Index().GetViewResultModel<BlogPostIndexViewModel>();
+            var viewModel = Target.Index().GetResult<BlogPostIndexViewModel>();
 
             viewModel.BlogPosts.ShouldBeEmpty();
         }
@@ -138,7 +138,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         {
             Post.IsApproved = false;
 
-            var viewModel = Target.Index(includeAll: true).GetViewResultModel<BlogPostIndexViewModel>();
+            var viewModel = Target.Index(includeAll: true).GetResult<BlogPostIndexViewModel>();
 
             viewModel.BlogPosts.ShouldNotBeEmpty();
         }
@@ -146,7 +146,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Filter_Out_Posts_From_Non_Matching_Blogs_When_Filter_Index_Is_Invoked()
         {
-            var viewModel = Target.Index(123).GetViewResultModel<BlogPostIndexViewModel>();
+            var viewModel = Target.Index(123).GetResult<BlogPostIndexViewModel>();
 
             viewModel.BlogPosts.ShouldBeEmpty();
         }
@@ -154,7 +154,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_Posts_From_Matching_Blogs()
         {
-            var viewModel = Target.Index(BlogId).GetViewResultModel<BlogPostIndexViewModel>();
+            var viewModel = Target.Index(BlogId).GetResult<BlogPostIndexViewModel>();
 
             viewModel.BlogPosts.ToList().ShouldNotBeEmpty();
         }
@@ -162,7 +162,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_Posts_From_Matching_Authors()
         {
-            var viewModel = Target.Index(authorId: AuthorId).GetViewResultModel<BlogPostIndexViewModel>();
+            var viewModel = Target.Index(authorId: AuthorId).GetResult<BlogPostIndexViewModel>();
 
             viewModel.BlogPosts.ShouldNotBeEmpty();
         }
@@ -170,7 +170,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Filter_Out_Posts_Not_Matching_The_Author()
         {
-            var viewModel = Target.Index(authorId: AuthorId + 1).GetViewResultModel<BlogPostIndexViewModel>();
+            var viewModel = Target.Index(authorId: AuthorId + 1).GetResult<BlogPostIndexViewModel>();
 
             viewModel.BlogPosts.ShouldBeEmpty();
 
@@ -179,7 +179,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Filter_By_Author_And_Blog_When_Both_Are_Specified()
         {
-            var viewModel = Target.Index(BlogId, AuthorId + 1).GetViewResultModel<BlogPostIndexViewModel>();
+            var viewModel = Target.Index(BlogId, AuthorId + 1).GetResult<BlogPostIndexViewModel>();
 
             viewModel.BlogPosts.ShouldBeEmpty();
         }
@@ -189,7 +189,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         {
            Post.AuthorId = null;
 
-            var viewModel = Target.Index(BlogId, AuthorId).GetViewResultModel<BlogPostIndexViewModel>();
+            var viewModel = Target.Index(BlogId, AuthorId).GetResult<BlogPostIndexViewModel>();
 
             viewModel.BlogPosts.ShouldBeEmpty();
         }
@@ -199,7 +199,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         {
             Post.AuthorId = null;
 
-            var viewModel = Target.Index(BlogId).GetViewResultModel<BlogPostIndexViewModel>();
+            var viewModel = Target.Index(BlogId).GetResult<BlogPostIndexViewModel>();
 
             viewModel.BlogPosts.ShouldNotBeEmpty();
         }
@@ -209,7 +209,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         {
             Post.SubmittedDate = Today.AddDays(-1);
 
-            var viewModel = Target.Index(BlogId).GetViewResultModel<BlogPostIndexViewModel>();
+            var viewModel = Target.Index(BlogId).GetResult<BlogPostIndexViewModel>();
 
             viewModel.BlogPosts.ShouldBeEmpty();
         }
@@ -219,7 +219,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         {
             Post.TargetPublicationDate = null;
 
-            var viewModel = Target.Index(BlogId).GetViewResultModel<BlogPostIndexViewModel>();
+            var viewModel = Target.Index(BlogId).GetResult<BlogPostIndexViewModel>();
 
             viewModel.BlogPosts.ShouldNotBeEmpty();
         }
@@ -230,7 +230,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
             Post.TargetPublicationDate = null;
             Post.DraftDate = Today.AddDays(-1);
 
-            var viewModel = Target.Index(includeAll: true).GetViewResultModel<BlogPostIndexViewModel>();
+            var viewModel = Target.Index(includeAll: true).GetResult<BlogPostIndexViewModel>();
 
             viewModel.BlogPosts.ShouldNotBeEmpty();
         }
@@ -241,7 +241,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
             Post.SubmittedDate = new DateTime(2019, 12, 1);
             Post.Blog = new Blog() { DoWePublish = true };
 
-            var viewModel = Target.Index(BlogId).GetViewResultModel<BlogPostIndexViewModel>();
+            var viewModel = Target.Index(BlogId).GetResult<BlogPostIndexViewModel>();
 
             viewModel.BlogPosts.ShouldNotBeEmpty();
         }
@@ -254,7 +254,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
 
             Context.BlogPosts.Add(moreRecentPost);
 
-            var viewModel = Target.Index().GetViewResultModel<BlogPostIndexViewModel>();
+            var viewModel = Target.Index().GetResult<BlogPostIndexViewModel>();
 
             viewModel.BlogPosts.First().Title.ShouldBe(title);
         }
@@ -265,7 +265,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
             DateTime draftDate = new DateTime(2018, 12, 1);
             Post.DraftDate = draftDate;
 
-            var viewModel = Target.Index(draftDate: draftDate.AddDays(2)).GetViewResultModel<BlogPostIndexViewModel>();
+            var viewModel = Target.Index(draftDate: draftDate.AddDays(2)).GetResult<BlogPostIndexViewModel>();
 
             viewModel.BlogPosts.ShouldBeEmpty();
         }

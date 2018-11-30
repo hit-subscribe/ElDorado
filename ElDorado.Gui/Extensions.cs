@@ -20,5 +20,10 @@ namespace ElDorado.Gui
 
             return DefaultMatches(target.Value, valueToCheck);
         }
+
+        public static bool MatchesYearAndMonth(this DateTime? target, int year, int month)
+        {
+            return target.HasValue && target.Value.Year == year && target.Value.Month == month;
+        }
     }
 }
