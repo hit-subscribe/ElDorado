@@ -36,13 +36,16 @@ namespace ElDorado.Gui.Tests.ReportsControllerTests
             BaseRate = PostBaseRate,
         };
 
-        private AccountsReceivableViewModel GetViewModel(int year = 0, int month = 0) => Target.AccountsReceivable(year, month).GetResult<AccountsReceivableViewModel>();
+        private BlogPost Post => AuthorWithOnePost.BlogPosts.First();
+
+        private AccountsReceivableViewModel GetViewModel(DateTime? userPickedDate = null) => Target.AccountsReceivable(userPickedDate).GetResult<AccountsReceivableViewModel>();
 
         [TestInitialize]
         public void BeforeEachTest()
         {
             Context.Authors.Add(AuthorWithOnePost);
-            AuthorWithOnePost.BlogPosts.First().Author = AuthorWithOnePost;
+            Post.Author = AuthorWithOnePost;
+            Post.SetAuthorPay();
 
             Target = new ReportsController(Context);
         }
@@ -60,7 +63,7 @@ namespace ElDorado.Gui.Tests.ReportsControllerTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_A_ViewModel_With_One_Author_Ledger_When_Author_Had_A_Post_For_The_Month()
         {
-            var viewModel = GetViewModel(2018, 12);
+            var viewModel = GetViewModel(new DateTime(2018, 12, 1));
 
             viewModel.AuthorLedgers.Count().ShouldBe(1);
         }
@@ -68,7 +71,7 @@ namespace ElDorado.Gui.Tests.ReportsControllerTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_A_ViewModel_With_No_Author_Ledgers_When_DraftCompleteDate_Is_Last_Month()
         {
-            var viewModel = GetViewModel(2018, 11);
+            var viewModel = GetViewModel(new DateTime(2018, 11, 1));
 
             viewModel.AuthorLedgers.ShouldBeEmpty();
         }
@@ -76,7 +79,7 @@ namespace ElDorado.Gui.Tests.ReportsControllerTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_A_Ledger_Matching_Author_Name()
         {
-            var viewModel = GetViewModel(2018, 12);
+            var viewModel = GetViewModel(new DateTime(2018, 12, 1));
 
             viewModel.AuthorLedgers.First().Name.ShouldBe($"{AuthorWithOnePost.FirstName} {AuthorWithOnePost.LastName}");
         }
@@ -84,15 +87,15 @@ namespace ElDorado.Gui.Tests.ReportsControllerTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_A_Ledger_Listing_The_Blog_Post_Name()
         {
-            var viewModel = GetViewModel(2018, 12);
+            var viewModel = GetViewModel(new DateTime(2018, 12, 1));
 
-            viewModel.AuthorLedgers.First().Posts.First().Title.ShouldBe(AuthorWithOnePost.BlogPosts.First().Title);
+            viewModel.AuthorLedgers.First().Posts.First().Title.ShouldBe(Post.Title);
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_A_Ledger_Listing_The_Post_Cost()
         {
-            var viewModel = GetViewModel(2018, 12);
+            var viewModel = GetViewModel(new DateTime(2018, 12, 1));
 
             viewModel.AuthorLedgers.First().Posts.First().Cost.ShouldBe(PostBaseRate);
         }
@@ -100,7 +103,7 @@ namespace ElDorado.Gui.Tests.ReportsControllerTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_A_Ledger_Summarizing_Post_Costs_For_The_Author()
         {
-            var viewModel = GetViewModel(2018, 12);
+            var viewModel = GetViewModel(new DateTime(2018, 12, 1));
 
             viewModel.AuthorLedgers.First().Total.ShouldBe(PostBaseRate);
         }
@@ -108,7 +111,7 @@ namespace ElDorado.Gui.Tests.ReportsControllerTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_A_ViewModel_Totaling_All_Ledgers()
         {
-            var viewModel = GetViewModel(2018, 12);
+            var viewModel = GetViewModel(new DateTime(2018, 12, 1));
 
             viewModel.Total.ShouldBe(PostBaseRate);
         }

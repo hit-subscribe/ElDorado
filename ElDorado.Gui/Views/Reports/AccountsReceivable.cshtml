@@ -6,30 +6,54 @@
 
 <h2>AccountsReceivable</h2>
 
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        $('.monthpicker').datepicker({
+            autoclose: true,
+            dateFormat: 'mm/yyyy',
+            onClose: function (dateText, inst) {
+                var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+                var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+                $(this).datepicker('setDate', new Date(year, month, 1));
+            }
+        }); //Initialise any date pickers
+
+    </script>
+}
+
+@using (Html.BeginForm("AccountsReceivable", "Reports", FormMethod.Get))
+{
+    <input name="userPickedDate" id="userPickedDate" class="monthpicker"/>
+    <input type="submit" value="Choose Month"/>
+}
 <table class="table">
     <tr>
         <th>Author</th>
         <th>Posts</th>
     </tr>
-@foreach (var ledger in Model.AuthorLedgers) {
-    <tr>
-        <td>@Html.DisplayFor(modelItem => ledger.Name)</td>
-        <td>
-            @foreach(var post in ledger.Posts) {
-                <table width="100%">
-                    <tr>
-                        <td>@Html.DisplayFor(modelItem => post.Title)</td>
-                        <td align="right">@Html.DisplayFor(modelItem => post.Cost)</td>
-                    </tr>
-                </table>
-            }
-        </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td align="right"><b>@Html.DisplayFor(modelItem => ledger.Total)</b></td>
-    </tr>
-}
+    @foreach (var ledger in Model.AuthorLedgers)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => ledger.Name)</td>
+            <td>
+                @foreach (var post in ledger.Posts)
+                {
+                    <table width="100%">
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => post.Title)</td>
+                            <td align="right">@Html.DisplayFor(modelItem => post.Cost)</td>
+                        </tr>
+                    </table>
+                }
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td align="right"><b>@Html.DisplayFor(modelItem => ledger.Total)</b></td>
+        </tr>
+    }
     <tr>
         <td>Grand Total</td>
         <td align="right"><b>@Html.DisplayFor(modelItem => Model.Total)</b></td>
