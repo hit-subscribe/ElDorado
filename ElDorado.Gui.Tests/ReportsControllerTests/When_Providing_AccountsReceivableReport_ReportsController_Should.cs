@@ -115,5 +115,29 @@ namespace ElDorado.Gui.Tests.ReportsControllerTests
 
             viewModel.Total.ShouldBe(PostBaseRate);
         }
-}
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Order_AuthorLedgers_By_AuthorFirstName()
+        {
+            var secondAuthor = new Author()
+            {
+                FirstName = "AAAA",
+                LastName = "whatever",
+                BlogPosts = new List<BlogPost>()
+                {
+                    new BlogPost()
+                    {
+                        DraftCompleteDate = new DateTime(2018, 12, 10),
+                    }
+                },
+                BaseRate = PostBaseRate,
+            };
+
+            Context.Authors.Add(secondAuthor);
+
+            var viewModel = GetViewModel(new DateTime(2018, 12, 1));
+
+            viewModel.AuthorLedgers.First().Name.ShouldBe($"{secondAuthor.FirstName} {secondAuthor.LastName}");
+        }
+    }
 }

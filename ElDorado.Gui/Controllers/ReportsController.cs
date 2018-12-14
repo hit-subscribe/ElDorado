@@ -49,7 +49,7 @@ namespace ElDorado.Gui.Controllers
                 {
                     Name = $"{a.FirstName} {a.LastName}",
                     Posts = a.BlogPosts.Where(bp => bp.DraftCompleteDate.MatchesYearAndMonth(year, month)).Select(bp => new PostLineItemViewModel(bp))
-                }),
+                }).OrderBy(a => a.Name),
             };
             return View(viewModel);
         }
