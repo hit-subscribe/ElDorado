@@ -105,6 +105,7 @@
     <Compile Include="BlogPostsControllerTests\When_Deleting_BlogPosts_BlogPostsController_Should.cs" />
     <Compile Include="BlogPostsControllerTests\When_Editing_BlogPosts_BlogPostsController_Should.cs" />
     <Compile Include="BlogPostsControllerTests\When_Retrieving_The_BlogPostsIndex_BlogPostsController_Should.cs" />
+    <Compile Include="BlogsControllerTests\When_Retrieving_The_BlogsIndex_BlogsController_Should.cs" />
     <Compile Include="MvcTestingExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportsControllerTests\When_Providing_AccountsReceivableReport_ReportsController_Should.cs" />
@@ -132,6 +133,7 @@
       <Name>ElDorado.Console</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
