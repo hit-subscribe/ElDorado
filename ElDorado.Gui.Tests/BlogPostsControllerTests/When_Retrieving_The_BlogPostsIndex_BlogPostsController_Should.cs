@@ -74,14 +74,14 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
-        public void Return_A_ViewModel_With_Authors_Sorted_By_LastName()
+        public void Return_A_ViewModel_With_Authors_Sorted_By_FirstName()
         {
-            Author.LastName = "Zurly";
-            Context.Authors.Add(new Author() { LastName = "Asquith" });
+            Author.FirstName = "Zurly";
+            Context.Authors.Add(new Author() { FirstName = "Asquith" });
 
             var viewModel = Target.Index().GetResult<BlogPostIndexViewModel>();
 
-            viewModel.Authors.First().Text.ShouldBe(" Asquith");
+            viewModel.Authors.First().Text.ShouldBe("Asquith ");
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
