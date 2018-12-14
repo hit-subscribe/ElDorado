@@ -1,10 +1,10 @@
-﻿@model ElDorado.Gui.ViewModels.AccountsReceivableViewModel
+﻿@model ElDorado.Gui.ViewModels.AccountsPayableViewModel
 
 @{
-    ViewBag.Title = "AccountsReceivable";
+    ViewBag.Title = "Accounts Payable";
 }
 
-<h2>AccountsReceivable</h2>
+<h2>Accounts Payable</h2>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -23,7 +23,7 @@
     </script>
 }
 
-@using (Html.BeginForm("AccountsReceivable", "Reports", FormMethod.Get))
+@using (Html.BeginForm("AccountsPayable", "Reports", FormMethod.Get))
 {
     <input name="userPickedDate" id="userPickedDate" class="monthpicker"/>
     <input type="submit" value="Choose Month"/>

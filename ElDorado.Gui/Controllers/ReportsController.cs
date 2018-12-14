@@ -35,14 +35,14 @@ namespace ElDorado.Gui.Controllers
             return View(authors.Select(a => new AuthorTimelinessRecord(a)));
         }
 
-        public ActionResult AccountsReceivable(DateTime? userPickedDate = null)
+        public ActionResult AccountsPayable(DateTime? userPickedDate = null)
         {
             var year = userPickedDate?.Year ?? 0;
             var month = userPickedDate?.Month ?? 0;
 
             var authors = _context.Authors.ToList();
             var accountsPayableAuthorsForTheMonth = authors.Where(a => a.BlogPosts.Any(bp => bp.DraftCompleteDate.MatchesYearAndMonth(year, month)));
-            var viewModel = new AccountsReceivableViewModel()
+            var viewModel = new AccountsPayableViewModel()
             {
                 AuthorLedgers = accountsPayableAuthorsForTheMonth.Select(a => 
                 new AuthorLedgerViewModel()

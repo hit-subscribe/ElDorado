@@ -7,7 +7,7 @@ using System.Web;
 namespace ElDorado.Gui.ViewModels
 {
     [NotMapped]
-    public class AccountsReceivableViewModel
+    public class AccountsPayableViewModel
     {
         public IEnumerable<AuthorLedgerViewModel> AuthorLedgers { get; set; } = Enumerable.Empty<AuthorLedgerViewModel>();
         public decimal Total => AuthorLedgers.Sum(al => al.Total);

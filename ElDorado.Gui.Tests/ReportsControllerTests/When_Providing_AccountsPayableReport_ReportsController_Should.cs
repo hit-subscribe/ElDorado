@@ -13,7 +13,7 @@ using Telerik.JustMock.EntityFramework;
 namespace ElDorado.Gui.Tests.ReportsControllerTests
 {
     [TestClass]
-    public class When_Providing_AccountsReceivableReport_ReportsController_Should
+    public class When_Providing_AccountsPayableReport_ReportsController_Should
     {
 
         private const decimal PostBaseRate = 100;
@@ -38,7 +38,7 @@ namespace ElDorado.Gui.Tests.ReportsControllerTests
 
         private BlogPost Post => AuthorWithOnePost.BlogPosts.First();
 
-        private AccountsReceivableViewModel GetViewModel(DateTime? userPickedDate = null) => Target.AccountsReceivable(userPickedDate).GetResult<AccountsReceivableViewModel>();
+        private AccountsPayableViewModel GetViewModel(DateTime? userPickedDate = null) => Target.AccountsPayable(userPickedDate).GetResult<AccountsPayableViewModel>();
 
         [TestInitialize]
         public void BeforeEachTest()
