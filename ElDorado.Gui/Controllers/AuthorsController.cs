@@ -11,7 +11,7 @@ namespace ElDorado.Gui.Controllers
     {
         public AuthorsController(BlogContext context) : base(context)
         {
-
+            IndexSortFunction = authors => authors.OrderBy(a => a.FirstName);
         }
     }
 }

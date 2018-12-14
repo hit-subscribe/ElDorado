@@ -155,5 +155,17 @@ namespace ElDorado.Gui.Tests.AuthorControllerTests
 
             actionResult.ShouldHaveRouteAction("Index");
         }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Sort_Results_By_Author_FirstName()
+        {
+            const string deliberatelyAlphabeticalFirstName = "AAAAAA";
+
+            Context.Authors.Add(new Author() { Id = 100, FirstName = deliberatelyAlphabeticalFirstName });
+
+            var authors = Target.Index().GetResult<IEnumerable<Author>>();
+
+            authors.First().FirstName.ShouldBe(deliberatelyAlphabeticalFirstName);
+        }
 }
 }
