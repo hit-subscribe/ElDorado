@@ -31,7 +31,7 @@ namespace ElDorado.Gui.Controllers
 
         public ActionResult AuthorTimeliness()
         {
-            var authors = _context.Authors.ToList();
+            var authors = _context.Authors.OrderBy(a => a.FirstName).ToList();
             return View(authors.Select(a => new AuthorTimelinessRecord(a)));
         }
 

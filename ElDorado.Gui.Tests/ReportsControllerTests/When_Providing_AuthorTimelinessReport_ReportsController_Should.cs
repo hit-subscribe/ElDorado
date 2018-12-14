@@ -145,5 +145,29 @@ namespace ElDorado.Gui.Tests.ReportsControllerTests
 
             records.First().LatePosts.ShouldBe(1);
         }
-}
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Order_Records_By_AuthorFirstName()
+        {
+        	var secondAuthor = new Author()
+            {
+                FirstName = "AAAA",
+                LastName = "Dietrich",
+                BlogPosts = new List<BlogPost>()
+                {
+                    new BlogPost()
+                    {
+                        DraftCompleteDate = Today.AddDays(-1),
+                        DraftDate = Today
+                    }
+                }
+            };
+
+            Context.Authors.Add(secondAuthor);
+
+            var records = GetRecords();
+
+            records.First().Name.ShouldBe($"{secondAuthor.FirstName} {secondAuthor.LastName}");
+        }
+    }
 }
