@@ -116,7 +116,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         public void Update_Author_Pay()
         {
             Author.BaseRate = 150;
-            Target.Edit(new BlogPostEditViewModel(new BlogPost() { AuthorId = Author.Id, IsDoublePost = true, IsGhostwritten = true }, Context));
+            Target.Edit(new BlogPostEditViewModel(new BlogPost() { AuthorId = Author.Id, IsDoublePost = true, IsGhostwritten = true }, Context) { AuthorPay = null });
 
             Context.BlogPosts.Last().AuthorPay.ShouldBe(450);
         }

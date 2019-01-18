@@ -48,7 +48,7 @@ namespace ElDorado.Gui.Controllers
 
             InitializeTrelloService();
             _trelloService.AddCard(post);
-            post.SetAuthorPay();
+            post.CalculateAuthorPay();
 
             _blogContext.SaveChanges();
 
@@ -70,7 +70,7 @@ namespace ElDorado.Gui.Controllers
             _blogContext.BlogPosts.Attach(blogPostViewModel.Post);
             _blogContext.SetModified(blogPostViewModel.Post);
             _blogContext.UpdateBlogPostDependencies(blogPostViewModel.Post);
-            blogPostViewModel.Post.SetAuthorPay();
+            blogPostViewModel.SetAuthorPay();
             _blogContext.SaveChanges();
 
             InitializeTrelloService();

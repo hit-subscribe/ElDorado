@@ -45,7 +45,7 @@ namespace ElDorado.Gui.Tests.ReportsControllerTests
         {
             Context.Authors.Add(AuthorWithOnePost);
             Post.Author = AuthorWithOnePost;
-            Post.SetAuthorPay();
+            Post.CalculateAuthorPay();
 
             Target = new ReportsController(Context);
         }
