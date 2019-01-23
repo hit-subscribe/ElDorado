@@ -22,7 +22,10 @@ namespace ElDorado
 
         private static string Token(string line, int index)
         {
-            return line.Split(':')[index];
+            const string unlikeklyToAppearInNormalString = "!@#$%";
+            const string escapedSeparator = "::";
+
+            return line.Replace(escapedSeparator, unlikeklyToAppearInNormalString).Split(':')[index].Replace(unlikeklyToAppearInNormalString, ":");
         }
 
         private static IEnumerable<string> SliceIntoLines(string targetFile)

@@ -9,10 +9,10 @@ namespace ElDorado
 {
     public class SimpleWebClient
     {
-        public virtual string GetRawText(string feedUrl)
+        public virtual string GetRawText(string url)
         {
             var client = new HttpClient();
-            var result = client.GetAsync(feedUrl).Result;
+            var result = client.GetAsync(url).Result;
             var results = result.Content.ReadAsStringAsync().Result;
             return results;
         }

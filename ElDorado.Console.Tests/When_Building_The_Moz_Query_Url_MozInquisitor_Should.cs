@@ -72,19 +72,6 @@ namespace ElDorado.Console.Tests
 
             url.ShouldContain($"&Expires={unixSecondsFiveMinutesFromNow}");
         }
-
-        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
-        public void Build_A_Url_Containing_The_Url_Encoded_Secret()
-        {
-            var time = new DateTime(2018, 1, 31);
-            Target.CurrentTime = time;
-            
-            var url = Target.BuildUrl(BaseUrl);
-
-            url.ShouldContain("&Signature=Q1F50wJ1tb1w30Jg%2fpGX43Yrd38%3d");
-        }
-
-
-}
+    }
 
 }

@@ -48,6 +48,6 @@ namespace ElDorado.Console.Tests
         {
             Target.GetSubscriberCount("asdfASfd").ShouldBe(0);
         }
-}
+    }
 
 }

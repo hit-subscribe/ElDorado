@@ -190,6 +190,7 @@
     <Compile Include="ExtensionTests\When_Converting_DateTimes_SafeToDateTime_Should.cs" />
     <Compile Include="ExtensionTests\When_Loose_Matching_LooselyMatches_Should.cs" />
     <Compile Include="ExtensionTests\When_Padding_The_Results_Of_A_GoogleSheet_Pad_Should.cs" />
+    <Compile Include="Scraping\When_Getting_Search_Results_SearchResultRetriever_Should.cs" />
     <Compile Include="TestingExtensions.cs" />
     <Compile Include="TrelloTests\When_Adding_Cards_To_Trello_TrelloCalendarWritingService_Should.cs" />
     <Compile Include="TrelloTests\When_Checking_If_Card_Exists_TrelloWritingCalendarService_Should.cs" />

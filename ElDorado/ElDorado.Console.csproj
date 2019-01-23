@@ -183,6 +183,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\OrphanedBlogPostException.cs" />
+    <Compile Include="Scraping\SearchResult.cs" />
+    <Compile Include="Scraping\SearchResultRetriever.cs" />
     <Compile Include="Trello\ITrelloCard.cs" />
     <Compile Include="Trello\IWritingCalendarBoard.cs" />
     <Compile Include="Trello\ManateeExtensions.cs" />
@@ -213,6 +215,9 @@
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="CredFiles\cse.cred">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="CredFiles\google.cred">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

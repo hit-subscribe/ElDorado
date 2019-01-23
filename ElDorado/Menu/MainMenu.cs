@@ -1,6 +1,7 @@
 ﻿using ElDorado.Domain;
 using ElDorado.Metrics;
 using ElDorado.Repository;
+using ElDorado.Scraping;
 using ElDorado.Trello;
 using ElDorado.WritingCalendar;
 using Gold.ConsoleMenu;
@@ -86,8 +87,23 @@ namespace ElDorado.Menu
 
             posts.Add(new BlogPost() { Title = "Placeholder", DraftDate = new DateTime(2018, 5, 11), Blog = new Blog() { CompanyName = "Scalyr" } });
 
+        }
 
+        [MenuMethod("Scrape Search")]
+        public static void ScrapeSearch()
+        {
+            Console.WriteLine("Enter search term");
+            var searchTerm = Console.ReadLine();
 
+            var webClient = new SimpleWebClient();
+            var retriever = new SearchResultRetriever(webClient, new CredentialStore(File.ReadAllText(@"CredFiles\cse.cred")));
+
+            var results = retriever.SearchFor(searchTerm).ToList();
+
+            var csvRows = results.Select(res => $"{res.DisplayLink},{res.Link}").ToList();
+            csvRows.Insert(0, "Base Site,Resut Link");
+
+            File.WriteAllLines("results.csv", csvRows);
         }
     }
 }
