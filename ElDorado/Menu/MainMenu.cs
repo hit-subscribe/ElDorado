@@ -98,7 +98,8 @@ namespace ElDorado.Menu
             var webClient = new SimpleWebClient();
             var retriever = new SearchResultRetriever(webClient, new CredentialStore(File.ReadAllText(@"CredFiles\cse.cred")));
 
-            var results = retriever.SearchFor(searchTerm).ToList();
+            const int serpPagesToCrawl = 5;
+            var results = retriever.SearchFor(searchTerm, serpPagesToCrawl).ToList();
 
             var csvRows = results.Select(res => $"{res.DisplayLink},{res.Link}").ToList();
             csvRows.Insert(0, "Base Site,Resut Link");

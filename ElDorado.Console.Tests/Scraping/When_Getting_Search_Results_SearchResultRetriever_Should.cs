@@ -32,6 +32,7 @@ namespace ElDorado.Console.Tests.Scraping
             var store = new CredentialStore($"ApiKey:{ApiKey}\nCseId:{CustomSearchEngineId}");
 
             Target = new SearchResultRetriever(Client, store);
+            Target.Delay = i => { };
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -69,5 +70,32 @@ namespace ElDorado.Console.Tests.Scraping
 
             Target.BaseSearchQuery.ShouldBe($"https://www.googleapis.com/customsearch/v1?key={ApiKey}&cx={unescapedString}&q=");
         }
-}
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Invoke_The_Web_Client_Twice_When_2_Serps_Are_Requested()
+        {
+            Target.SearchFor(SearchString, 2);
+
+            Client.Assert(cl => cl.GetRawText(Arg.AnyString), Occurs.Exactly(2));
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Invoke_The_Client_With_num_equals_11_As_Query_Parameter()
+        {
+            Target.SearchFor(SearchString, 2);
+
+            Client.Assert(cl => cl.GetRawText(Target.BaseSearchQuery + SearchString + "&start=11"), Occurs.Once());
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Invoke_The_Delay_Once_For_Two_Serps_Totaling_30_Seconds()
+        {
+            int delaySeconds = 0;
+            Target.Delay = i => delaySeconds += i;
+
+            Target.SearchFor(SearchString, 2);
+
+            delaySeconds.ShouldBe(30);
+        }
+    }
 }
