@@ -46,7 +46,7 @@ namespace ElDorado.Scraping
                 var singlePageResults = ExecuteSearch(searchParameters);
                 allResults.AddRange(singlePageResults);
 
-                if(resultNumber + 1 < serpPages)
+                if(resultNumber + 1 < serpPages && singlePageResults.Any())
                     Delay(30);
             }
         }
@@ -55,10 +55,17 @@ namespace ElDorado.Scraping
         {
             var rawText = _client.GetRawText(BaseSearchQuery + searchParameters);
 
-            var resultJson = JObject.Parse(rawText);
-            var serpResults = resultJson["items"].Children();
+            try
+            {
+                var resultJson = JObject.Parse(rawText);
+                var serpResults = resultJson["items"].Children();
 
-            return serpResults.Select(sr => JsonConvert.DeserializeObject<SearchResult>(sr.ToString()));
+                return serpResults.Select(sr => JsonConvert.DeserializeObject<SearchResult>(sr.ToString()));
+            }
+            catch
+            {
+                return Enumerable.Empty<SearchResult>();
+            }
         }
     }
 }
