@@ -18,7 +18,7 @@ namespace ElDorado.Metrics
 
         public virtual int GetGlobalRank(string baseSiteUrl)
         {
-            var rawXml =_client.GetRawText($"http://data.alexa.com/data?cli=10&dat=snbamz&url={baseSiteUrl}");
+            var rawXml =_client.GetRawResultOfBasicGetRequest($"http://data.alexa.com/data?cli=10&dat=snbamz&url={baseSiteUrl}");
             try
             {
                 return GetRankFromXml(rawXml);

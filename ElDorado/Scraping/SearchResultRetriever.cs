@@ -46,7 +46,7 @@ namespace ElDorado.Scraping
 
         private IEnumerable<SearchResult> ExecuteSearch(string searchParameters)
         {
-            var rawText = _client.GetRawText(BaseSearchQuery + searchParameters);
+            var rawText = _client.GetRawResultOfBasicGetRequest(BaseSearchQuery + searchParameters);
 
             try
             {

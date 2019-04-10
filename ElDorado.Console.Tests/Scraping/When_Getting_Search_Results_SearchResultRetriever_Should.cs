@@ -27,7 +27,7 @@ namespace ElDorado.Console.Tests.Scraping
         [TestInitialize]
         public void BeforeEachTest()
         {
-            Client.Arrange(cl => cl.GetRawText(Arg.AnyString)).Returns(SearchResult);
+            Client.Arrange(cl => cl.GetRawResultOfBasicGetRequest(Arg.AnyString)).Returns(SearchResult);
 
             var store = new CredentialStore($"ApiKey:{ApiKey}\nCseId:{CustomSearchEngineId}");
 
@@ -38,7 +38,7 @@ namespace ElDorado.Console.Tests.Scraping
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_A_Collection_Of_SearchResults()
         {
-            Client.Arrange(cl => cl.GetRawText(Arg.AnyString)).Returns(string.Empty);
+            Client.Arrange(cl => cl.GetRawResultOfBasicGetRequest(Arg.AnyString)).Returns(string.Empty);
 
             var results = Target.SearchFor(SearchString);
 
@@ -76,7 +76,7 @@ namespace ElDorado.Console.Tests.Scraping
         {
             Target.SearchFor(SearchString, 2);
 
-            Client.Assert(cl => cl.GetRawText(Arg.AnyString), Occurs.Exactly(2));
+            Client.Assert(cl => cl.GetRawResultOfBasicGetRequest(Arg.AnyString), Occurs.Exactly(2));
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -84,7 +84,7 @@ namespace ElDorado.Console.Tests.Scraping
         {
             Target.SearchFor(SearchString, 2);
 
-            Client.Assert(cl => cl.GetRawText(Target.BaseSearchQuery + SearchString + "&start=11"), Occurs.Once());
+            Client.Assert(cl => cl.GetRawResultOfBasicGetRequest(Target.BaseSearchQuery + SearchString + "&start=11"), Occurs.Once());
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -101,7 +101,7 @@ namespace ElDorado.Console.Tests.Scraping
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_Empty_Results_When_Search_Yields_No_Items()
         {
-            Client.Arrange(cl => cl.GetRawText(Arg.AnyString)).ReturnsMany(SearchResult, "{\"kind\":\"customsearch#search\",\"url\":{\"type\":\"application/json\",\"template\":\"https://www.googleapis.com/customsearch/v1?q={searchTerms}&num={count?}&start={startIndex?}&lr={language?}&safe={safe?}&cx={cx?}&sort={sort?}&filter={filter?}&gl={gl?}&cr={cr?}&googlehost={googleHost?}&c2coff={disableCnTwTranslation?}&hq={hq?}&hl={hl?}&siteSearch={siteSearch?}&siteSearchFilter={siteSearchFilter?}&exactTerms={exactTerms?}&excludeTerms={excludeTerms?}&linkSite={linkSite?}&orTerms={orTerms?}&relatedSite={relatedSite?}&dateRestrict={dateRestrict?}&lowRange={lowRange?}&highRange={highRange?}&searchType={searchType}&fileType={fileType?}&rights={rights?}&imgSize={imgSize?}&imgType={imgType?}&imgColorType={imgColorType?}&imgDominantColor={imgDominantColor?}&alt=json\"},\"queries\":{\"request\":[{\"title\":\"GoogleCustomSearch-intitle:applicationintitle:security\"guestpostby\"\",\"totalResults\":\"0\",\"searchTerms\":\"intitle:applicationintitle:security\"guestpostby\"\",\"count\":10,\"startIndex\":11,\"inputEncoding\":\"utf8\",\"outputEncoding\":\"utf8\",\"safe\":\"off\",\"cx\":\"005715214518926163004:txoiceucevk\"}]},\"searchInformation\":{\"searchTime\":0.072811,\"formattedSearchTime\":\"0.07\",\"totalResults\":\"0\",\"formattedTotalResults\":\"0\"}}");
+            Client.Arrange(cl => cl.GetRawResultOfBasicGetRequest(Arg.AnyString)).ReturnsMany(SearchResult, "{\"kind\":\"customsearch#search\",\"url\":{\"type\":\"application/json\",\"template\":\"https://www.googleapis.com/customsearch/v1?q={searchTerms}&num={count?}&start={startIndex?}&lr={language?}&safe={safe?}&cx={cx?}&sort={sort?}&filter={filter?}&gl={gl?}&cr={cr?}&googlehost={googleHost?}&c2coff={disableCnTwTranslation?}&hq={hq?}&hl={hl?}&siteSearch={siteSearch?}&siteSearchFilter={siteSearchFilter?}&exactTerms={exactTerms?}&excludeTerms={excludeTerms?}&linkSite={linkSite?}&orTerms={orTerms?}&relatedSite={relatedSite?}&dateRestrict={dateRestrict?}&lowRange={lowRange?}&highRange={highRange?}&searchType={searchType}&fileType={fileType?}&rights={rights?}&imgSize={imgSize?}&imgType={imgType?}&imgColorType={imgColorType?}&imgDominantColor={imgDominantColor?}&alt=json\"},\"queries\":{\"request\":[{\"title\":\"GoogleCustomSearch-intitle:applicationintitle:security\"guestpostby\"\",\"totalResults\":\"0\",\"searchTerms\":\"intitle:applicationintitle:security\"guestpostby\"\",\"count\":10,\"startIndex\":11,\"inputEncoding\":\"utf8\",\"outputEncoding\":\"utf8\",\"safe\":\"off\",\"cx\":\"005715214518926163004:txoiceucevk\"}]},\"searchInformation\":{\"searchTime\":0.072811,\"formattedSearchTime\":\"0.07\",\"totalResults\":\"0\",\"formattedTotalResults\":\"0\"}}");
 
             var results = Target.SearchFor(SearchString, 2);
 

@@ -19,7 +19,7 @@ namespace ElDorado.Metrics
 
         public virtual int GetSubscriberCount(string feedUrl)
         {
-            var rawText = _client.GetRawText(feedUrl);
+            var rawText = _client.GetRawResultOfBasicGetRequest(feedUrl);
 
             var feedlyFeed = JsonConvert.DeserializeObject<FeedlyFeed>(rawText);
             return feedlyFeed == null ? 0 : feedlyFeed.Subscribers;

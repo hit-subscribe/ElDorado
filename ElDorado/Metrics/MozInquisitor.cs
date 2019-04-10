@@ -42,7 +42,7 @@ namespace ElDorado.Metrics
             try
             {
                 var authenticatedUrl = BuildUrl(host);
-                var rawText = _simpleWebClient.GetRawText(authenticatedUrl);
+                var rawText = _simpleWebClient.GetRawResultOfBasicGetRequest(authenticatedUrl);
 
                 dynamic mozRowJson = JsonConvert.DeserializeObject(rawText);
                 return new MozRecord(Math.Round((decimal)mozRowJson.pda, 2), (int)mozRowJson.pid);

@@ -115,16 +115,12 @@ namespace ElDorado.Menu
         {
             var credentials = new CredentialStore(File.ReadAllText(@"CredFiles\wordpress.cred"));
 
-            var client = new HttpClient();
-            var result = client.PostAsync($"https://daedtech.com/wp-json/jwt-auth/v1/token?username={credentials["Username"]}&password={credentials["Password"]}", null).Result;
-
-            var json = result.Content.ReadAsStringAsync().Result;
-            dynamic wordpressCredential = JsonConvert.DeserializeObject(json);
+            var client = new SimpleWebClient();
+            var rawJson = client.GetRawResultOfBasicPostRequest($"https://daedtech.com/wp-json/jwt-auth/v1/token?username={credentials["Username"]}&password={credentials["Password"]}");
+            dynamic wordpressCredential = JsonConvert.DeserializeObject(rawJson);
             string token = wordpressCredential.token;
 
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            var blogPostResult = client.GetAsync("https://daedtech.com/wp-json/wp/v2/posts/10968").Result;
-            var blogPostJson = blogPostResult.Content.ReadAsStringAsync().Result;
+            var blogPostJson = client.GetRawResultOfBearerGetRequest("https://daedtech.com/wp-json/wp/v2/posts/10968", token);
             dynamic blogPost = JsonConvert.DeserializeObject(blogPostJson);
 
             Console.WriteLine(blogPost.content.rendered);

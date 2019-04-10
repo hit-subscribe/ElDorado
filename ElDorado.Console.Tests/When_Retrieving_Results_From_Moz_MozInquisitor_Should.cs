@@ -43,7 +43,7 @@ namespace ElDorado.Console.Tests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_39_Point_53_For_DomainAuthority_Using_SampleJson()
         {
-            Client.Arrange(cl => cl.GetRawText(Arg.AnyString)).Returns(CallResult);
+            Client.Arrange(cl => cl.GetRawResultOfBasicGetRequest(Arg.AnyString)).Returns(CallResult);
 
             var domainAuthority = Target.GetMozStats(BaseUrl).DomainAuthority;
 
@@ -57,7 +57,7 @@ namespace ElDorado.Console.Tests
 
             Target.GetMozStats("asdf");
 
-            Client.Assert(cl => cl.GetRawText(url), Occurs.Once());
+            Client.Assert(cl => cl.GetRawResultOfBasicGetRequest(url), Occurs.Once());
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -71,7 +71,7 @@ namespace ElDorado.Console.Tests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return()
         {
-            Client.Arrange(cl => cl.GetRawText(Arg.AnyString)).Returns(CallResult);
+            Client.Arrange(cl => cl.GetRawResultOfBasicGetRequest(Arg.AnyString)).Returns(CallResult);
 
             var linkingDomains = Target.GetMozStats(BaseUrl).LinkingDomains;
 

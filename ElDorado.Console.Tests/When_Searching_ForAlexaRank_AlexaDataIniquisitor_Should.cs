@@ -25,7 +25,7 @@ namespace ElDorado.Console.Tests
         [TestInitialize]
         public void BeforeEachTest()
         {
-            Client.Arrange(cl => cl.GetRawText("http://data.alexa.com/data?cli=10&dat=snbamz&url=daedtech.com")).Returns(Response);
+            Client.Arrange(cl => cl.GetRawResultOfBasicGetRequest("http://data.alexa.com/data?cli=10&dat=snbamz&url=daedtech.com")).Returns(Response);
             Target = new AlexaDataInquisitor(Client);
         }
 
