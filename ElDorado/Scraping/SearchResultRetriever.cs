@@ -25,16 +25,9 @@ namespace ElDorado.Scraping
 
         public IEnumerable<SearchResult> SearchFor(string searchTerm, int serpPages = 1)
         {
-            try
-            {
-                var allResults = new List<SearchResult>();
-                AddResultsToList(searchTerm, serpPages, allResults);
-                return allResults;
-            }
-            catch
-            {
-                return Enumerable.Empty<SearchResult>();
-            }
+            var allResults = new List<SearchResult>();
+            AddResultsToList(searchTerm, serpPages, allResults);
+            return allResults;
         }
 
         private void AddResultsToList(string searchTerm, int serpPages, List<SearchResult> allResults)

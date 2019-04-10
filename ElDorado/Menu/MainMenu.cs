@@ -5,10 +5,13 @@ using ElDorado.Scraping;
 using ElDorado.Trello;
 using ElDorado.WritingCalendar;
 using Gold.ConsoleMenu;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -105,6 +108,26 @@ namespace ElDorado.Menu
             csvRows.Insert(0, "Base Site,Resut Link");
 
             File.WriteAllLines("results.csv", csvRows);
+        }
+
+        [MenuMethod("Pop a blog post.")]
+        public static void PopPost()
+        {
+            var credentials = new CredentialStore(File.ReadAllText(@"CredFiles\wordpress.cred"));
+
+            var client = new HttpClient();
+            var result = client.PostAsync($"https://daedtech.com/wp-json/jwt-auth/v1/token?username={credentials["Username"]}&password={credentials["Password"]}", null).Result;
+
+            var json = result.Content.ReadAsStringAsync().Result;
+            dynamic wordpressCredential = JsonConvert.DeserializeObject(json);
+            string token = wordpressCredential.token;
+
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var blogPostResult = client.GetAsync("https://daedtech.com/wp-json/wp/v2/posts/10968").Result;
+            var blogPostJson = blogPostResult.Content.ReadAsStringAsync().Result;
+            dynamic blogPost = JsonConvert.DeserializeObject(blogPostJson);
+
+            Console.WriteLine(blogPost.content.rendered);
         }
     }
 }
