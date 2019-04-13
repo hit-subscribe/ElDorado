@@ -25,7 +25,7 @@ namespace ElDorado.Console.Tests.Wordpress
         [TestInitialize]
         public void BeforeEachTest()
         {
-            Client.Arrange(cl => cl.GetRawResultOfBearerGetRequest($"https://daedtech.com/wp-json/wp/v2/posts/{BlogPostId}", Arg.AnyString)).Returns(RawServerPostJsonResponse);
+            Client.Arrange(cl => cl.GetRawResultOfBearerGetRequest($"https://www.hitsubscribe.com/wp-json/wp/v2/posts/{BlogPostId}", Arg.AnyString)).Returns(RawServerPostJsonResponse);
             Client.Arrange(cl => cl.GetRawResultOfBasicPostRequest(Arg.AnyString)).Returns("{token:\"asdf\"}");
 
             Target = new BlogPostRetriever(Client);

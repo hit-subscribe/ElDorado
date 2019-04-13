@@ -46,5 +46,17 @@ namespace ElDorado.Console.Tests.Wordpress
 
             Should.Throw<WordpressAuthorizationException>(() => Target.AuthorizeUser(Username, Password));
         }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Encode_The_Password()
+        {
+            const string password = "badpass&";
+
+            Client.Arrange(cl => cl.GetRawResultOfBasicPostRequest(Arg.AnyString)).Returns(RawResponseJson);
+
+            Target.AuthorizeUser(Username, password);
+
+            Client.Assert(cl => cl.GetRawResultOfBasicPostRequest($"{BlogPostRetriever.AuthEndpoint}?username={Username}&password=badpass%26"), Occurs.Once());
+        }
 }
 }

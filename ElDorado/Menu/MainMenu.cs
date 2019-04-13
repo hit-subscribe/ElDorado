@@ -118,7 +118,7 @@ namespace ElDorado.Menu
 
             var retriever = new BlogPostRetriever(new SimpleWebClient());
             retriever.AuthorizeUser(credentials["Username"], credentials["Password"]);
-            var post = retriever.GetBlogPostById(10968);
+            var post = retriever.GetBlogPostById(16731);
 
             Console.WriteLine(post);
         }

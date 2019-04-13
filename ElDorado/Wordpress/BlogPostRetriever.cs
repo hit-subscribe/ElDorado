@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,7 +12,7 @@ namespace ElDorado.Wordpress
     {
         private readonly SimpleWebClient _client;
 
-        public const string BaseSite = "https://daedtech.com/";
+        public const string BaseSite = "https://www.hitsubscribe.com/";
         public static readonly string PostsEndpoint = $"{BaseSite}wp-json/wp/v2/posts";
         public static readonly string AuthEndpoint = $"{BaseSite}wp-json/jwt-auth/v1/token";
 
@@ -26,7 +27,7 @@ namespace ElDorado.Wordpress
         {
             try
             {
-                var rawJson = _client.GetRawResultOfBasicPostRequest($"{AuthEndpoint}?username={username}&password={password}");
+                var rawJson = _client.GetRawResultOfBasicPostRequest($"{AuthEndpoint}?username={username}&password={WebUtility.UrlEncode(password)}");
                 dynamic wordpressCredential = JsonConvert.DeserializeObject(rawJson);
                 Token = wordpressCredential.token;
             }
