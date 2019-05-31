@@ -3,12 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ElDorado.Wordpress
 {
-    public class BlogPostRetriever
+    public class WordpressService
     {
         private readonly SimpleWebClient _client;
 
@@ -18,7 +19,7 @@ namespace ElDorado.Wordpress
 
         public string Token { get; private set; }
 
-        public BlogPostRetriever(SimpleWebClient client)
+        public WordpressService(SimpleWebClient client)
         {
             _client = client;
         }
@@ -45,6 +46,12 @@ namespace ElDorado.Wordpress
             var blogPostJson = _client.GetRawResultOfBearerGetRequest($"{PostsEndpoint}/{value}", Token);
             dynamic blogPostContents = JsonConvert.DeserializeObject(blogPostJson);
             return blogPostContents.content.rendered;
+        }
+
+        public void CreateBlogPost()
+        {
+            var contents = _client.GetRawResultOfBearerRequest(HttpMethod.Post, $"{PostsEndpoint}", Token, "{\"title\":\"Created from El Dorado, FTW\", \"content\":\"Seriously, I do \", \"excerpt\":\"asdf\"}"); 
+            Console.WriteLine(contents);
         }
     }
 }

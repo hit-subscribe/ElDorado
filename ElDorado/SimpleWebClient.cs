@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ElDorado.Domain;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -22,6 +24,21 @@ namespace ElDorado
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearerToken);
             return GetRawTextFrom(client.GetAsync(url));
+        }
+
+
+        public virtual string GetRawResultOfBearerRequest(HttpMethod method, string url, string bearerToken, string content = null)
+        {
+            var client = new HttpClient();
+
+            using (var requestMessage = new HttpRequestMessage(method, url))
+            {
+                requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", bearerToken);
+                requestMessage.Headers.Add("user-agent", "El Dorado");
+                requestMessage.Content = new StringContent(content);
+                requestMessage.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                return GetRawTextFrom(client.SendAsync(requestMessage));
+            }
         }
 
         public virtual string GetRawResultOfBasicPostRequest(string url)

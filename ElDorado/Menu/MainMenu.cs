@@ -116,11 +116,13 @@ namespace ElDorado.Menu
         {
             var credentials = new CredentialStore(File.ReadAllText(@"CredFiles\wordpress.cred"));
 
-            var retriever = new BlogPostRetriever(new SimpleWebClient());
+            var retriever = new WordpressService(new SimpleWebClient());
             retriever.AuthorizeUser(credentials["Username"], credentials["Password"]);
-            var post = retriever.GetBlogPostById(16731);
 
-            Console.WriteLine(post);
+            //var post = retriever.GetBlogPostById(16731);
+            //Console.WriteLine(post);
+
+            retriever.CreateBlogPost();
         }
     }
 }

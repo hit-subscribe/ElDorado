@@ -12,7 +12,7 @@ using Telerik.JustMock.Helpers;
 namespace ElDorado.Console.Tests.Wordpress
 {
     [TestClass]
-    public class When_Authorizing_BlogPostRetriever_Should
+    public class When_Authorizing_WordpressService_Should
     {
         private const string Username = "erik";
         private const string Password = "badpass";
@@ -21,14 +21,14 @@ namespace ElDorado.Console.Tests.Wordpress
 
         private SimpleWebClient Client { get; set; } = Mock.Create<SimpleWebClient>();
 
-        private BlogPostRetriever Target;
+        private WordpressService Target;
 
         [TestInitialize]
         public void BeforeEachTest()
         {
-            Client.Arrange(cl => cl.GetRawResultOfBasicPostRequest($"{BlogPostRetriever.AuthEndpoint}?username={Username}&password={Password}")).Returns(RawResponseJson);
+            Client.Arrange(cl => cl.GetRawResultOfBasicPostRequest($"{WordpressService.AuthEndpoint}?username={Username}&password={Password}")).Returns(RawResponseJson);
 
-            Target = new BlogPostRetriever(Client);
+            Target = new WordpressService(Client);
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -42,7 +42,7 @@ namespace ElDorado.Console.Tests.Wordpress
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Throw_An_Authorization_Exception_On_An_Invalid_Json_Response()
         {
-            Client.Arrange(cl => cl.GetRawResultOfBasicPostRequest($"{BlogPostRetriever.AuthEndpoint}?username={Username}&password={Password}")).Returns("asdf");
+            Client.Arrange(cl => cl.GetRawResultOfBasicPostRequest($"{WordpressService.AuthEndpoint}?username={Username}&password={Password}")).Returns("asdf");
 
             Should.Throw<WordpressAuthorizationException>(() => Target.AuthorizeUser(Username, Password));
         }
@@ -56,7 +56,7 @@ namespace ElDorado.Console.Tests.Wordpress
 
             Target.AuthorizeUser(Username, password);
 
-            Client.Assert(cl => cl.GetRawResultOfBasicPostRequest($"{BlogPostRetriever.AuthEndpoint}?username={Username}&password=badpass%26"), Occurs.Once());
+            Client.Assert(cl => cl.GetRawResultOfBasicPostRequest($"{WordpressService.AuthEndpoint}?username={Username}&password=badpass%26"), Occurs.Once());
         }
 }
 }

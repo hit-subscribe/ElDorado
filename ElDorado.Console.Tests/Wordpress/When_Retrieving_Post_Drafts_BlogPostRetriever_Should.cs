@@ -12,7 +12,7 @@ using Telerik.JustMock.Helpers;
 namespace ElDorado.Console.Tests.Wordpress
 {
     [TestClass]
-    public class When_Retrieving_Post_Drafts_BlogPostRetriever_Should
+    public class When_Retrieving_Post_Drafts_WordpressService_Should
     {
         private const int BlogPostId = 123;
         private const string RawServerBlogPost = "This is an awesome blog post.";
@@ -20,7 +20,7 @@ namespace ElDorado.Console.Tests.Wordpress
 
         private SimpleWebClient Client { get; set; } = Mock.Create<SimpleWebClient>();
 
-        private BlogPostRetriever Target;
+        private WordpressService Target;
 
         [TestInitialize]
         public void BeforeEachTest()
@@ -28,7 +28,7 @@ namespace ElDorado.Console.Tests.Wordpress
             Client.Arrange(cl => cl.GetRawResultOfBearerGetRequest($"https://www.hitsubscribe.com/wp-json/wp/v2/posts/{BlogPostId}", Arg.AnyString)).Returns(RawServerPostJsonResponse);
             Client.Arrange(cl => cl.GetRawResultOfBasicPostRequest(Arg.AnyString)).Returns("{token:\"asdf\"}");
 
-            Target = new BlogPostRetriever(Client);
+            Target = new WordpressService(Client);
             Target.AuthorizeUser("username", "password");
         }
 
@@ -43,7 +43,7 @@ namespace ElDorado.Console.Tests.Wordpress
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Throw_An_Exception_When_Authorization_Has_Not_Occurred()
         {
-            var retriever = new BlogPostRetriever(Client);
+            var retriever = new WordpressService(Client);
 
             Should.Throw<WordpressAuthorizationException>(() => retriever.GetBlogPostById(1234));
         }
