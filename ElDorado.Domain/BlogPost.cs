@@ -40,7 +40,9 @@ namespace ElDorado.Domain
         public string TrelloId { get; set; }
         public decimal AuthorPay { get; set; }
 
-        public string Content { get; set; }
+        //Need to be added to the database
+        public string Content { get; set; } 
+        public int WordpressId { get; set; }
 
         [NotMapped]
         public string AuthorTitle => $"{Title}{(IsDoublePost ? " (2x)" : string.Empty)}";
