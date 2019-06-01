@@ -205,7 +205,7 @@
     <Compile Include="Trello\TrelloCard.cs" />
     <Compile Include="Trello\TrelloWrapperInterfaceExtensions.cs" />
     <Compile Include="Trello\WritingCalendarBoard.cs" />
-    <Compile Include="Wordpress\BlogPostRetriever.cs" />
+    <Compile Include="Wordpress\WordpressService.cs" />
     <Compile Include="Wordpress\WordpressAuthorizationException.cs" />
     <Compile Include="WritingCalendar\BlogPostSynchronizer.cs" />
     <Compile Include="WritingCalendar\ClientSpreadsheetService.cs" />

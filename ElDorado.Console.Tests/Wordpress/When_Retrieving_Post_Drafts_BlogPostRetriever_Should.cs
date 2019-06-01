@@ -4,6 +4,7 @@ using Shouldly;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Telerik.JustMock;
@@ -15,8 +16,8 @@ namespace ElDorado.Console.Tests.Wordpress
     public class When_Retrieving_Post_Drafts_WordpressService_Should
     {
         private const int BlogPostId = 123;
-        private const string RawServerBlogPost = "This is an awesome blog post.";
-        private static readonly string RawServerPostJsonResponse = $"{{\"content\":{{\"rendered\":\"{RawServerBlogPost}\",\"protected\":false}}}}";
+        private const string RawServerBlogPostText = "This is an awesome blog post.";
+        private static readonly string RawServerPostJsonResponse = $"{{\"content\":{{\"rendered\":\"{RawServerBlogPostText}\",\"protected\":false}}}}";
 
         private SimpleWebClient Client { get; set; } = Mock.Create<SimpleWebClient>();
 
@@ -25,7 +26,7 @@ namespace ElDorado.Console.Tests.Wordpress
         [TestInitialize]
         public void BeforeEachTest()
         {
-            Client.Arrange(cl => cl.GetRawResultOfBearerGetRequest($"https://www.hitsubscribe.com/wp-json/wp/v2/posts/{BlogPostId}", Arg.AnyString)).Returns(RawServerPostJsonResponse);
+            Client.Arrange(cl => cl.GetRawResultOfBearerRequest(HttpMethod.Get, $"https://www.hitsubscribe.com/wp-json/wp/v2/posts/{BlogPostId}", Arg.AnyString, Arg.AnyString)).Returns(RawServerPostJsonResponse);
             Client.Arrange(cl => cl.GetRawResultOfBasicPostRequest(Arg.AnyString)).Returns("{token:\"asdf\"}");
 
             Target = new WordpressService(Client);
@@ -33,11 +34,11 @@ namespace ElDorado.Console.Tests.Wordpress
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
-        public void Return_A_String_Containing_The_Raw_Blog_Post_Content()
+        public void Return_A_BlogPost_With_Content_Set()
         {
-            var postContents = Target.GetBlogPostById(BlogPostId);
+            var postContents = Target.GetBlogPostById(BlogPostId).Content;
 
-            postContents.ShouldBe(RawServerBlogPost);
+            postContents.ShouldBe(RawServerBlogPostText);
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -53,7 +54,7 @@ namespace ElDorado.Console.Tests.Wordpress
         {
             Target.GetBlogPostById(BlogPostId);
 
-            Client.Assert(cl => cl.GetRawResultOfBearerGetRequest(Arg.AnyString, Target.Token), Occurs.Once());
+            Client.Assert(cl => cl.GetRawResultOfBearerRequest(HttpMethod.Get, Arg.AnyString, Target.Token, Arg.AnyString), Occurs.Once());
         }
 
     }

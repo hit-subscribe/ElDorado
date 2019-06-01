@@ -19,14 +19,6 @@ namespace ElDorado
             return GetRawTextFrom(_basicClient.GetAsync(url));
         }
 
-        public virtual string GetRawResultOfBearerGetRequest(string url, string bearerToken)
-        {
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearerToken);
-            return GetRawTextFrom(client.GetAsync(url));
-        }
-
-
         public virtual string GetRawResultOfBearerRequest(HttpMethod method, string url, string bearerToken, string content = null)
         {
             var client = new HttpClient();
@@ -35,8 +27,11 @@ namespace ElDorado
             {
                 requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", bearerToken);
                 requestMessage.Headers.Add("user-agent", "El Dorado");
-                requestMessage.Content = new StringContent(content);
-                requestMessage.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                if (content != null)
+                {
+                    requestMessage.Content = new StringContent(content);
+                    requestMessage.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                }
                 return GetRawTextFrom(client.SendAsync(requestMessage));
             }
         }

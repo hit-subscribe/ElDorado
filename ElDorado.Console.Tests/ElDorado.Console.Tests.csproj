@@ -207,6 +207,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Wordpress\When_Authorizing_BlogPostRetriever_Should.cs" />
     <Compile Include="Wordpress\When_Retrieving_Post_Drafts_BlogPostRetriever_Should.cs" />
+    <Compile Include="Wordpress\When_Syncing_To_Wordpress_WordpressService_Should.cs" />
     <Compile Include="WritingCalendar\When_Adding_Posts_To_The_Spreadsheet_AddPosts_Should.cs" />
     <Compile Include="WritingCalendar\When_Encapsulating_A_Raw_Row_GoogleSheetRow_Should.cs" />
     <Compile Include="WritingCalendar\When_Fetching_A_BlogPost_From_The_PostsSpreadsheet_PlanningSpreadsheetService_Should.cs" />

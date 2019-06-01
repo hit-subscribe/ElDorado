@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using ElDorado.Domain;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,20 +39,22 @@ namespace ElDorado.Wordpress
             }
         }
 
-        public string GetBlogPostById(int value)
+        public BlogPost GetBlogPostById(int wordpressId)
         {
             if (string.IsNullOrEmpty(Token))
                 throw new WordpressAuthorizationException("You have to authorize a user to invoke this.");
 
-            var blogPostJson = _client.GetRawResultOfBearerGetRequest($"{PostsEndpoint}/{value}", Token);
+            var blogPostJson = _client.GetRawResultOfBearerRequest(HttpMethod.Get, $"{PostsEndpoint}/{wordpressId}", Token);
             dynamic blogPostContents = JsonConvert.DeserializeObject(blogPostJson);
-            return blogPostContents.content.rendered;
+            return new BlogPost()
+            {
+                Content = blogPostContents.content.rendered
+            };
         }
 
-        public void CreateBlogPost()
+        public void SyncToWordpress(BlogPost post)
         {
-            var contents = _client.GetRawResultOfBearerRequest(HttpMethod.Post, $"{PostsEndpoint}", Token, "{\"title\":\"Created from El Dorado, FTW\", \"content\":\"Seriously, I do \", \"excerpt\":\"asdf\"}"); 
-            Console.WriteLine(contents);
+            var contents = _client.GetRawResultOfBearerRequest(HttpMethod.Post, $"{PostsEndpoint}", Token, $"{{\"title\":\"{post.Title}\"}}"); 
         }
     }
 }

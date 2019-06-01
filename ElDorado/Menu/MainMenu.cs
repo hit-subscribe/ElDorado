@@ -119,10 +119,11 @@ namespace ElDorado.Menu
             var retriever = new WordpressService(new SimpleWebClient());
             retriever.AuthorizeUser(credentials["Username"], credentials["Password"]);
 
-            //var post = retriever.GetBlogPostById(16731);
-            //Console.WriteLine(post);
+            var post = retriever.GetBlogPostById(16731);
+            Console.WriteLine(post.Content);
 
-            retriever.CreateBlogPost();
+            //retriever.SyncToWordpress(new BlogPost() { Title = "Are We Getting This Right?" });
+
         }
     }
 }
