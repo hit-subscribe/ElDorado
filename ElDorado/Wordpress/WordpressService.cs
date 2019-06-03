@@ -54,7 +54,25 @@ namespace ElDorado.Wordpress
 
         public void SyncToWordpress(BlogPost post)
         {
-            var contents = _client.GetRawResultOfBearerRequest(HttpMethod.Post, $"{PostsEndpoint}", Token, $"{{\"title\":\"{post.Title}\"}}"); 
+            var postJson = BuildJsonBodyFromPost(post);
+            var url = post.WordpressId == 0 ? PostsEndpoint : $"{PostsEndpoint}/{post.WordpressId}";
+
+            var rawJson = _client.GetRawResultOfBearerRequest(HttpMethod.Post, url, Token, postJson);
+            SetWordpressIdIfNeeded(post, rawJson);
+        }
+
+        private static void SetWordpressIdIfNeeded(BlogPost post, string rawJson)
+        {
+            if (post.WordpressId == 0)
+            {
+                dynamic wordpressPost = JsonConvert.DeserializeObject(rawJson);
+                post.WordpressId = wordpressPost.id;
+            }
+        }
+
+        private string BuildJsonBodyFromPost(BlogPost post)
+        {
+            return $"{{\"title\":\"{post.Title}\"}}";
         }
     }
 }
