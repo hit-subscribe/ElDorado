@@ -277,6 +277,9 @@
     <Content Include="Contents\bootstrap-datepicker3.css.map" />
     <Content Include="Contents\bootstrap-datepicker.standalone.css.map" />
     <Content Include="Contents\bootstrap-datepicker.css.map" />
+    <Content Include="App_Data\wordpress.cred">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\PublishProfiles\HitSubscribe - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

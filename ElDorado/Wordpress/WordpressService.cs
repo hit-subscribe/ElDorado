@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -25,7 +26,13 @@ namespace ElDorado.Wordpress
             _client = client;
         }
 
-        public void AuthorizeUser(string username, string password)
+        public virtual void AuthorizeUser(string filePath)
+        {
+            var credentialStore = new CredentialStore(File.ReadAllText(filePath));
+            AuthorizeUser(credentialStore["Username"], credentialStore["Password"]);
+        }
+
+        public virtual void AuthorizeUser(string username, string password)
         {
             try
             {
@@ -39,7 +46,7 @@ namespace ElDorado.Wordpress
             }
         }
 
-        public BlogPost GetBlogPostById(int wordpressId)
+        public virtual BlogPost GetBlogPostById(int wordpressId)
         {
             if (string.IsNullOrEmpty(Token))
                 throw new WordpressAuthorizationException("You have to authorize a user to invoke this.");
@@ -52,7 +59,7 @@ namespace ElDorado.Wordpress
             };
         }
 
-        public void SyncToWordpress(BlogPost post)
+        public virtual void SyncToWordpress(BlogPost post)
         {
             var postJson = BuildJsonBodyFromPost(post);
             var url = post.WordpressId == 0 ? PostsEndpoint : $"{PostsEndpoint}/{post.WordpressId}";

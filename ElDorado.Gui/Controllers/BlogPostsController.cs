@@ -1,6 +1,7 @@
 ﻿using ElDorado.Domain;
 using ElDorado.Gui.ViewModels;
 using ElDorado.Trello;
+using ElDorado.Wordpress;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -14,11 +15,13 @@ namespace ElDorado.Gui.Controllers
     {
         private readonly BlogContext _blogContext;
         private readonly TrelloWritingCalendarService _trelloService;
+        private readonly WordpressService _wordpressService;
 
         public string MapPath { get; set; }
 
-        public BlogPostsController(BlogContext blogContext, TrelloWritingCalendarService trelloService)
+        public BlogPostsController(BlogContext blogContext, TrelloWritingCalendarService trelloService, Wordpress.WordpressService wordpressService)
         {
+            _wordpressService = wordpressService;
             _trelloService = trelloService;
             _blogContext = blogContext;
         }
@@ -48,7 +51,11 @@ namespace ElDorado.Gui.Controllers
 
             InitializeTrelloService();
             _trelloService.AddCard(post);
+
             post.CalculateAuthorPay();
+
+            _wordpressService.AuthorizeUser(MapPath ?? Server.MapPath(@"~/App_Data/wordpress.cred"));
+            _wordpressService.SyncToWordpress(post);
 
             _blogContext.SaveChanges();
 

@@ -1,6 +1,7 @@
 ﻿using ElDorado.Domain;
 using ElDorado.Gui.Controllers;
 using ElDorado.Trello;
+using ElDorado.Wordpress;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shouldly;
 using System;
@@ -35,7 +36,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         {
             Context.BlogPosts.Add(Post);
 
-            Target = new BlogPostsController(Context, Service) { MapPath = "Doesn't matter" };
+            Target = new BlogPostsController(Context, Service, Mock.Create<WordpressService>()) { MapPath = "Doesn't matter" };
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]

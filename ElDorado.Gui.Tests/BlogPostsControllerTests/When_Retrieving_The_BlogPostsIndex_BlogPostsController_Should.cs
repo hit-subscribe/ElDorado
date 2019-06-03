@@ -2,6 +2,7 @@
 using ElDorado.Gui.Controllers;
 using ElDorado.Gui.ViewModels;
 using ElDorado.Trello;
+using ElDorado.Wordpress;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shouldly;
 using System;
@@ -51,7 +52,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
             Context.Authors.Add(new Author());
             Context.Blogs.Add(new Blog());
 
-            Target = new BlogPostsController(Context, Mock.Create<TrelloWritingCalendarService>());
+            Target = new BlogPostsController(Context, Mock.Create<TrelloWritingCalendarService>(), Mock.Create<WordpressService>());
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]

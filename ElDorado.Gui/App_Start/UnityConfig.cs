@@ -1,6 +1,7 @@
 using ElDorado.Domain;
 using ElDorado.Gui.Controllers;
 using ElDorado.Trello;
+using ElDorado.Wordpress;
 using System;
 using System.Data.Entity;
 using Unity;
@@ -51,6 +52,7 @@ namespace ElDorado.Gui
             container.RegisterType<AccountController>(new InjectionConstructor());
             container.RegisterType<ManageController>(new InjectionConstructor());
             container.RegisterType<TrelloWritingCalendarService, TrelloWritingCalendarService>();
+            container.RegisterType<WordpressService, WordpressService>();
             container.RegisterType<IWritingCalendarBoard, WritingCalendarBoard>();
         }
     }

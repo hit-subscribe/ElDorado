@@ -2,6 +2,7 @@
 using ElDorado.Gui.Controllers;
 using ElDorado.Gui.ViewModels;
 using ElDorado.Trello;
+using ElDorado.Wordpress;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shouldly;
 using System;
@@ -21,8 +22,8 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         private const int PostId = 12;
 
         private BlogContext Context { get; } = EntityFrameworkMock.Create<BlogContext>();
-
         private TrelloWritingCalendarService TrelloService = Mock.Create<TrelloWritingCalendarService>();
+        private WordpressService WordpressService = Mock.Create<WordpressService>();
 
         private Author Author => Context.Authors.First();
 
@@ -37,7 +38,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
             Context.Authors.Add(new Author() { Id = 1 });
             Context.Arrange(ctx => ctx.UpdateBlogPostDependencies(Arg.IsAny<BlogPost>())).DoInstead((BlogPost bp) => bp.Author = Context.Authors.First(a => a.Id == bp.AuthorId));
 
-            Target = new BlogPostsController(Context, TrelloService) { MapPath = "somepath" };
+            Target = new BlogPostsController(Context, TrelloService, WordpressService) { MapPath = "somepath" };
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -176,6 +177,26 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
             Target.Create(new BlogPost() { AuthorId = Author.Id, IsDoublePost = true, IsGhostwritten = true });
 
             Context.BlogPosts.First().AuthorPay.ShouldBe(450);
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Sync_To_Wordpress()
+        {
+            WordpressService.Arrange(ws => ws.SyncToWordpress(Post));
+
+            Target.Create(Post);
+
+            WordpressService.Assert(ws => ws.SyncToWordpress(Post), Occurs.Once());
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Authorize_Wordpress()
+        {
+            WordpressService.Arrange(ws => ws.AuthorizeUser(Arg.AnyString));
+
+            Target.Create(Post);
+
+            WordpressService.Assert(ws => ws.AuthorizeUser(Arg.AnyString));
         }
 }
 }

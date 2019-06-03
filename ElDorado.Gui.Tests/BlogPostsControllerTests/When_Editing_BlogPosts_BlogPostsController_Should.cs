@@ -2,6 +2,7 @@
 using ElDorado.Gui.Controllers;
 using ElDorado.Gui.ViewModels;
 using ElDorado.Trello;
+using ElDorado.Wordpress;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shouldly;
 using System;
@@ -41,7 +42,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
 
             Context.Arrange(ctx => ctx.UpdateBlogPostDependencies(Arg.IsAny<BlogPost>())).DoInstead((BlogPost bp) => bp.Author = Context.Authors.First(a => a.Id == bp.AuthorId));
 
-            Target = new BlogPostsController(Context, Service) { MapPath = "asdf" };
+            Target = new BlogPostsController(Context, Service, Mock.Create<WordpressService>()) { MapPath = "asdf" };
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
