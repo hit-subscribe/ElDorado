@@ -68,6 +68,11 @@ namespace ElDorado.Wordpress
             SetWordpressIdIfNeeded(post, rawJson);
         }
 
+        public virtual void DeleteFromWordpress(BlogPost post)
+        {
+            _client.GetRawResultOfBearerRequest(HttpMethod.Delete, $"{PostsEndpoint}/{post.WordpressId}", Token);
+        }
+
         private static void SetWordpressIdIfNeeded(BlogPost post, string rawJson)
         {
             if (post.WordpressId == 0)

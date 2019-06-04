@@ -21,12 +21,20 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
     {
         private const string PostTitle = "This One Weird Trick";
         private const int PostId = 4;
+        private const int WordpressId = 123;
 
         private BlogContext Context { get; } = EntityFrameworkMock.Create<BlogContext>();
 
         private TrelloWritingCalendarService Service { get; set; } = Mock.Create<TrelloWritingCalendarService>();
+        private WordpressService WordpressService { get; set; } = Mock.Create<WordpressService>();
 
-        private BlogPost Post { get; set; } = new BlogPost() { Id = PostId, Title = PostTitle };
+
+        private BlogPost Post { get; set; } = new BlogPost()
+        {
+            Id = PostId,
+            Title = PostTitle,
+            WordpressId = WordpressId
+        };
 
         private BlogPostsController Target { get; set; }
 
@@ -36,7 +44,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         {
             Context.BlogPosts.Add(Post);
 
-            Target = new BlogPostsController(Context, Service, Mock.Create<WordpressService>()) { MapPath = "Doesn't matter" };
+            Target = new BlogPostsController(Context, Service, WordpressService) { MapPath = "Doesn't matter" };
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -75,5 +83,24 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
             Service.Assert(s => s.DeleteCard(Post.TrelloId), Occurs.Once());
         }
 
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Delete_Draft_From_Wordpress()
+        {
+            WordpressService.Arrange(ws => ws.DeleteFromWordpress(Arg.IsAny<BlogPost>()));
+
+            Target.Delete(PostId);
+
+            WordpressService.Assert(ws => ws.DeleteFromWordpress(Post));
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Authorize_In_Wordpress()
+        {
+            WordpressService.Arrange(ws => ws.AuthorizeUser(Arg.AnyString));
+
+            Target.Delete(PostId);
+
+            WordpressService.Assert(ws => ws.AuthorizeUser(Arg.AnyString));
+        }
 }
 }

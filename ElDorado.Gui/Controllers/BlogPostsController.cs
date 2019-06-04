@@ -91,12 +91,6 @@ namespace ElDorado.Gui.Controllers
             return RedirectToAction("Edit", new { postId = blogPostViewModel.Post.Id });
         }
 
-        private void SyncToWordpress(BlogPost post)
-        {
-            _wordpressService.AuthorizeUser(MapPath ?? Server.MapPath(@"~/App_Data/wordpress.cred"));
-            _wordpressService.SyncToWordpress(post);
-        }
-
         public ActionResult Delete(int postId)
         {
             var post = _blogContext.BlogPosts.First(p => p.Id == postId);
@@ -108,7 +102,16 @@ namespace ElDorado.Gui.Controllers
             InitializeTrelloService();
             _trelloService.DeleteCard(trelloId);
 
+            _wordpressService.AuthorizeUser(MapPath ?? Server.MapPath(@"~/App_Data/wordpress.cred"));
+            _wordpressService.DeleteFromWordpress(post);
+
             return RedirectToAction("Index");
+        }
+
+        private void SyncToWordpress(BlogPost post)
+        {
+            _wordpressService.AuthorizeUser(MapPath ?? Server.MapPath(@"~/App_Data/wordpress.cred"));
+            _wordpressService.SyncToWordpress(post);
         }
 
         private BlogPostEditViewModel GetViewModelForId(int id)
