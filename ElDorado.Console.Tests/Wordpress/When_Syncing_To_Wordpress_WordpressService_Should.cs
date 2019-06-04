@@ -17,12 +17,18 @@ namespace ElDorado.Console.Tests.Wordpress
     [TestClass]
     public class When_Syncing_To_Wordpress_WordpressService_Should
     {
+        private const int AuthorWordpressId = 12;
         private const int PostWordpressId = 12345;
         private const string PostTitle = "An Awesome Post";
 
         private SimpleWebClient Client { get; set; } = Mock.Create<SimpleWebClient>();
 
-        private BlogPost Post { get; set; } = new BlogPost() { Title = PostTitle, WordpressId = PostWordpressId };
+        private BlogPost Post { get; set; } = new BlogPost()
+        {
+            Title = PostTitle,
+            WordpressId = PostWordpressId,
+            Author = new Author() { WordpressId = AuthorWordpressId }
+        };
 
         private WordpressService Target;
 
@@ -41,7 +47,7 @@ namespace ElDorado.Console.Tests.Wordpress
 
             Target.SyncToWordpress(Post);
 
-            Client.Assert(cl => cl.GetRawResultOfBearerRequest(HttpMethod.Post, WordpressService.PostsEndpoint, Arg.AnyString, $"{{\"title\":\"{PostTitle}\"}}"), Occurs.Once());
+            Client.Assert(cl => cl.GetRawResultOfBearerRequest(HttpMethod.Post, WordpressService.PostsEndpoint, Arg.AnyString, Arg.AnyString), Occurs.Once());
 
         }
 
@@ -50,7 +56,7 @@ namespace ElDorado.Console.Tests.Wordpress
         {
             Target.SyncToWordpress(Post);
 
-            Client.Assert(cl => cl.GetRawResultOfBearerRequest(HttpMethod.Post, $"{WordpressService.PostsEndpoint}/{PostWordpressId}", Arg.AnyString, $"{{\"title\":\"{PostTitle}\"}}"));
+            Client.Assert(cl => cl.GetRawResultOfBearerRequest(HttpMethod.Post, $"{WordpressService.PostsEndpoint}/{PostWordpressId}", Arg.AnyString, Arg.AnyString));
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -61,6 +67,14 @@ namespace ElDorado.Console.Tests.Wordpress
             Target.SyncToWordpress(Post);
 
             Post.WordpressId.ShouldBe(PostWordpressId);
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Set_The_Author_To_BlogPost_Authors_WordpressId()
+        {
+            Target.SyncToWordpress(Post);
+
+            Client.Assert(cl => cl.GetRawResultOfBearerRequest(HttpMethod.Post, $"{WordpressService.PostsEndpoint}/{PostWordpressId}", Arg.AnyString, Arg.Matches<string>(s => s.Contains($"\"author\":{AuthorWordpressId}"))));
         }
 }
 }

@@ -157,6 +157,10 @@
     <Compile Include="Migrations\201906010009166_AddingWordpressPropertiesToBlogPosts.Designer.cs">
       <DependentUpon>201906010009166_AddingWordpressPropertiesToBlogPosts.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906040108547_AddingWordpressIdToAuthor.cs" />
+    <Compile Include="Migrations\201906040108547_AddingWordpressIdToAuthor.Designer.cs">
+      <DependentUpon>201906040108547_AddingWordpressIdToAuthor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -235,6 +239,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906010009166_AddingWordpressPropertiesToBlogPosts.resx">
       <DependentUpon>201906010009166_AddingWordpressPropertiesToBlogPosts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906040108547_AddingWordpressIdToAuthor.resx">
+      <DependentUpon>201906040108547_AddingWordpressIdToAuthor.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

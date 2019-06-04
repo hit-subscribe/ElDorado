@@ -79,7 +79,7 @@ namespace ElDorado.Wordpress
 
         private string BuildJsonBodyFromPost(BlogPost post)
         {
-            return $"{{\"title\":\"{post.Title}\"}}";
+            return $"{{\"title\":\"{post.Title}\", \"author\":{post.Author.WordpressId}}}";
         }
     }
 }
