@@ -28,6 +28,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         private Author Author => Context.Authors.First();
 
         private TrelloWritingCalendarService Service { get; set; } = Mock.Create<TrelloWritingCalendarService>();
+        private WordpressService WordpressService { get; set; } = Mock.Create<WordpressService>();
 
         private BlogPost Post { get; set; } = new BlogPost() { Id = PostId, Title = PostTitle, AuthorId = 1 };
 
@@ -42,7 +43,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
 
             Context.Arrange(ctx => ctx.UpdateBlogPostDependencies(Arg.IsAny<BlogPost>())).DoInstead((BlogPost bp) => bp.Author = Context.Authors.First(a => a.Id == bp.AuthorId));
 
-            Target = new BlogPostsController(Context, Service, Mock.Create<WordpressService>()) { MapPath = "asdf" };
+            Target = new BlogPostsController(Context, Service, WordpressService) { MapPath = "asdf" };
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -121,5 +122,25 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
 
             Context.BlogPosts.Last().AuthorPay.ShouldBe(450);
         }
-}
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Sync_To_Wordpress()
+        {
+            WordpressService.Arrange(ws => ws.SyncToWordpress(Post));
+
+            Target.Edit(new BlogPostEditViewModel(Post, Context));
+
+            WordpressService.Assert(ws => ws.SyncToWordpress(Post), Occurs.Once());
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Authorize_Wordpress()
+        {
+            WordpressService.Arrange(ws => ws.AuthorizeUser(Arg.AnyString));
+
+            Target.Edit(new BlogPostEditViewModel(Post, Context));
+
+            WordpressService.Assert(ws => ws.AuthorizeUser(Arg.AnyString));
+        }
+    }
 }

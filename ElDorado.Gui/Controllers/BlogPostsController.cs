@@ -54,11 +54,15 @@ namespace ElDorado.Gui.Controllers
 
             post.CalculateAuthorPay();
 
-            _wordpressService.AuthorizeUser(MapPath ?? Server.MapPath(@"~/App_Data/wordpress.cred"));
-            _wordpressService.SyncToWordpress(post);
+            SyncToWordpress(post);
 
             _blogContext.SaveChanges();
 
+            return RedirectToAppropriatePage(post, createNew);
+        }
+
+        private ActionResult RedirectToAppropriatePage(BlogPost post, string createNew)
+        {
             if (createNew == "Create and Add Another")
                 return RedirectToAction("Create", new { blogId = post.BlogId });
 
@@ -79,11 +83,18 @@ namespace ElDorado.Gui.Controllers
             _blogContext.UpdateBlogPostDependencies(blogPostViewModel.Post);
             blogPostViewModel.SetAuthorPay();
             _blogContext.SaveChanges();
+            SyncToWordpress(blogPostViewModel.Post);
 
             InitializeTrelloService();
             _trelloService.EditCard(blogPostViewModel.Post);
 
             return RedirectToAction("Edit", new { postId = blogPostViewModel.Post.Id });
+        }
+
+        private void SyncToWordpress(BlogPost post)
+        {
+            _wordpressService.AuthorizeUser(MapPath ?? Server.MapPath(@"~/App_Data/wordpress.cred"));
+            _wordpressService.SyncToWordpress(post);
         }
 
         public ActionResult Delete(int postId)
