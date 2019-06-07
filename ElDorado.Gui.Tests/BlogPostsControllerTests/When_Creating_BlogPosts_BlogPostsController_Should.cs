@@ -198,5 +198,15 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
 
             WordpressService.Assert(ws => ws.AuthorizeUser(Arg.AnyString));
         }
-}
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Return_Same_View_When_Model_State_Is_Invalid()
+        {
+            WordpressService.Arrange(wps => wps.SyncToWordpress(Arg.IsAny<BlogPost>())).Throws<MissingAuthorException>();
+
+            var result = Target.Create(Post) as ViewResult;
+
+            result.ShouldNotBeNull();
+        }
+    }
 }

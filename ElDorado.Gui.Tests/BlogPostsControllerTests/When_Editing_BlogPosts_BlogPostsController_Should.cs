@@ -142,5 +142,25 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
 
             WordpressService.Assert(ws => ws.AuthorizeUser(Arg.AnyString));
         }
-    }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Add_Model_Error_For_Wordpress_Author_When_Sync_Throws_MissingAuthorException()
+        {
+            WordpressService.Arrange(wps => wps.SyncToWordpress(Arg.IsAny<BlogPost>())).Throws<MissingAuthorException>();
+
+            Target.Edit(new BlogPostEditViewModel(Post, Context));
+
+            Target.ModelState["Post.AuthorId"].Errors.First().ErrorMessage.ShouldBe("Author not in Wordpress.");
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Return_Same_View_When_Model_State_Is_Invalid()
+        {
+            WordpressService.Arrange(wps => wps.SyncToWordpress(Arg.IsAny<BlogPost>())).Throws<MissingAuthorException>();
+
+            var result = Target.Edit(new BlogPostEditViewModel(Post, Context)) as ViewResult;
+
+            result.ShouldNotBeNull();
+        }
+}
 }

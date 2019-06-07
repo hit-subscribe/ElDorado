@@ -58,7 +58,10 @@ namespace ElDorado.Gui.Controllers
 
             _blogContext.SaveChanges();
 
-            return RedirectToAppropriatePage(post, createNew);
+            if (ModelState.IsValid)
+                return RedirectToAppropriatePage(post, createNew);
+            else
+                return Create(post.BlogId);
         }
 
         private ActionResult RedirectToAppropriatePage(BlogPost post, string createNew)
@@ -83,12 +86,16 @@ namespace ElDorado.Gui.Controllers
             _blogContext.UpdateBlogPostDependencies(blogPostViewModel.Post);
             blogPostViewModel.SetAuthorPay();
             _blogContext.SaveChanges();
+
             SyncToWordpress(blogPostViewModel.Post);
             
             InitializeTrelloService();
             _trelloService.EditCard(blogPostViewModel.Post);
 
-            return RedirectToAction("Edit", new { postId = blogPostViewModel.Post.Id });
+            if (ModelState.IsValid)
+                return RedirectToAction("Edit", new { postId = blogPostViewModel.Post.Id });
+            else
+                return Edit(blogPostViewModel.Post.Id);
         }
 
         public ActionResult Delete(int postId)
@@ -102,7 +109,7 @@ namespace ElDorado.Gui.Controllers
             InitializeTrelloService();
             _trelloService.DeleteCard(trelloId);
 
-            _wordpressService.AuthorizeUser(MapPath ?? Server.MapPath(@"~/App_Data/wordpress.cred"));
+            AuthorizeWordpress();
             _wordpressService.DeleteFromWordpress(post);
 
             return RedirectToAction("Index");
@@ -110,8 +117,15 @@ namespace ElDorado.Gui.Controllers
 
         private void SyncToWordpress(BlogPost post)
         {
-            _wordpressService.AuthorizeUser(MapPath ?? Server.MapPath(@"~/App_Data/wordpress.cred"));
-            _wordpressService.SyncToWordpress(post);
+            try
+            {
+                AuthorizeWordpress();
+                _wordpressService.SyncToWordpress(post);
+            }
+            catch(MissingAuthorException)
+            {
+                ModelState.AddModelError("Post.AuthorId", "Author not in Wordpress.");
+            }
         }
 
         private BlogPostEditViewModel GetViewModelForId(int id)
@@ -124,5 +138,7 @@ namespace ElDorado.Gui.Controllers
         {
             _trelloService.Initialize(MapPath ?? Server.MapPath(@"~/App_Data/trello.cred"));
         }
+
+        private void AuthorizeWordpress() => _wordpressService.AuthorizeUser(MapPath ?? Server.MapPath(@"~/App_Data/wordpress.cred"));
     }
 }

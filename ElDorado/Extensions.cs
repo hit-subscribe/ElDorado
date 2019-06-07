@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -49,6 +50,11 @@ namespace ElDorado
             var easternTimeUtcOffset = new TimeSpan(-5, 0, 0);
 
             return new DateTimeOffset(nearMidnight, easternTimeUtcOffset).DateTime;
+        }
+
+        public static string ToJsonString<T>(this T target)
+        {
+            return JObject.FromObject(target).ToString();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using ElDorado.Domain;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -61,11 +62,13 @@ namespace ElDorado.Wordpress
 
         public virtual void SyncToWordpress(BlogPost post)
         {
-            var postJson = BuildJsonBodyFromPost(post);
-            var url = post.WordpressId == 0 ? PostsEndpoint : $"{PostsEndpoint}/{post.WordpressId}";
+            bool areWeCreatingANewPost = post.WordpressId == 0;
 
-            var rawJson = _client.GetRawResultOfBearerRequest(HttpMethod.Post, url, Token, postJson);
-            SetWordpressIdIfNeeded(post, rawJson);
+            if (areWeCreatingANewPost)
+                CreatePostInWordpress(post);
+            else
+                EditPostInWordpress(post);
+
         }
 
         public virtual void DeleteFromWordpress(BlogPost post)
@@ -73,20 +76,45 @@ namespace ElDorado.Wordpress
             _client.GetRawResultOfBearerRequest(HttpMethod.Delete, $"{PostsEndpoint}/{post.WordpressId}", Token);
         }
 
-        private static void SetWordpressIdIfNeeded(BlogPost post, string rawJson)
+
+        //This is a lot of private cruft, Erik, maybe a new class is in order here
+
+        private void EditPostInWordpress(BlogPost post)
         {
-            if (post.WordpressId == 0)
+            var postToMakeJson = new
             {
-                dynamic wordpressPost = JsonConvert.DeserializeObject(rawJson);
-                post.WordpressId = wordpressPost.id;
-                if (post.Author.WordpressId != (int)wordpressPost.author)
-                    throw new MissingAuthorException();
-            }
+                author = post.Author?.WordpressId ?? 0
+            };
+
+            dynamic wordpressPost = SendPostToWordpressAndGetResultantJson(post, $"{PostsEndpoint}/{post.WordpressId}", postToMakeJson.ToJsonString());
+            ValidateAUthorMatchOrDieTrying(post, wordpressPost);
         }
 
-        private string BuildJsonBodyFromPost(BlogPost post)
+        private void CreatePostInWordpress(BlogPost post)
         {
-            return $"{{\"title\":\"{post.Title}\", \"author\":{post.Author?.WordpressId ?? 0}}}";
+            var postToMakeJson = new
+            {
+                title = post.Title,
+                author = post.Author?.WordpressId ?? 0
+            };
+
+            dynamic wordpressPost = SendPostToWordpressAndGetResultantJson(post, PostsEndpoint, postToMakeJson.ToJsonString());
+            post.WordpressId = wordpressPost.id;
+
+            ValidateAUthorMatchOrDieTrying(post, wordpressPost);
+        }
+
+        private static void ValidateAUthorMatchOrDieTrying(BlogPost post, dynamic wordpressPost)
+        {
+            if (post.Author != null && post.Author.WordpressId != (int)wordpressPost.author)
+                throw new MissingAuthorException();
+        }
+
+        private dynamic SendPostToWordpressAndGetResultantJson(BlogPost post, string endpoint, string json)
+        {
+            var rawJson = _client.GetRawResultOfBearerRequest(HttpMethod.Post, endpoint, Token, json);
+
+            return JsonConvert.DeserializeObject(rawJson);
         }
     }
 }
