@@ -35,7 +35,7 @@ namespace ElDorado.Console.Tests.Wordpress
         [TestInitialize]
         public void BeforeEachTest()
         {
-            Client.Arrange(cl => cl.GetRawResultOfBearerRequest(HttpMethod.Post, WordpressService.PostsEndpoint, Arg.AnyString, Arg.AnyString)).Returns($"{{\"id\":{PostWordpressId}}}");
+            Client.Arrange(cl => cl.GetRawResultOfBearerRequest(HttpMethod.Post, WordpressService.PostsEndpoint, Arg.AnyString, Arg.AnyString)).Returns($"{{\"id\":{PostWordpressId}, \"author\":{AuthorWordpressId}}}");
 
             Target = new WordpressService(Client);   
         }
@@ -75,6 +75,25 @@ namespace ElDorado.Console.Tests.Wordpress
             Target.SyncToWordpress(Post);
 
             Client.Assert(cl => cl.GetRawResultOfBearerRequest(HttpMethod.Post, $"{WordpressService.PostsEndpoint}/{PostWordpressId}", Arg.AnyString, Arg.Matches<string>(s => s.Contains($"\"author\":{AuthorWordpressId}"))));
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Set_AuthorId_To_Zero_When_Has_No_Author()
+        {
+            Post.Author = null;
+
+            Target.SyncToWordpress(Post);
+
+            Client.Assert(cl => cl.GetRawResultOfBearerRequest(HttpMethod.Post, $"{WordpressService.PostsEndpoint}/{PostWordpressId}", Arg.AnyString, Arg.Matches<string>(s => s.Contains($"\"author\":0"))));
+        }
+
+    [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Throw_An_Exception_When_Post_Author_Wordpress_Id_Does_Not_Match_Json_Author_Id()
+        {
+            Post.Author.WordpressId = 16;
+            Post.WordpressId = 0;
+
+            Should.Throw<MissingAuthorException>(() => Target.SyncToWordpress(Post));
         }
 }
 }

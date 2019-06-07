@@ -79,12 +79,14 @@ namespace ElDorado.Wordpress
             {
                 dynamic wordpressPost = JsonConvert.DeserializeObject(rawJson);
                 post.WordpressId = wordpressPost.id;
+                if (post.Author.WordpressId != (int)wordpressPost.author)
+                    throw new MissingAuthorException();
             }
         }
 
         private string BuildJsonBodyFromPost(BlogPost post)
         {
-            return $"{{\"title\":\"{post.Title}\", \"author\":{post.Author.WordpressId}}}";
+            return $"{{\"title\":\"{post.Title}\", \"author\":{post.Author?.WordpressId ?? 0}}}";
         }
     }
 }
