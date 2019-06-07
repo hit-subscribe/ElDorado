@@ -59,7 +59,7 @@ namespace ElDorado.Console.Tests.TrelloTests
         {
             Card.BuildDescriptionFromBlogPost(Post);
 
-            Card.Description.ShouldContain($"**Persona**: {Post.Persona}");
+            Card.Description.ShouldContain($"**Persona (Intended Audience)**: {Post.Persona}");
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]

@@ -19,7 +19,7 @@ namespace ElDorado.Trello
 
             target.Description = SeparateIntoLines($"{Bold("Mission")}: {post.Mission}",
                                                    $"{Bold("Keyword")}: {post.Keyword}", 
-                                                   $"{Bold("Persona")}: {post.Persona}", 
+                                                   $"{Bold("Persona (Intended Audience)")}: {post.Persona}", 
                                                    $"{Bold("Post Notes")}: {post.PostNotes}", 
                                                    $"{Bold("Client Notes")}: {post.ClientNotes}",
                                                    $"{Bold("Special Considerations")}: {specialConsiderationText}");
