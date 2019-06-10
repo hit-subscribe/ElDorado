@@ -85,12 +85,13 @@ namespace ElDorado.Gui.Controllers
             _blogContext.SetModified(blogPostViewModel.Post);
             _blogContext.UpdateBlogPostDependencies(blogPostViewModel.Post);
             blogPostViewModel.SetAuthorPay();
-            _blogContext.SaveChanges();
 
             SyncToWordpress(blogPostViewModel.Post);
-            
+
             InitializeTrelloService();
             _trelloService.EditCard(blogPostViewModel.Post);
+
+            _blogContext.SaveChanges();
 
             if (ModelState.IsValid)
                 return RedirectToAction("Edit", new { postId = blogPostViewModel.Post.Id });
