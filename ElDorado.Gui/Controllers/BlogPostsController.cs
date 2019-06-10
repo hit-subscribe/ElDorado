@@ -86,7 +86,8 @@ namespace ElDorado.Gui.Controllers
             _blogContext.UpdateBlogPostDependencies(blogPostViewModel.Post);
             blogPostViewModel.SetAuthorPay();
 
-            SyncToWordpress(blogPostViewModel.Post);
+            if(blogPostViewModel.Post.WordpressId != 0)
+               SyncToWordpress(blogPostViewModel.Post);
 
             InitializeTrelloService();
             _trelloService.EditCard(blogPostViewModel.Post);

@@ -30,7 +30,13 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         private TrelloWritingCalendarService Service { get; set; } = Mock.Create<TrelloWritingCalendarService>();
         private WordpressService WordpressService { get; set; } = Mock.Create<WordpressService>();
 
-        private BlogPost Post { get; set; } = new BlogPost() { Id = PostId, Title = PostTitle, AuthorId = 1 };
+        private BlogPost Post { get; set; } = new BlogPost()
+        {
+            Id = PostId,
+            Title = PostTitle,
+            AuthorId = 1,
+            WordpressId = 1
+        };
 
         private BlogPostsController Target { get; set; }
 
@@ -161,6 +167,18 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
             var result = Target.Edit(new BlogPostEditViewModel(Post, Context)) as ViewResult;
 
             result.ShouldNotBeNull();
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Only_Sync_To_Wordpress_When_Post_Has_WordpressId()
+        {
+            WordpressService.Arrange(ws => ws.SyncToWordpress(Post));
+
+            Post.WordpressId = 0;
+
+            Target.Edit(new BlogPostEditViewModel(Post, Context));
+
+            WordpressService.Assert(ws => ws.SyncToWordpress(Post), Occurs.Never());
         }
 }
 }
