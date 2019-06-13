@@ -1,14 +1,10 @@
 ﻿using ElDorado.Domain;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ElDorado.Wordpress
 {
@@ -41,7 +37,7 @@ namespace ElDorado.Wordpress
                 dynamic wordpressCredential = JsonConvert.DeserializeObject(rawJson);
                 Token = wordpressCredential.token;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new WordpressAuthorizationException(ex);
             }

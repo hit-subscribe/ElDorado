@@ -1,0 +1,18 @@
+﻿@model ElDorado.Gui.ViewModels.PostReviewViewModel
+
+@{
+    ViewBag.Title = "Review the Post";
+}
+
+<div>
+    <h4>@Html.DisplayFor(model => model.Title)</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>@Html.DisplayNameFor(model => model.WordCount)</dt>
+        <dd>@Html.DisplayFor(model => model.WordCount)</dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -66,6 +66,7 @@
             <td>@Html.DisplayFor(modelItem => item.Blog.CompanyName)</td>
             <td>@Html.DisplayFor(modelItem => item.Author.FullName)</td>
             <td>@Html.DisplayFor(modelItem => item.Title)</td>
+            <td>@Html.ActionLink(item.Title, "Review", new { postId = item.Id })</td>
             <td>@Html.DisplayFor(modelItem => item.Keyword)</td>
             <td>@Html.DisplayFor(modelItem => item.DraftDate)</td>
             <td>@Html.DisplayFor(modelItem => item.TargetFinalizeDate)</td>

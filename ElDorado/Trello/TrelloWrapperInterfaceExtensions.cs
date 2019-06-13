@@ -1,9 +1,6 @@
 ﻿using ElDorado.Domain;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ElDorado.Trello
 {
@@ -18,9 +15,9 @@ namespace ElDorado.Trello
             var specialConsiderationText = GenerateCommaSeparatedList(ghostwrittenText, doublePostText);
 
             target.Description = SeparateIntoLines($"{Bold("Mission")}: {post.Mission}",
-                                                   $"{Bold("Keyword")}: {post.Keyword}", 
-                                                   $"{Bold("Persona (Intended Audience)")}: {post.Persona}", 
-                                                   $"{Bold("Post Notes")}: {post.PostNotes}", 
+                                                   $"{Bold("Keyword")}: {post.Keyword}",
+                                                   $"{Bold("Persona (Intended Audience)")}: {post.Persona}",
+                                                   $"{Bold("Post Notes")}: {post.PostNotes}",
                                                    $"{Bold("Client Notes")}: {post.ClientNotes}",
                                                    $"{Bold("Special Considerations")}: {specialConsiderationText}");
         }

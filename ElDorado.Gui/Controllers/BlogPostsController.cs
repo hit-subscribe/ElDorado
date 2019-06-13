@@ -64,14 +64,6 @@ namespace ElDorado.Gui.Controllers
                 return Create(post.BlogId);
         }
 
-        private ActionResult RedirectToAppropriatePage(BlogPost post, string createNew)
-        {
-            if (createNew == "Create and Add Another")
-                return RedirectToAction("Create", new { blogId = post.BlogId });
-
-            return RedirectToAction("Edit", new { postId = post.Id });
-        }
-
         public ActionResult Edit(int postId)
         {
             return View(GetViewModelForId(postId));
@@ -115,6 +107,31 @@ namespace ElDorado.Gui.Controllers
             _wordpressService.DeleteFromWordpress(post);
 
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Review(int postId)
+        {
+            var post = _blogContext.BlogPosts.First(p => p.Id == postId);
+
+            AuthorizeWordpress();
+            post.Content = _wordpressService.GetBlogPostById(post.WordpressId).Content;
+
+            var viewModel = new PostReviewViewModel()
+            {
+                WordCount = post.Content.Split(' ').Count(),
+                Title = post.Title
+            };
+
+            _blogContext.SaveChanges();
+            return View(viewModel);
+        }
+
+        private ActionResult RedirectToAppropriatePage(BlogPost post, string createNew)
+        {
+            if (createNew == "Create and Add Another")
+                return RedirectToAction("Create", new { blogId = post.BlogId });
+
+            return RedirectToAction("Edit", new { postId = post.Id });
         }
 
         private void SyncToWordpress(BlogPost post)

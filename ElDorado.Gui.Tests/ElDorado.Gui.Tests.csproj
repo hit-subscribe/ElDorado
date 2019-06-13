@@ -105,6 +105,7 @@
     <Compile Include="BlogPostsControllerTests\When_Deleting_BlogPosts_BlogPostsController_Should.cs" />
     <Compile Include="BlogPostsControllerTests\When_Editing_BlogPosts_BlogPostsController_Should.cs" />
     <Compile Include="BlogPostsControllerTests\When_Retrieving_The_BlogPostsIndex_BlogPostsController_Should.cs" />
+    <Compile Include="BlogPostsControllerTests\When_Reviewing_Blog_Posts_BlogPostsController_Should.cs" />
     <Compile Include="BlogsControllerTests\When_Retrieving_The_BlogsIndex_BlogsController_Should.cs" />
     <Compile Include="MvcTestingExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

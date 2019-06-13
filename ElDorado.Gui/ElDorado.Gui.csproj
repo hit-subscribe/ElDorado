@@ -247,6 +247,7 @@
     <Compile Include="ViewModels\PostAuthorPairing.cs" />
     <Compile Include="ViewModels\PostHustlingViewModel.cs" />
     <Compile Include="ViewModels\PostLineItemViewModel.cs" />
+    <Compile Include="ViewModels\PostReviewViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Contents\bootstrap-datepicker.css" />
@@ -421,6 +422,7 @@
     <Content Include="Views\Reports\PostHustling.cshtml" />
     <Content Include="Views\Reports\AuthorTimeliness.cshtml" />
     <Content Include="Views\Reports\AccountsPayable.cshtml" />
+    <Content Include="Views\BlogPosts\Review.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
