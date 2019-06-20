@@ -62,26 +62,32 @@
 
     @foreach (var item in Model.BlogPosts)
     {
-        <tr>
-            <td>@Html.DisplayFor(modelItem => item.Blog.CompanyName)</td>
-            <td>@Html.DisplayFor(modelItem => item.Author.FullName)</td>
-            <td>@Html.DisplayFor(modelItem => item.Title)</td>
+    <tr>
+        <td>@Html.DisplayFor(modelItem => item.Blog.CompanyName)</td>
+        <td>@Html.DisplayFor(modelItem => item.Author.FullName)</td>
+        @if (item.WordpressId != 0)
+        {
             <td>@Html.ActionLink(item.Title, "Review", new { postId = item.Id })</td>
-            <td>@Html.DisplayFor(modelItem => item.Keyword)</td>
-            <td>@Html.DisplayFor(modelItem => item.DraftDate)</td>
-            <td>@Html.DisplayFor(modelItem => item.TargetFinalizeDate)</td>
-            <td>@Html.DisplayFor(modelItem => item.TargetPublicationDate)</td>
-            <td>@Html.DisplayFor(modelItem => item.DraftCompleteDate)</td>
-            <td>@Html.DisplayFor(modelItem => item.SubmittedDate)</td>
-            <td>@Html.DisplayFor(modelItem => item.PublishedDate)</td>
-            <td>@Html.DisplayFor(modelItem => item.IsApproved)</td>
-            <td>@Html.DisplayFor(modelItem => item.IsDoublePost)</td>
-            <td>@Html.DisplayFor(modelItem => item.IsGhostwritten)</td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { postId = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { postId = item.Id })
-            </td>
-        </tr>
+        }
+        else
+        {
+            <td>@Html.DisplayFor(modelItem => item.Title)</td>
+        }
+        <td>@Html.DisplayFor(modelItem => item.Keyword)</td>
+        <td>@Html.DisplayFor(modelItem => item.DraftDate)</td>
+        <td>@Html.DisplayFor(modelItem => item.TargetFinalizeDate)</td>
+        <td>@Html.DisplayFor(modelItem => item.TargetPublicationDate)</td>
+        <td>@Html.DisplayFor(modelItem => item.DraftCompleteDate)</td>
+        <td>@Html.DisplayFor(modelItem => item.SubmittedDate)</td>
+        <td>@Html.DisplayFor(modelItem => item.PublishedDate)</td>
+        <td>@Html.DisplayFor(modelItem => item.IsApproved)</td>
+        <td>@Html.DisplayFor(modelItem => item.IsDoublePost)</td>
+        <td>@Html.DisplayFor(modelItem => item.IsGhostwritten)</td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { postId = item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { postId = item.Id })
+        </td>
+    </tr>
     }
 
 </table>

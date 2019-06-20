@@ -9,25 +9,23 @@ namespace ElDorado.Gui.ViewModels
 {
     public class PostReviewViewModel
     {
-        private BlogPost _post;
+        private HtmlNode _documentNode; 
 
-        public int WordCount { get; set; }
-        public string Title { get; set; }
+        public int WordCount { get; }
+        public string Title { get; }
+        public IEnumerable<string> Links { get; } = Enumerable.Empty<string>();
+
 
         public PostReviewViewModel(BlogPost post)
         {
-            _post = post;
+            _documentNode = post.Content.AsHtml();
+
             Title = post.Title;
-            SetWordCount();
-        }
+            WordCount = _documentNode.InnerText.WordCount();
 
-        private void SetWordCount()
-        {
-            var htmlDocument = new HtmlDocument();
-            htmlDocument.LoadHtml(_post.Content);
-
-            var parsedContent = htmlDocument.DocumentNode.InnerText;
-            WordCount = parsedContent.WordCount();
+            var linkNodes = _documentNode.SelectNodes("//a[@href]");
+            if(linkNodes != null)
+                Links = linkNodes.Select(n => n.Attributes["href"]?.Value);
         }
     }
 }

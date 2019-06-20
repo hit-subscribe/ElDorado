@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HtmlAgilityPack;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -24,6 +25,13 @@ namespace ElDorado.Gui
         public static bool MatchesYearAndMonth(this DateTime? target, int year, int month)
         {
             return target.HasValue && target.Value.Year == year && target.Value.Month == month;
+        }
+
+        public static HtmlNode AsHtml(this string target)
+        {
+            var document = new HtmlDocument();
+            document.LoadHtml(target);
+            return document.DocumentNode;
         }
     }
 }

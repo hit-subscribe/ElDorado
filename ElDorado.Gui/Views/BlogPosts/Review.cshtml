@@ -10,9 +10,19 @@
     <dl class="dl-horizontal">
         <dt>@Html.DisplayNameFor(model => model.WordCount)</dt>
         <dd>@Html.DisplayFor(model => model.WordCount)</dd>
-
     </dl>
 </div>
+<table class="table">
+    <tr>
+        <th>Links</th>
+    </tr>
+    @foreach (var link in Model.Links)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelLink => link)</td>
+        </tr>
+    }
+</table>
 <p>
     @Html.ActionLink("Back to List", "Index")
 </p>

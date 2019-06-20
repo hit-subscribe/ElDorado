@@ -87,5 +87,31 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
 
             Context.Assert(ctx => ctx.SaveChanges());
         }
-    }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Return_A_ViewModel_With_A_Single_Link()
+        {
+            var viewModel = Target.Review(Post.Id).GetResult<PostReviewViewModel>();
+
+            viewModel.Links.Count().ShouldBe(1);
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Return_A_ViewModel_With_Correct_Link()
+        {
+            var viewModel = Target.Review(Post.Id).GetResult<PostReviewViewModel>();
+
+            viewModel.Links.First().ShouldBe("https://www.shrm.org/resourcesandtools/hr-topics/talent-acquisition/pages/dont-underestimate-the-importance-of-effective-onboarding.aspx");
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Return_ViewModel_With_No_Links_When_None_Exist()
+        {
+            Post.Content = "<p>Adding some text, let&#8217;s make sure the sync doesn&#8217;t blow it away.</p>";
+
+            var viewModel = Target.Review(Post.Id).GetResult<PostReviewViewModel>();
+
+            viewModel.Links.Count().ShouldBe(0);
+        }
+}
 }
