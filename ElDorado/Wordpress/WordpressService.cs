@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 
 namespace ElDorado.Wordpress
 {
@@ -52,7 +53,7 @@ namespace ElDorado.Wordpress
             dynamic blogPostContents = JsonConvert.DeserializeObject(blogPostJson);
             return new BlogPost()
             {
-                Content = blogPostContents.content.rendered
+                Content = HttpUtility.HtmlDecode((string)blogPostContents.content.rendered).ReplaceWeirdQuotes()
             };
         }
 

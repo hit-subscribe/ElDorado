@@ -116,11 +116,7 @@ namespace ElDorado.Gui.Controllers
             AuthorizeWordpress();
             post.Content = _wordpressService.GetBlogPostById(post.WordpressId).Content;
 
-            var viewModel = new PostReviewViewModel()
-            {
-                WordCount = post.Content.Split(' ').Count(),
-                Title = post.Title
-            };
+            var viewModel = new PostReviewViewModel(post);
 
             _blogContext.SaveChanges();
             return View(viewModel);

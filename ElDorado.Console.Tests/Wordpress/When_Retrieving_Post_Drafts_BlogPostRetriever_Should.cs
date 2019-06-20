@@ -16,7 +16,7 @@ namespace ElDorado.Console.Tests.Wordpress
     public class When_Retrieving_Post_Drafts_WordpressService_Should
     {
         private const int BlogPostId = 123;
-        private const string RawServerBlogPostText = "This is an awesome blog post.";
+        private const string RawServerBlogPostText = "This ain’t an ‘awesome’ &#8220;blog post.&#8221;";
         private static readonly string RawServerPostJsonResponse = $"{{\"content\":{{\"rendered\":\"{RawServerBlogPostText}\",\"protected\":false}}}}";
 
         private SimpleWebClient Client { get; set; } = Mock.Create<SimpleWebClient>();
@@ -38,7 +38,7 @@ namespace ElDorado.Console.Tests.Wordpress
         {
             var postContents = Target.GetBlogPostById(BlogPostId).Content;
 
-            postContents.ShouldBe(RawServerBlogPostText);
+            postContents.ShouldNotBeEmpty();
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -57,5 +57,12 @@ namespace ElDorado.Console.Tests.Wordpress
             Client.Assert(cl => cl.GetRawResultOfBearerRequest(HttpMethod.Get, Arg.AnyString, Target.Token, Arg.AnyString), Occurs.Once());
         }
 
-    }
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Decode_The_Html()
+        {
+            var postContents = Target.GetBlogPostById(BlogPostId).Content;
+
+            postContents.ShouldBe("This ain't an 'awesome' \"blog post.\"");
+        }
+}
 }

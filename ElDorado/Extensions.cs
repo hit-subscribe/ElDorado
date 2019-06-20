@@ -56,5 +56,15 @@ namespace ElDorado
         {
             return JObject.FromObject(target).ToString();
         }
+
+        public static string ReplaceWeirdQuotes(this string target)
+        {
+            return target.Replace("“", "\"").Replace("”", "\"").Replace("’", "'").Replace("‘", "'");
+        }
+
+        public static int WordCount(this string target)
+        {
+            return target.Replace("—", " ").Split((char[])null, StringSplitOptions.RemoveEmptyEntries).Count();
+        }
     }
 }
