@@ -3,23 +3,56 @@
 @{
     ViewBag.Title = "Review the Post";
 }
+<h2><b>Title: </b>@Html.DisplayFor(model => model.Title)</h2>
+
+<h3><u>Warnings</u></h3>
+<table class="table">
+    <tr>
+        <th>Warning</th>
+    </tr>
+    @foreach (var warning in Model.Warnings)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelWarning => warning)</td>
+        </tr>
+    }
+</table>
 
 <div>
-    <h4>@Html.DisplayFor(model => model.Title)</h4>
-    <hr />
+    <h3><u>Post Stats</u></h3>
     <dl class="dl-horizontal">
         <dt>@Html.DisplayNameFor(model => model.WordCount)</dt>
         <dd>@Html.DisplayFor(model => model.WordCount)</dd>
     </dl>
 </div>
+
+<h3><u>External Links: @(Model.InternalLinks.Count())</u></h3>
 <table class="table">
     <tr>
-        <th>Links</th>
+        <th>Link</th>
+        <th>Full URL</th>
     </tr>
-    @foreach (var link in Model.Links)
+    @foreach (var link in Model.InternalLinks)
     {
         <tr>
-            <td>@Html.DisplayFor(modelLink => link)</td>
+            <td><a href="@Html.DisplayFor(modelLink => link.Url)">@Html.DisplayFor(modelLink => link.AnchorText)</a></td>
+            <td>@Html.DisplayFor(modelLink => link.Url)</td>
+        </tr>
+    }
+</table>
+<h3><u>External Links: @(Model.ExternalLinks.Count())</u></h3>
+<table class="table">
+    <tr>
+        <th>Link</th>
+        <th>Base URL</th>
+        <th>Full URL</th>
+    </tr>
+    @foreach (var link in Model.ExternalLinks)
+    {
+        <tr>
+            <td><a href="@Html.DisplayFor(modelLink => link.Url)">@Html.DisplayFor(modelLink => link.AnchorText)</a></td>
+            <td>@Html.DisplayFor(modelLink => link.Domain)</td>
+            <td>@Html.DisplayFor(modelLink => link.Url)</td>
         </tr>
     }
 </table>

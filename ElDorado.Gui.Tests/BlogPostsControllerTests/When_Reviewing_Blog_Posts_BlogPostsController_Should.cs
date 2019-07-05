@@ -93,7 +93,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         {
             var viewModel = Target.Review(Post.Id).GetResult<PostReviewViewModel>();
 
-            viewModel.Links.Count().ShouldBe(1);
+            viewModel.ExternalLinks.Count().ShouldBe(1);
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -101,7 +101,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         {
             var viewModel = Target.Review(Post.Id).GetResult<PostReviewViewModel>();
 
-            viewModel.Links.First().ShouldBe("https://www.shrm.org/resourcesandtools/hr-topics/talent-acquisition/pages/dont-underestimate-the-importance-of-effective-onboarding.aspx");
+            viewModel.ExternalLinks.First().Url.ShouldBe("https://www.shrm.org/resourcesandtools/hr-topics/talent-acquisition/pages/dont-underestimate-the-importance-of-effective-onboarding.aspx");
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -111,7 +111,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
 
             var viewModel = Target.Review(Post.Id).GetResult<PostReviewViewModel>();
 
-            viewModel.Links.Count().ShouldBe(0);
+            viewModel.ExternalLinks.Count().ShouldBe(0);
         }
 }
 }

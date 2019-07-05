@@ -77,5 +77,9 @@ namespace ElDorado.Domain
             if (IsDoublePost)
                 AuthorPay += baseRate;
         }
+        public bool IsInternalLink(Link targetLink)
+        {
+            return Blog?.Url != null && Blog.Url.Contains(targetLink.Domain);
+        }
     }
 }
