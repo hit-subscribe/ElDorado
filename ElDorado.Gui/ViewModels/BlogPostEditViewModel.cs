@@ -20,6 +20,7 @@ namespace ElDorado.Gui.ViewModels
         {
             Post = post;
             AuthorPay = post.AuthorPay;
+            Blogs = BuildClientList(context, b => b.IsActive || post.BlogId == b.Id);
             Authors = BuildAuthorsList(context, a => a.IsActive && a.IsInOurSystems);
         }
 

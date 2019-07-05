@@ -165,6 +165,10 @@
     <Compile Include="Migrations\201906040108547_AddingWordpressIdToAuthor.Designer.cs">
       <DependentUpon>201906040108547_AddingWordpressIdToAuthor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907052113572_Adding IsActive Property for Clients.cs" />
+    <Compile Include="Migrations\201907052113572_Adding IsActive Property for Clients.Designer.cs">
+      <DependentUpon>201907052113572_Adding IsActive Property for Clients.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -246,6 +250,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906040108547_AddingWordpressIdToAuthor.resx">
       <DependentUpon>201906040108547_AddingWordpressIdToAuthor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907052113572_Adding IsActive Property for Clients.resx">
+      <DependentUpon>201907052113572_Adding IsActive Property for Clients.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

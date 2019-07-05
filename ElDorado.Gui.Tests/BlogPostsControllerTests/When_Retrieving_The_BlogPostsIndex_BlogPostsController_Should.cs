@@ -109,7 +109,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         public void Return_A_ViewModel_With_Companies_Sorted()
         {
             Blog.CompanyName = "Zephyr";
-            Context.Blogs.Add(new Blog() { CompanyName = "Acme" });
+            Context.Blogs.Add(new Blog() { CompanyName = "Acme", IsActive = true });
 
             var viewModel = Target.Index().GetResult<BlogPostIndexViewModel>();
 

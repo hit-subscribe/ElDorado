@@ -27,6 +27,8 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
 
         private Author Author => Context.Authors.First();
 
+        private Blog Blog => Context.Blogs.First();
+        
         private TrelloWritingCalendarService Service { get; set; } = Mock.Create<TrelloWritingCalendarService>();
         private WordpressService WordpressService { get; set; } = Mock.Create<WordpressService>();
 
@@ -35,7 +37,8 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
             Id = PostId,
             Title = PostTitle,
             AuthorId = 1,
-            WordpressId = 1
+            WordpressId = 1,
+            BlogId = 1
         };
 
         private BlogPostsController Target { get; set; }
@@ -44,6 +47,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         [TestInitialize]
         public void BeforeEachTest()
         {
+            Context.Blogs.Add(new Blog() { Id = 1, IsActive = true });
             Context.Authors.Add(new Author() { Id = 1 });
             Context.BlogPosts.Add(Post);
 
@@ -63,7 +67,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_A_ViewModel_With_All_Blogs()
         {
-            Blog blog = new Blog() { CompanyName = "Acme" };
+            Blog blog = new Blog() { CompanyName = "Acme", IsActive = true };
             Context.Blogs.Add(blog);
 
             var viewModel = Target.Edit(PostId).GetResult<BlogPostEditViewModel>();
@@ -179,6 +183,16 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
             Target.Edit(new BlogPostEditViewModel(Post, Context));
 
             WordpressService.Assert(ws => ws.SyncToWordpress(Post), Occurs.Never());
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Include_The_Post_Blog_Even_If_That_Client_Is_Inactive()
+        {
+            Blog.IsActive = false;
+            
+            var viewModel = Target.Edit(PostId).GetResult<BlogPostEditViewModel>();
+
+            viewModel.Blogs.ShouldContain(item => item.Value == Blog.Id.ToString());
         }
 }
 }

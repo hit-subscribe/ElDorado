@@ -8,7 +8,7 @@ namespace ElDorado.Gui.ViewModels
 {
     public class BlogPostViewModel
     {
-        public IEnumerable<SelectListItem> Blogs { get; private set; } = Enumerable.Empty<SelectListItem>();
+        public IEnumerable<SelectListItem> Blogs { get; protected set; } = Enumerable.Empty<SelectListItem>();
 
         public IEnumerable<SelectListItem> Authors { get; protected set; } = Enumerable.Empty<SelectListItem>();
 
@@ -16,12 +16,21 @@ namespace ElDorado.Gui.ViewModels
         {
             if (context != null)
             {
-                Blogs = context.Blogs.OrderBy(b => b.CompanyName).ToList().Select(b => new SelectListItem() { Text = b.CompanyName, Value = b.Id.ToString() });
+                Blogs = BuildClientList(context, b => b.IsActive);
                 Authors = BuildAuthorsList(context, a => a.IsInOurSystems);
             }
         }
 
-        protected IEnumerable<SelectListItem> BuildAuthorsList(BlogContext context, Func<Author, bool> selectionCriteria)
+        protected IEnumerable<SelectListItem> BuildClientList(BlogContext context, Func<Blog, bool> selectionCriterion)
+        {
+            if (context == null)
+                return Enumerable.Empty<SelectListItem>();
+
+            var matchingClients = context.Blogs.Where(selectionCriterion).OrderBy(b => b.CompanyName).ToList();
+            return matchingClients.Select(mc => new SelectListItem() { Text = mc.CompanyName, Value = mc.Id.ToString() });
+        }
+
+    protected IEnumerable<SelectListItem> BuildAuthorsList(BlogContext context, Func<Author, bool> selectionCriteria)
         {
             if (context == null)
                 return Enumerable.Empty<SelectListItem>();

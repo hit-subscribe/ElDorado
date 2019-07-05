@@ -26,6 +26,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         private WordpressService WordpressService = Mock.Create<WordpressService>();
 
         private Author Author => Context.Authors.First();
+        private Blog Blog => Context.Blogs.First();
 
         private BlogPost Post { get; set; } = new BlogPost() { Id = PostId, Title = PostTitle, AuthorId = 1 };
 
@@ -35,6 +36,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         [TestInitialize]
         public void BeforeEachTest()
         {
+            Context.Blogs.Add(new Blog() { Id = 12, IsActive = true });
             Context.Authors.Add(new Author() { Id = 1 });
             Context.Arrange(ctx => ctx.UpdateBlogPostDependencies(Arg.IsAny<BlogPost>())).DoInstead((BlogPost bp) => bp.Author = Context.Authors.First(a => a.Id == bp.AuthorId));
 
@@ -52,7 +54,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Respond_To_Get_Request_With_A_ViewModel_Containing_All_Blogs()
         {
-            Blog blog = new Blog() { CompanyName = "EvilCorp" };
+            Blog blog = new Blog() { CompanyName = "EvilCorp", IsActive = true };
             Context.Blogs.Add(blog);
 
             var viewModel = Target.Create().GetResult<BlogPostEditViewModel>();
@@ -71,6 +73,16 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Filter_Inactive_Clients_Out_Of_Blogs_List()
+        {
+            Blog.IsActive = false;
+
+            var viewModel = Target.Create().GetResult<BlogPostEditViewModel>();
+
+            viewModel.Blogs.ShouldBeEmpty();
+        }
+
+    [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Respond_To_Get_Request_With_BlogId_Specified_By_Setting_Post_BlogId()
         {
             const int blogId = 6;
