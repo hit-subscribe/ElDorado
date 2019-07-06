@@ -46,6 +46,7 @@
     <tr>
         <th>@Html.DisplayNameFor(model => model.BlogPosts.First().Blog.CompanyName)</th>
         <th>Author</th>
+        <th>Editor</th>
         <th>@Html.DisplayNameFor(model => model.BlogPosts.First().Title)</th>
         <th>@Html.DisplayNameFor(model => model.BlogPosts.First().Keyword)</th>
         <th>@Html.DisplayNameFor(model => model.BlogPosts.First().DraftDate)</th>
@@ -65,6 +66,7 @@
     <tr>
         <td>@Html.DisplayFor(modelItem => item.Blog.CompanyName)</td>
         <td>@Html.DisplayFor(modelItem => item.Author.FullName)</td>
+        <td>@Html.DisplayFor(modelItem => item.Editor.FullName)</td>
         @if (item.WordpressId != 0)
         {
             <td>@Html.ActionLink(item.Title, "Review", new { postId = item.Id })</td>

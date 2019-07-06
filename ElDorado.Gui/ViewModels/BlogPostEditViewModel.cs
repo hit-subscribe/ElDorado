@@ -11,6 +11,8 @@ namespace ElDorado.Gui.ViewModels
     {
 
         public decimal? AuthorPay { get; set; }
+        
+        public decimal? EditorPay { get; set; }
 
         public BlogPost Post { get; private set; }
 

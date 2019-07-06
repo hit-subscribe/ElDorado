@@ -12,12 +12,15 @@ namespace ElDorado.Gui.ViewModels
 
         public IEnumerable<SelectListItem> Authors { get; protected set; } = Enumerable.Empty<SelectListItem>();
 
+        public IEnumerable<SelectListItem> Editors { get; protected set; } = Enumerable.Empty<SelectListItem>();
+
         public BlogPostViewModel(BlogContext context)
         {
             if (context != null)
             {
                 Blogs = BuildClientList(context, b => b.IsActive);
                 Authors = BuildAuthorsList(context, a => a.IsInOurSystems);
+                Editors = BuildEditorsList(context, e => e.IsInOurSystems);
             }
         }
 
@@ -30,13 +33,22 @@ namespace ElDorado.Gui.ViewModels
             return matchingClients.Select(mc => new SelectListItem() { Text = mc.CompanyName, Value = mc.Id.ToString() });
         }
 
-    protected IEnumerable<SelectListItem> BuildAuthorsList(BlogContext context, Func<Author, bool> selectionCriteria)
+        protected IEnumerable<SelectListItem> BuildAuthorsList(BlogContext context, Func<Author, bool> selectionCriteria)
         {
             if (context == null)
                 return Enumerable.Empty<SelectListItem>();
 
             var matchingAuthors = context.Authors.Where(selectionCriteria).OrderBy(a => a.FirstName).ToList();
             return matchingAuthors.Select(a => new SelectListItem() { Text = $"{a.FirstName} {a.LastName}", Value = a.Id.ToString() });
+        }
+
+        protected IEnumerable<SelectListItem> BuildEditorsList(BlogContext context, Func<Editor, bool> selectionCriterion)
+        {
+            if (context == null)
+                return Enumerable.Empty<SelectListItem>();
+
+            var matchingEditors = context.Editors.Where(selectionCriterion).OrderBy(e => e.FirstName).ToList();
+            return matchingEditors.Select(e => new SelectListItem() { Text = $"{e.FirstName} {e.LastName}", Value = e.Id.ToString() });
         }
     }
 }
