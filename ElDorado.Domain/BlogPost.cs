@@ -81,6 +81,14 @@ namespace ElDorado.Domain
             if (IsDoublePost)
                 AuthorPay += baseRate;
         }
+
+        public void CalculateEditorPay()
+        {
+            var baseRate = Editor?.BaseRate ?? 0;
+
+            EditorPay = baseRate * (Content != null ? Content.WordCount() : 0);
+        }
+
         public bool IsInternalLink(Link targetLink)
         {
             return Blog?.Url != null && Blog.Url.Contains(targetLink.Domain);

@@ -26,7 +26,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         private BlogContext Context { get; } = EntityFrameworkMock.Create<BlogContext>();
 
         private Author Author => Context.Authors.First();
-
+        private Editor Editor => Context.Editors.First();
         private Blog Blog => Context.Blogs.First();
         
         private TrelloWritingCalendarService Service { get; set; } = Mock.Create<TrelloWritingCalendarService>();
@@ -37,6 +37,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
             Id = PostId,
             Title = PostTitle,
             AuthorId = 1,
+            EditorId = 1,
             WordpressId = 1,
             BlogId = 1
         };
@@ -49,9 +50,10 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         {
             Context.Blogs.Add(new Blog() { Id = 1, IsActive = true });
             Context.Authors.Add(new Author() { Id = 1 });
+            Context.Editors.Add(new Editor() { Id = 1 });
             Context.BlogPosts.Add(Post);
 
-            Context.Arrange(ctx => ctx.UpdateBlogPostDependencies(Arg.IsAny<BlogPost>())).DoInstead((BlogPost bp) => bp.Author = Context.Authors.First(a => a.Id == bp.AuthorId));
+            Context.Arrange(ctx => ctx.UpdateBlogPostDependencies(Arg.IsAny<BlogPost>())).DoInstead((BlogPost bp) => bp.Author = Context.Authors.First(a => a.Id == bp.AuthorId)).DoInstead((BlogPost bp) => bp.Editor = Context.Editors.First(e => e.Id == bp.EditorId));
 
             Target = new BlogPostsController(Context, Service, WordpressService) { MapPath = "asdf" };
         }
@@ -128,12 +130,34 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         public void Update_Author_Pay()
         {
             Author.BaseRate = 150;
-            Target.Edit(new BlogPostEditViewModel(new BlogPost() { AuthorId = Author.Id, IsDoublePost = true, IsGhostwritten = true }, Context) { AuthorPay = null });
+            Target.Edit(new BlogPostEditViewModel(new BlogPost() { AuthorId = Author.Id, EditorId = Editor.Id, IsDoublePost = true, IsGhostwritten = true }, Context) { AuthorPay = null });
 
             Context.BlogPosts.Last().AuthorPay.ShouldBe(450);
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Update_Editor_Pay()
+        {
+            Editor.BaseRate = 0.04M;
+
+            Target.Edit(new BlogPostEditViewModel(new BlogPost() { AuthorId = Author.Id, EditorId = Editor.Id, Content = "<p>asdf</p>" }, Context) { EditorPay = null });
+
+            Context.BlogPosts.Last().EditorPay.ShouldBe(0.04M);
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Use_User_Specified_Editor_Pay_When_Specified()
+        {
+            const decimal userSpecifiedPay = 1.23M;
+
+            Editor.BaseRate = 0.04M;
+
+            Target.Edit(new BlogPostEditViewModel(new BlogPost() { AuthorId = Author.Id, EditorId = Editor.Id, Content = "<p>asdf</p>" }, Context) { EditorPay = userSpecifiedPay });
+
+            Context.BlogPosts.Last().EditorPay.ShouldBe(userSpecifiedPay);
+        }
+
+    [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Sync_To_Wordpress()
         {
             WordpressService.Arrange(ws => ws.SyncToWordpress(Post));

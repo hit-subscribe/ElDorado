@@ -68,6 +68,7 @@
     <Compile Include="BlogPost.cs" />
     <Compile Include="CustomBlogContext.cs" />
     <Compile Include="Editor.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="IHaveIdentity.cs" />
     <Compile Include="Link.cs" />
     <Compile Include="Migrations\201802210846572_CreatedBlogEntity.cs" />

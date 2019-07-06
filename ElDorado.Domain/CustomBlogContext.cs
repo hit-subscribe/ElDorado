@@ -12,6 +12,7 @@ namespace ElDorado.Domain
         {
             Entry(post).Reference(p => p.Author).Load();
             Entry(post).Reference(p => p.Blog).Load();
+            Entry(post).Reference(p => p.Editor).Load();
         }
     }
 }

@@ -76,7 +76,7 @@ namespace ElDorado.Gui.Controllers
             _blogContext.BlogPosts.Attach(blogPostViewModel.Post);
             _blogContext.SetModified(blogPostViewModel.Post);
             _blogContext.UpdateBlogPostDependencies(blogPostViewModel.Post);
-            blogPostViewModel.SetAuthorPay();
+            blogPostViewModel.SetPay();
 
             if(blogPostViewModel.Post.WordpressId != 0)
                SyncToWordpress(blogPostViewModel.Post);

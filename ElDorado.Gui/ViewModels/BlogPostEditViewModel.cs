@@ -26,12 +26,26 @@ namespace ElDorado.Gui.ViewModels
             Authors = BuildAuthorsList(context, a => a.IsActive && a.IsInOurSystems);
         }
 
+        public void SetPay()
+        {
+            SetAuthorPay();
+            SetEditorPay();
+        }
+
         public void SetAuthorPay()
         {
             if (AuthorPay == null)
                 Post.CalculateAuthorPay();
             else
                 Post.AuthorPay = AuthorPay.Value;
+        }
+
+        public void SetEditorPay()
+        {
+            if (EditorPay == null)
+                Post.CalculateEditorPay();
+            else
+                Post.EditorPay = EditorPay.Value;
         }
     }
 }

@@ -61,10 +61,5 @@ namespace ElDorado
         {
             return target.Replace("“", "\"").Replace("”", "\"").Replace("’", "'").Replace("‘", "'");
         }
-
-        public static int WordCount(this string target)
-        {
-            return target.Replace("—", " ").Split((char[])null, StringSplitOptions.RemoveEmptyEntries).Count();
-        }
     }
 }
