@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ElDorado.Domain
 {
-    public class Editor
+    public class Editor : IHaveIdentity
     {
         [Required]
         public int Id { get; set; }

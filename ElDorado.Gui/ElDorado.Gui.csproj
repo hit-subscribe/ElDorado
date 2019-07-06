@@ -230,6 +230,7 @@
     <Compile Include="Controllers\BlogPostsController.cs" />
     <Compile Include="Controllers\BlogsController.cs" />
     <Compile Include="Controllers\CrudController`1.cs" />
+    <Compile Include="Controllers\EditorsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
@@ -426,6 +427,9 @@
     <Content Include="Views\Reports\AuthorTimeliness.cshtml" />
     <Content Include="Views\Reports\AccountsPayable.cshtml" />
     <Content Include="Views\BlogPosts\Review.cshtml" />
+    <Content Include="Views\Editors\Index.cshtml" />
+    <Content Include="Views\Editors\Create.cshtml" />
+    <Content Include="Views\Editors\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
