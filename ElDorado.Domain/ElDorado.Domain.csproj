@@ -67,6 +67,7 @@
     <Compile Include="BlogMetric.cs" />
     <Compile Include="BlogPost.cs" />
     <Compile Include="CustomBlogContext.cs" />
+    <Compile Include="Editor.cs" />
     <Compile Include="IHaveIdentity.cs" />
     <Compile Include="Link.cs" />
     <Compile Include="Migrations\201802210846572_CreatedBlogEntity.cs" />
@@ -169,6 +170,10 @@
     <Compile Include="Migrations\201907052113572_Adding IsActive Property for Clients.Designer.cs">
       <DependentUpon>201907052113572_Adding IsActive Property for Clients.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907061516262_Added editor as a concept.cs" />
+    <Compile Include="Migrations\201907061516262_Added editor as a concept.Designer.cs">
+      <DependentUpon>201907061516262_Added editor as a concept.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -253,6 +258,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907052113572_Adding IsActive Property for Clients.resx">
       <DependentUpon>201907052113572_Adding IsActive Property for Clients.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907061516262_Added editor as a concept.resx">
+      <DependentUpon>201907061516262_Added editor as a concept.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

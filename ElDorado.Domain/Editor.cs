@@ -9,20 +9,27 @@ using System.Threading.Tasks;
 
 namespace ElDorado.Domain
 {
-    public class Author : IHaveIdentity
+    public class Editor
     {
+        [Required]
         public int Id { get; set; }
+
         [Required]
         public string FirstName { get; set; }
+
         [Required]
         public string LastName { get; set; }
-        public string Bio { get; set; }
-        public string BlogUrl { get; set; }
+
         public string EmailAddress { get; set; }
-        public string TrelloId { get; set; }
-        public bool IsActive { get; set; } = true;
-        public bool IsInOurSystems { get; set; } = true;
-        public decimal BaseRate { get; set; } = 100;
+
+        public string TrelloId {get;set;}
+
+        public bool IsActive { get; set; }
+
+        public bool IsInOurSystems { get; set; }
+
+        public decimal BaseRate { get; set; } = 0.04M;
+
         public int WordpressId { get; set; }
 
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -30,10 +37,5 @@ namespace ElDorado.Domain
 
         [NotMapped]
         public string FullName => $"{FirstName} {LastName}";
-
-        public bool HasPostsDue(DateTime dueDate)
-        {
-            return BlogPosts != null && BlogPosts.Any(bp => bp.DraftDate.GetValueOrDefault() == dueDate.Date);
-        }
     }
 }

@@ -20,6 +20,9 @@ namespace ElDorado.Domain
 
         public virtual Author Author { get; set; }
 
+        public int? EditorId { get; set; }
+        public virtual Editor Editor { get; set; }
+
         [Required]
         public string Title { get; set; }
         public string SeoTitle { get; set; }
@@ -39,6 +42,7 @@ namespace ElDorado.Domain
         public bool IsGhostwritten { get; set; }
         public string TrelloId { get; set; }
         public decimal AuthorPay { get; set; }
+        public decimal EditorPay { get; set; }
 
         //Need to be added to the database
         public string Content { get; set; } 

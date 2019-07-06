@@ -13,6 +13,7 @@ namespace ElDorado.Domain
         public virtual DbSet<BlogMetric> BlogMetrics { get; set; }
         public virtual DbSet<BlogPost> BlogPosts { get; set; }
         public virtual DbSet<Author> Authors { get; set; }
+        public virtual DbSet<Editor> Editors { get; set; }
 
         public virtual void SetModified<TEntity>(TEntity entity) where TEntity : class
         {
@@ -39,6 +40,12 @@ namespace ElDorado.Domain
                 .HasMany(b => b.BlogPosts)
                 .WithOptional(b => b.Author)
                 .HasForeignKey(b => b.AuthorId)
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<Editor>()
+                .HasMany(e => e.BlogPosts)
+                .WithOptional(bp => bp.Editor)
+                .HasForeignKey(bp => bp.EditorId)
                 .WillCascadeOnDelete(true);
         }
     }
