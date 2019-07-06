@@ -9,7 +9,14 @@ namespace ElDorado.Gui.ViewModels
     [NotMapped]
     public class AccountsPayableViewModel
     {
-        public IEnumerable<AuthorLedgerViewModel> AuthorLedgers { get; set; } = Enumerable.Empty<AuthorLedgerViewModel>();
-        public decimal Total => AuthorLedgers.Sum(al => al.Total);
+        public IEnumerable<PersonLedgerViewModel> AuthorLedgers { get; set; } = Enumerable.Empty<PersonLedgerViewModel>();
+
+        public IEnumerable<PersonLedgerViewModel> EditorLedgers { get; set; } = Enumerable.Empty<PersonLedgerViewModel>();
+        
+        public decimal AuthorTotal => AuthorLedgers.Sum(al => al.Total);
+
+        public decimal EditorTotal => EditorLedgers.Sum(el => el.Total);
+
+        public decimal GrandTotal => AuthorTotal + EditorTotal;
     }
 }

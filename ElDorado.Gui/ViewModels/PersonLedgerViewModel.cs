@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ElDorado.Gui.ViewModels
 {
-    public class AuthorLedgerViewModel
+    public class PersonLedgerViewModel
     {
         public string Name { get; set; }
 

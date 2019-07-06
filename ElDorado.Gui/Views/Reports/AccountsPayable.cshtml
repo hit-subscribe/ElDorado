@@ -28,6 +28,7 @@
     <input name="userPickedDate" id="userPickedDate" class="monthpicker"/>
     <input type="submit" value="Choose Month"/>
 }
+<h2>Authors</h2>
 <table class="table">
     <tr>
         <th>Author</th>
@@ -55,7 +56,47 @@
         </tr>
     }
     <tr>
-        <td>Grand Total</td>
-        <td align="right"><b>@Html.DisplayFor(modelItem => Model.Total)</b></td>
+        <td><b>Author Total</b></td>
+        <td align="right"><b>@Html.DisplayFor(modelItem => Model.AuthorTotal)</b></td>
+    </tr>
+</table>
+
+<h2>Editors</h2>
+<table class="table">
+    <tr>
+        <th>Editor</th>
+        <th>Posts</th>
+    </tr>
+    @foreach (var ledger in Model.EditorLedgers)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => ledger.Name)</td>
+            <td>
+                @foreach (var post in ledger.Posts)
+                {
+                    <table width="100%">
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => post.Title)</td>
+                            <td align="right">@Html.DisplayFor(modelItem => post.Cost)</td>
+                        </tr>
+                    </table>
+                }
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td align="right"><b>@Html.DisplayFor(modelItem => ledger.Total)</b></td>
+        </tr>
+    }
+    <tr>
+        <td><b>Editor Total</b></td>
+        <td align="right"><b>@Html.DisplayFor(modelItem => Model.EditorTotal)</b></td>
+    </tr>
+</table>
+
+<table class="table">
+    <tr>
+        <td><h3><b>Grand Total:</b></h3></td>
+        <td align="right"><h3><b>@Model.GrandTotal</b></h3></td>
     </tr>
 </table>

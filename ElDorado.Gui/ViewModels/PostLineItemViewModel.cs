@@ -14,7 +14,6 @@ namespace ElDorado.Gui.ViewModels
         public PostLineItemViewModel(BlogPost bp)
         {
             Title = bp.Title;
-            Cost = bp.AuthorPay;
         }
     }
 }

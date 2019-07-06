@@ -157,7 +157,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
             Context.BlogPosts.Last().EditorPay.ShouldBe(userSpecifiedPay);
         }
 
-    [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Sync_To_Wordpress()
         {
             WordpressService.Arrange(ws => ws.SyncToWordpress(Post));
