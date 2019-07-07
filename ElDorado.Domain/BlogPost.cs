@@ -64,6 +64,9 @@ namespace ElDorado.Domain
         public string AuthorTrelloUserName => Author?.TrelloId?.Trim();
 
         [NotMapped]
+        public string EditorTrelloUserName => Editor?.TrelloId?.Trim();
+
+        [NotMapped]
         public bool HasBeenSubmitted => SubmittedDate.HasValue;
 
         [NotMapped]

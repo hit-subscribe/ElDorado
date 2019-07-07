@@ -1,9 +1,6 @@
 ﻿using ElDorado.Domain;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 
 namespace ElDorado.Gui.ViewModels
 {
@@ -11,7 +8,7 @@ namespace ElDorado.Gui.ViewModels
     {
 
         public decimal? AuthorPay { get; set; }
-        
+
         public decimal? EditorPay { get; set; }
 
         public BlogPost Post { get; private set; }

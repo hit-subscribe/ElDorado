@@ -8,7 +8,8 @@ namespace ElDorado.Trello
     public interface IWritingCalendarBoard
     {
         IEnumerable<Label> GetLabelsForCompany(string companyName);
-        IEnumerable<Member> GetMemberWithUserName(string trelloUserName);
+
+        IEnumerable<Member> GetMembersWithUserNames(params string[] trelloUserNames);
 
         IList<ITrelloCard> AllCards { get; }
 

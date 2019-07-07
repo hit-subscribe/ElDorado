@@ -1,5 +1,6 @@
 ﻿using ElDorado.Domain;
 using ElDorado.Trello;
+using Manatee.Trello;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,7 @@ namespace ElDorado.Console.Tests.TrelloTests
             DraftDate = new DateTime(2018, 10, 1),
             Blog = new Blog() { CompanyName = "A Company" },
             Author = new Author() { TrelloId = "trello.username" },
+            Editor = new Editor() { TrelloId = "trello.editorusername"},
             TrelloId = CardId,
             Mission = "Creating havoc"
         };
@@ -122,9 +124,12 @@ namespace ElDorado.Console.Tests.TrelloTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Update_Members_For_The_Card()
         {
+            var members = new List<Member>() { null, null};
+            Board.Arrange(b => b.GetMembersWithUserNames(Post.AuthorTrelloUserName, Post.EditorTrelloUserName)).Returns(members);
+
             Target.EditCard(Post);
 
-            Card.Assert(c => c.UpdateMembers(Board.GetMemberWithUserName(Post.AuthorTrelloUserName)), Occurs.Once());
+            Card.Assert(c => c.UpdateMembers(members), Occurs.Once());
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -134,17 +139,17 @@ namespace ElDorado.Console.Tests.TrelloTests
 
             Target.EditCard(Post);
 
-            Board.Assert(b => b.GetMemberWithUserName("erik"));
+            Board.Assert(b => b.GetMembersWithUserNames("erik", "trello.editorusername"));
         }
 
-    [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Not_Update_Members_In_Other_Columns()
         {
             Card.Arrange(c => c.ListName).Returns("asdf");
 
             Target.EditCard(Post);
 
-            Card.Assert(c => c.UpdateMembers(Board.GetMemberWithUserName(Post.AuthorTrelloUserName)), Occurs.Never());
+            Card.Assert(c => c.UpdateMembers(Board.GetMembersWithUserNames(Post.AuthorTrelloUserName)), Occurs.Never());
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]

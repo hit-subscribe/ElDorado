@@ -80,7 +80,7 @@ namespace ElDorado.Trello
             {
                 card.DueDate = postToEdit.DraftDate.SafeToMidnightEastern();
                 card.UpdateLabels(_board.GetLabelsForCompany(postToEdit.BlogCompanyName));
-                card.UpdateMembers(_board.GetMemberWithUserName(postToEdit.AuthorTrelloUserName));
+                card.UpdateMembers(_board.GetMembersWithUserNames(postToEdit.AuthorTrelloUserName, postToEdit.EditorTrelloUserName));
             }
         }
     }

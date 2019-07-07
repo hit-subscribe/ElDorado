@@ -7,7 +7,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shouldly;
 using System;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Telerik.JustMock;
 using Telerik.JustMock.EntityFramework;
@@ -82,7 +81,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
             viewModel.Blogs.ShouldBeEmpty();
         }
 
-    [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Respond_To_Get_Request_With_BlogId_Specified_By_Setting_Post_BlogId()
         {
             const int blogId = 6;

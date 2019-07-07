@@ -20,7 +20,7 @@ namespace ElDorado.Trello
 
         public ITrelloCard AddPlannedPostCard(string name, string description = null, DateTime? dueDate = null, string companyName = null, string trelloUserName = null)
         {
-            var card = PlannedPostCards.Add(name: name, description: description, dueDate: dueDate, members: GetMemberWithUserName(trelloUserName), labels: GetLabelsForCompany(companyName));
+            var card = PlannedPostCards.Add(name: name, description: description, dueDate: dueDate, members: GetMembersWithUserNames(trelloUserName), labels: GetLabelsForCompany(companyName));
             return new TrelloCard(card);
         }
 
@@ -29,9 +29,9 @@ namespace ElDorado.Trello
             return WritingCalendar.Labels.Where(l => l.Name == companyName);
         }
 
-        public IEnumerable<Member> GetMemberWithUserName(string trelloUserName)
+        public IEnumerable<Member> GetMembersWithUserNames(params string[] trelloUserNames)
         {
-            return WritingCalendar.Members.Where(m => m.UserName == trelloUserName);
+            return trelloUserNames.Select(tun => WritingCalendar.Members.FirstOrDefault(m => m.UserName == tun)).Where(m => m != null);
         }
     }
 }
