@@ -16,10 +16,10 @@ namespace ElDorado.Gui.Tests.PostRefreshesControllerTests
     public class When_Performing_CRUD_Opeartions_On_Post_Refreshes_PostRefreshesController_Should
     {
         private const int BlogPostId = 1;
-        
+
         private BlogPost Post = new BlogPost() { Id = BlogPostId };
         private PostRefresh Refresh = new PostRefresh() { BlogPostId = BlogPostId };
-        
+
         private BlogContext Context { get; } = EntityFrameworkMock.Create<BlogContext>();
 
         private PostRefreshesController Target { get; set; }
@@ -71,18 +71,6 @@ namespace ElDorado.Gui.Tests.PostRefreshesControllerTests
             var refreshes = Target.Index(BlogPostId).GetResult<IEnumerable<PostRefresh>>();
 
             refreshes.ShouldNotBeEmpty();
-        }
-}
-    public class PostRefreshesController : CrudController<PostRefresh>
-    {
-        public PostRefreshesController(BlogContext context) : base(context)
-        {
-            IndexSortFunction = refreshes => refreshes.OrderBy(r => r.DraftDate);
-        }
-        public ActionResult Index(int blogPostId)
-        {
-            var matchingRefreshes = Context.PostRefreshes.Where(pr => pr.BlogPostId == blogPostId);
-            return View(IndexSortFunction(matchingRefreshes));
         }
     }
 }

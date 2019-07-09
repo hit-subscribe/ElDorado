@@ -233,6 +233,7 @@
     <Compile Include="Controllers\EditorsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PostRefreshesController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Global.asax.cs">
