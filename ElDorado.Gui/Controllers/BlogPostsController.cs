@@ -45,6 +45,7 @@ namespace ElDorado.Gui.Controllers
         [HttpPost]
         public ActionResult Create(BlogPost post, string createNew = null)
         {
+            #region Move to a service
             _blogContext.BlogPosts.Add(post);
             _blogContext.SaveChanges();
             _blogContext.UpdateBlogPostDependencies(post);
@@ -57,6 +58,7 @@ namespace ElDorado.Gui.Controllers
             SyncToWordpress(post);
 
             _blogContext.SaveChanges();
+            #endregion
 
             if (ModelState.IsValid)
                 return RedirectToAppropriatePage(post, createNew);
@@ -73,6 +75,7 @@ namespace ElDorado.Gui.Controllers
         [HttpPost]
         public ActionResult Edit(BlogPostEditViewModel blogPostViewModel)
         {
+            #region Move to a service
             _blogContext.BlogPosts.Attach(blogPostViewModel.Post);
             _blogContext.SetModified(blogPostViewModel.Post);
             _blogContext.UpdateBlogPostDependencies(blogPostViewModel.Post);
@@ -85,6 +88,7 @@ namespace ElDorado.Gui.Controllers
             _trelloService.EditCard(blogPostViewModel.Post);
 
             _blogContext.SaveChanges();
+            #endregion
 
             if (ModelState.IsValid)
                 return RedirectToAction("Edit", new { postId = blogPostViewModel.Post.Id });
@@ -94,6 +98,7 @@ namespace ElDorado.Gui.Controllers
 
         public ActionResult Delete(int postId)
         {
+            #region Move to a Service
             var post = _blogContext.BlogPosts.First(p => p.Id == postId);
             string trelloId = post.TrelloId;
 
@@ -105,6 +110,7 @@ namespace ElDorado.Gui.Controllers
 
             AuthorizeWordpress();
             _wordpressService.DeleteFromWordpress(post);
+            #endregion
 
             return RedirectToAction("Index");
         }

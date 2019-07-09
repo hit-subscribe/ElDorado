@@ -26,27 +26,39 @@ namespace ElDorado.Domain
 
             modelBuilder.Entity<Blog>()
                 .HasMany(b => b.BlogMetrics)
-                .WithRequired(b => b.Blog)
-                .HasForeignKey(b => b.BlogId)
+                .WithRequired(bm => bm.Blog)
+                .HasForeignKey(bm => bm.BlogId)
                 .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Blog>()
                 .HasMany(b => b.BlogPosts)
-                .WithRequired(b => b.Blog)
-                .HasForeignKey(b => b.BlogId)
+                .WithRequired(bp => bp.Blog)
+                .HasForeignKey(bp => bp.BlogId)
                 .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Author>()
-                .HasMany(b => b.BlogPosts)
+                .HasMany(a => a.BlogPosts)
                 .WithOptional(b => b.Author)
                 .HasForeignKey(b => b.AuthorId)
-                .WillCascadeOnDelete(true);
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Author>()
+                .HasMany(a => a.PostRefreshes)
+                .WithOptional(pr => pr.Author)
+                .HasForeignKey(pr => pr.AuthorId)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Editor>()
                 .HasMany(e => e.BlogPosts)
                 .WithOptional(bp => bp.Editor)
                 .HasForeignKey(bp => bp.EditorId)
-                .WillCascadeOnDelete(true);
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<BlogPost>()
+                .HasMany(bp => bp.PostRefreshes)
+                .WithRequired(pr => pr.BlogPost)
+                .HasForeignKey(pr => pr.BlogPostId)
+                .WillCascadeOnDelete(false);
         }
     }
 }

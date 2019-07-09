@@ -175,7 +175,12 @@
     <Compile Include="Migrations\201907061516262_Added editor as a concept.Designer.cs">
       <DependentUpon>201907061516262_Added editor as a concept.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907091547118_AddingRefresh.cs" />
+    <Compile Include="Migrations\201907091547118_AddingRefresh.Designer.cs">
+      <DependentUpon>201907091547118_AddingRefresh.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="PostRefresh.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -262,6 +267,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907061516262_Added editor as a concept.resx">
       <DependentUpon>201907061516262_Added editor as a concept.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907091547118_AddingRefresh.resx">
+      <DependentUpon>201907091547118_AddingRefresh.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

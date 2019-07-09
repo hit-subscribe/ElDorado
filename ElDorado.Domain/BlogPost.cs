@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,6 +48,9 @@ namespace ElDorado.Domain
         //Need to be added to the database
         public string Content { get; set; } 
         public int WordpressId { get; set; }
+
+        [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PostRefresh> PostRefreshes { get; set; }
 
         [NotMapped]
         public string AuthorTitle => $"{Title}{(IsDoublePost ? " (2x)" : string.Empty)}";
