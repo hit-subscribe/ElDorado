@@ -87,6 +87,7 @@
         <td>@Html.DisplayFor(modelItem => item.IsGhostwritten)</td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { postId = item.Id }) |
+            @Html.ActionLink("Refreshes", "Index", "PostRefreshes", new { blogPostId = item.Id }, null) |
             @Html.ActionLink("Delete", "Delete", new { postId = item.Id })
         </td>
     </tr>

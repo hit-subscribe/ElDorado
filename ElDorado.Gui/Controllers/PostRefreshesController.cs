@@ -13,10 +13,22 @@ namespace ElDorado.Gui.Controllers
         {
             IndexSortFunction = refreshes => refreshes.OrderBy(r => r.DraftDate);
         }
-        public ActionResult Index(int blogPostId)
+
+        public override ActionResult Index(int blogPostId = 0)
         {
-            var matchingRefreshes = Context.PostRefreshes.Where(pr => pr.BlogPostId == blogPostId);
-            return View(IndexSortFunction(matchingRefreshes));
+            var matchingRefreshes = Context.PostRefreshes.Where(pr => pr.BlogPostId == blogPostId || blogPostId == 0);
+            return View("Index", IndexSortFunction(matchingRefreshes));
+        }
+        public override ViewResult Create(int blogPostId = 0)
+        {
+            ViewBag.Authors = Context.Authors;
+            return View(new PostRefresh() { BlogPostId = blogPostId });
+        }
+
+        public override ViewResult Edit(int id)
+        {
+            ViewBag.Authors = Context.Authors;
+            return base.Edit(id);
         }
     }
 }

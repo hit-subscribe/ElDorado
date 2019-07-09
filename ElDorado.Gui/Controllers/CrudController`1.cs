@@ -17,11 +17,11 @@ namespace ElDorado.Gui.Controllers
             Context = context;
         }
 
-        public virtual ActionResult Index()
+        public virtual ActionResult Index(int id = 0)
         {
             return View(IndexSortFunction(Context.Set<T>()));
         }
-        public virtual ViewResult Create()
+        public virtual ViewResult Create(int id = 0)
         {
             return View(new T());
         }

@@ -431,6 +431,9 @@
     <Content Include="Views\Editors\Index.cshtml" />
     <Content Include="Views\Editors\Create.cshtml" />
     <Content Include="Views\Editors\Edit.cshtml" />
+    <Content Include="Views\PostRefreshes\Index.cshtml" />
+    <Content Include="Views\PostRefreshes\Create.cshtml" />
+    <Content Include="Views\PostRefreshes\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

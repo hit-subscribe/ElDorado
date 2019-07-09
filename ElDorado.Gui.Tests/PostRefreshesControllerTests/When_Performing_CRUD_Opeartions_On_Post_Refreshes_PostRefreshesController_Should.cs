@@ -18,8 +18,10 @@ namespace ElDorado.Gui.Tests.PostRefreshesControllerTests
         private const int BlogPostId = 1;
 
         private BlogPost Post = new BlogPost() { Id = BlogPostId };
-        private PostRefresh Refresh = new PostRefresh() { BlogPostId = BlogPostId };
-
+        private PostRefresh Refresh = new PostRefresh() { Id = 11, BlogPostId = BlogPostId };
+        private Author Author = new Author() { };
+        
+        
         private BlogContext Context { get; } = EntityFrameworkMock.Create<BlogContext>();
 
         private PostRefreshesController Target { get; set; }
@@ -28,6 +30,7 @@ namespace ElDorado.Gui.Tests.PostRefreshesControllerTests
         public void BeforeEachTest()
         {
             Context.PostRefreshes.Add(Refresh);
+            Context.Authors.Add(Author);
 
             Target = new PostRefreshesController(Context);
         }
@@ -72,5 +75,29 @@ namespace ElDorado.Gui.Tests.PostRefreshesControllerTests
 
             refreshes.ShouldNotBeEmpty();
         }
-    }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Create_A_Post_With_BlogId_Set()
+        {
+            var refresh = Target.Create(BlogPostId).GetResult<PostRefresh>();
+
+            refresh.BlogPostId.ShouldBe(BlogPostId);
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Add_Authors_To_ViewBag_On_Create()
+        {
+            var result = Target.Create(BlogPostId);
+
+            ((IEnumerable<Author>)result.ViewBag.Authors).ShouldNotBeEmpty();
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Add_Authors_To_ViewBag_On_Edit()
+        {
+            var result = Target.Edit(11);
+
+            ((IEnumerable<Author>)result.ViewBag.Authors).ShouldNotBeEmpty();
+        }
+}
 }
