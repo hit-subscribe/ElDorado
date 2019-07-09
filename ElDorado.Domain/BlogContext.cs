@@ -14,6 +14,7 @@ namespace ElDorado.Domain
         public virtual DbSet<BlogPost> BlogPosts { get; set; }
         public virtual DbSet<Author> Authors { get; set; }
         public virtual DbSet<Editor> Editors { get; set; }
+        public virtual DbSet<PostRefresh> PostRefreshes { get; set; }
 
         public virtual void SetModified<TEntity>(TEntity entity) where TEntity : class
         {

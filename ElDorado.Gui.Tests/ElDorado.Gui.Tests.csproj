@@ -112,6 +112,7 @@
     <Compile Include="BlogsControllerTests\When_Retrieving_The_BlogsIndex_BlogsController_Should.cs" />
     <Compile Include="EditorControllerTests\When_Performing_CRUD_Operations_On_Editors_EditorController_Should.cs" />
     <Compile Include="MvcTestingExtensions.cs" />
+    <Compile Include="PostRefreshesControllerTests\When_Performing_CRUD_Opeartions_On_Post_Refreshes_PostRefreshesController_Should.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportsControllerTests\When_Providing_AccountsPayableReport_ReportsController_Should.cs" />
     <Compile Include="ReportsControllerTests\When_Providing_AuthorTimelinessReport_ReportsController_Should.cs" />
