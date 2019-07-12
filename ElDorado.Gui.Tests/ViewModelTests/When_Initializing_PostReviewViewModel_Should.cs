@@ -17,7 +17,7 @@ namespace ElDorado.Gui.Tests.ViewModelTests
         {
             Blog = new Blog() { Url = "https://daedtech.com" },
             Title = "Clickbait",
-            Content = $@"<p>Imagine an office. Hundreds of employees fill the office. One of the main duties of these employees is to make copies using one of the many copy machines throughout the office. The air smells of toner and the carpet is worn to threads in front of each copy station.</p>{Environment.NewLine}<p>Jerry needs one hundred copies of the <a href=""https://www.shrm.org/resourcesandtools/hr-topics/talent-acquisition/pages/dont-underestimate-the-importance-of-effective-onboarding.aspx"">manual</a> and he can only get them from this <a href=""https://daedtech.com/apage"">Daedtech page</a></p>."
+            Content = $@"<p>Imagine an office. Hundreds of employees fill the office.</p> <p>One of the main duties of these employees is to make copies using one of the many copy machines throughout the office. The air smells of toner and the carpet is worn to threads in front of each copy station.</p>{Environment.NewLine}<p>Jerry needs one hundred copies of the <a href=""https://www.shrm.org/resourcesandtools/hr-topics/talent-acquisition/pages/dont-underestimate-the-importance-of-effective-onboarding.aspx"">manual</a> and he can only get them from this <a href=""https://daedtech.com/apage"">Daedtech page</a></p>."
         };
 
         private PostReviewViewModel Target { get; set; }
@@ -25,13 +25,13 @@ namespace ElDorado.Gui.Tests.ViewModelTests
         [TestInitialize]
         public void BeforeEachTest()
         {
-            Target = new PostReviewViewModel(Post);
+            Target = new PostReviewViewModel(Post, new RenderedPostContents(Post.Content));
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Have_Word_Count_67_Words()
         {
-            Target.WordCount.ShouldBe(67);
+            Target.Stats["Word Count"].ShouldBe(67.ToString());
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -44,7 +44,7 @@ namespace ElDorado.Gui.Tests.ViewModelTests
         public void Have_No_Internal_Links_When_Post_Blog_Is_Null()
         {
             Post.Blog = null;
-            Target = new PostReviewViewModel(Post);
+            Target = new PostReviewViewModel(Post, new RenderedPostContents(Post.Content));
             Target.InternalLinks.Count().ShouldBe(0);
         }
 
@@ -63,13 +63,29 @@ namespace ElDorado.Gui.Tests.ViewModelTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Throw_Exception_On_Null_Argument()
         {
-            Should.Throw<ArgumentNullException>(() => new PostReviewViewModel(null));	
+            Should.Throw<ArgumentNullException>(() => new PostReviewViewModel(null, new RenderedPostContents(Post.Content)));	
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Have_Domain_Of_shrm_org_For_External_Link()
         {
             Target.ExternalLinks.First().Domain.ShouldBe("shrm.org");
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Add_A_Stat_For_Number_Of_Paragraphs()
+        {
+            Target.Stats["Paragraph Count"].ShouldBe("3");
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Add_A_Stat_For_Sentences_Per_Paragraph()
+        {
+            Post.Content = "<p>This is a dog.  This is a basset hound.</p><p>This is something.</p>";
+
+            Target = new PostReviewViewModel(Post, new RenderedPostContents(Post.Content));
+
+            Target.Stats["Sentences Per Paragraph"].ShouldBe("1.5");
         }
 }
 }

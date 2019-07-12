@@ -76,6 +76,9 @@ namespace ElDorado.Domain
         [NotMapped]
         public bool IsHitSubscribeFinished => Blog?.DoWePublish ?? false  ? PublishedDate.HasValue : SubmittedDate.HasValue;
 
+        [NotMapped]
+        public int TargetWordCount => IsDoublePost ? 2400 : 1200;
+
         public void CalculateAuthorPay()
         {
             var baseRate = Author?.BaseRate ?? 0;

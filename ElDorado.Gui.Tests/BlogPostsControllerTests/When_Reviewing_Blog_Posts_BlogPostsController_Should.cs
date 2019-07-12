@@ -67,7 +67,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         {
             var viewModel = Target.Review(Post.Id).GetResult<PostReviewViewModel>();
 
-            viewModel.WordCount.ShouldBe(1372);
+            viewModel.Stats["Word Count"].ShouldBe(1372.ToString());
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]

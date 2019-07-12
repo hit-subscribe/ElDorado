@@ -122,7 +122,7 @@ namespace ElDorado.Gui.Controllers
             AuthorizeWordpress();
             post.Content = _wordpressService.GetBlogPostById(post.WordpressId).Content;
 
-            var viewModel = new PostReviewViewModel(post);
+            var viewModel = new PostReviewViewModel(post, new RenderedPostContents(post.Content));
 
             _blogContext.SaveChanges();
             return View(viewModel);

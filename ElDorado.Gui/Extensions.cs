@@ -33,5 +33,12 @@ namespace ElDorado.Gui
             document.LoadHtml(target);
             return document.DocumentNode;
         }
+
+        public static IEnumerable<HtmlNode> SelectNodesWithTag(this HtmlNode target, string tag)
+        {
+            var nodes = target.SelectNodes($"//{tag}");
+
+            return nodes ?? Enumerable.Empty<HtmlNode>();
+        }
     }
 }

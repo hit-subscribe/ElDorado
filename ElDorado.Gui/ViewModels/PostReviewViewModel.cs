@@ -9,33 +9,41 @@ namespace ElDorado.Gui.ViewModels
 {
     public class PostReviewViewModel
     {
+        private readonly BlogPost _post;
         private readonly RenderedPostContents _contents;
 
-        public int WordCount => _contents.WordCount;
-        public string Title { get; }
-        public IEnumerable<Link> ExternalLinks => _contents.ExternalLinks;
-        public IEnumerable<Link> InternalLinks => _contents.InternalLinks;
+        public string Title => _post.Title;
+        public IEnumerable<Link> ExternalLinks => _contents.Links.Where(ln => !_post.IsInternalLink(ln));
+        public IEnumerable<Link> InternalLinks => _contents.Links.Where(ln => _post.IsInternalLink(ln));
         
         public IEnumerable<string> Warnings
         {
             get
             {
-                if (!_contents.ExternalLinks.Any())
+                if (!ExternalLinks.Any())
                     yield return "No external links.";
-                if (!_contents.InternalLinks.Any())
+                if (!InternalLinks.Any())
                     yield return "No internal links.";
-                if (_contents.WordCount < 1000)
+                if (_contents.WordCount < _post.TargetWordCount * .9M) 
                     yield return "Post may be too short.";
+                if (_contents.Links.Any(l => l.Url.Contains("http://")))
+                    yield return "Post contains non-SSL links.";
             }
         }
 
-        public PostReviewViewModel(BlogPost post)
+        public Dictionary<string, string> Stats = new Dictionary<string, string>();
+
+        public PostReviewViewModel(BlogPost post, RenderedPostContents postContents)
         {
             if (post == null)
                 throw new ArgumentNullException(nameof(post));
 
-            _contents = new RenderedPostContents(post);
-            Title = post.Title;
+            _post = post;
+            _contents = postContents;
+
+            Stats["Word Count"] = _contents.WordCount.ToString();
+            Stats["Paragraph Count"] =_contents.Paragraphs.Count().ToString();
+            Stats["Sentences Per Paragraph"] = _contents.Paragraphs.Count() == 0 ? string.Empty : ((decimal)_contents.Sentences.Count() / (decimal)_contents.Paragraphs.Count()).ToString();
         }
     }
 }

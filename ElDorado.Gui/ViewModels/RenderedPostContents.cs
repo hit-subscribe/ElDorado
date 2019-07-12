@@ -9,21 +9,22 @@ namespace ElDorado.Gui.ViewModels
 {
     public class RenderedPostContents
     {
-        private BlogPost _post;
-        private HtmlNode _documentNode;
-        private IEnumerable<Link> _links;
+        private readonly HtmlNode _documentNode;
 
-        public IEnumerable<Link> ExternalLinks => _links.Where(ln => !_post.IsInternalLink(ln));
-        public IEnumerable<Link> InternalLinks => _links.Where(ln => _post.IsInternalLink(ln));
+        public virtual IEnumerable<Link> Links { get; }
 
-        public int WordCount => _documentNode.InnerText.WordCount();
+        public virtual int WordCount => _documentNode.InnerText.WordCount();
 
-        public RenderedPostContents(BlogPost post)
+        public virtual IEnumerable<string> Paragraphs => _documentNode.SelectNodesWithTag("p").Select(node => node.InnerHtml);
+
+        public virtual IEnumerable<string> Sentences => Paragraphs.SelectMany(p => p.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries));
+
+        public RenderedPostContents(string rawContents)
         {
-            _post = post;
-            _documentNode = post.Content.AsHtml();
+            _documentNode = rawContents.AsHtml();
+
             var linkNodes = _documentNode.SelectNodes("//a[@href]");
-            _links = linkNodes == null ? Enumerable.Empty<Link>() : linkNodes.Select(ln => new Link(ln));
+            Links = linkNodes == null ? Enumerable.Empty<Link>() : linkNodes.Select(ln => new Link(ln));
         }
     }
 }

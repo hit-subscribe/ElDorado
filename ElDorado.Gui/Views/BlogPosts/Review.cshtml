@@ -12,19 +12,25 @@
     </tr>
     @foreach (var warning in Model.Warnings)
     {
-        <tr>
+        <tr class="text-danger">
             <td>@Html.DisplayFor(modelWarning => warning)</td>
         </tr>
     }
 </table>
 
-<div>
-    <h3><u>Post Stats</u></h3>
-    <dl class="dl-horizontal">
-        <dt>@Html.DisplayNameFor(model => model.WordCount)</dt>
-        <dd>@Html.DisplayFor(model => model.WordCount)</dd>
-    </dl>
-</div>
+<h3>Post Stats</h3>
+<table class="table">
+    <tr>
+        <th>Warning</th>
+    </tr>
+    @foreach (var stat in Model.Stats)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelWarning => stat.Key)</td>
+            <td>@Html.DisplayFor(modelWarning => stat.Value)</td>
+        </tr>
+    }
+</table>
 
 <h3><u>External Links: @(Model.InternalLinks.Count())</u></h3>
 <table class="table">
