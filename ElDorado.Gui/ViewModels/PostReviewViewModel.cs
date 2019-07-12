@@ -9,37 +9,33 @@ namespace ElDorado.Gui.ViewModels
 {
     public class PostReviewViewModel
     {
-        private HtmlNode _documentNode; 
+        private readonly RenderedPostContents _contents;
 
-        public int WordCount { get; }
+        public int WordCount => _contents.WordCount;
         public string Title { get; }
-        public IEnumerable<Link> ExternalLinks { get; } = Enumerable.Empty<Link>();
-
-        public IEnumerable<Link> InternalLinks { get; } = Enumerable.Empty<Link>();
-        public IList<string> Warnings { get; } = new List<string>();
+        public IEnumerable<Link> ExternalLinks => _contents.ExternalLinks;
+        public IEnumerable<Link> InternalLinks => _contents.InternalLinks;
+        
+        public IEnumerable<string> Warnings
+        {
+            get
+            {
+                if (!_contents.ExternalLinks.Any())
+                    yield return "No external links.";
+                if (!_contents.InternalLinks.Any())
+                    yield return "No internal links.";
+                if (_contents.WordCount < 1000)
+                    yield return "Post may be too short.";
+            }
+        }
 
         public PostReviewViewModel(BlogPost post)
         {
             if (post == null)
                 throw new ArgumentNullException(nameof(post));
 
-            _documentNode = post.Content.AsHtml();
-
+            _contents = new RenderedPostContents(post);
             Title = post.Title;
-            WordCount = _documentNode.InnerText.WordCount();
-
-            var linkNodes = _documentNode.SelectNodes("//a[@href]");
-            var links = linkNodes == null ? Enumerable.Empty<Link>() : linkNodes.Select(ln => new Link(ln));
-                
-            InternalLinks = links.Where(ln => post.IsInternalLink(ln));
-            ExternalLinks = links.Where(ln => !post.IsInternalLink(ln));
-
-            if (!ExternalLinks.Any())
-                Warnings.Add("No external links.");
-            if (!InternalLinks.Any())
-                Warnings.Add("No internal links.");
-            if (WordCount < 1000)
-                Warnings.Add("Post may be too short.");
         }
     }
 }

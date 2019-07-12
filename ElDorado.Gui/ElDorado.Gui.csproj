@@ -253,6 +253,7 @@
     <Compile Include="ViewModels\PostHustlingViewModel.cs" />
     <Compile Include="ViewModels\PostLineItemViewModel.cs" />
     <Compile Include="ViewModels\PostReviewViewModel.cs" />
+    <Compile Include="ViewModels\RenderedPostContents.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Contents\bootstrap-datepicker.css" />
