@@ -192,10 +192,12 @@
     <Compile Include="ExtensionTests\When_Padding_The_Results_Of_A_GoogleSheet_Pad_Should.cs" />
     <Compile Include="Scraping\When_Getting_Search_Results_SearchResultRetriever_Should.cs" />
     <Compile Include="TestingExtensions.cs" />
-    <Compile Include="TrelloTests\When_Adding_Cards_To_Trello_TrelloCalendarWritingService_Should.cs" />
+    <Compile Include="TrelloTests\When_Adding_Cards_To_Trello_CalendarWritingService_Should.cs" />
+    <Compile Include="TrelloTests\When_Adding_Cards_To_Trello_RefreshCalendarService_Should.cs" />
     <Compile Include="TrelloTests\When_Checking_If_Card_Exists_TrelloWritingCalendarService_Should.cs" />
     <Compile Include="TrelloTests\When_Deleting_Cards_TrelloWritingCalendarService_Should.cs" />
     <Compile Include="TrelloTests\When_Editing_Cards_TrelloCalendarWritingService_Should.cs" />
+    <Compile Include="TrelloTests\When_Initializing_RefreshCalendarService_Should.cs" />
     <Compile Include="TrelloTests\When_Setting_Card_Description_BuildDescriptionFromBlogPost_Should.cs" />
     <Compile Include="When_Building_The_Moz_Query_Url_MozInquisitor_Should.cs" />
     <Compile Include="When_Initializing_BlogStatsRecord_Should.cs" />
@@ -214,7 +216,7 @@
     <Compile Include="WritingCalendar\When_Fetching_A_BlogPost_From_The_PostsSpreadsheet_PlanningSpreadsheetService_Should.cs" />
     <Compile Include="WritingCalendar\When_UpdatingPostIds_On_The_PlanningSpreadsheet_UpdatePostIds_Should.cs" />
     <Compile Include="WritingCalendar\When_Updating_Trello_From_PlanningSpreadsheet_BlogPostSynchronizer_Should.cs" />
-    <Compile Include="TrelloTests\When_Initializing_WritingCalendarSynchronizer_Should.cs" />
+    <Compile Include="TrelloTests\When_Initializing_WritingCalendarService_Should.cs" />
     <Compile Include="ClientSpreadsheets\When_Writing_To_A_ClientPostPlan_ClientSpreadsheetService_Should.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -29,7 +29,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         private Editor Editor => Context.Editors.First();
         private Blog Blog => Context.Blogs.First();
         
-        private TrelloWritingCalendarService Service { get; set; } = Mock.Create<TrelloWritingCalendarService>();
+        private WritingCalendarService Service { get; set; } = Mock.Create<WritingCalendarService>();
         private WordpressService WordpressService { get; set; } = Mock.Create<WordpressService>();
 
         private BlogPost Post { get; set; } = new BlogPost()

@@ -33,17 +33,17 @@ namespace ElDorado.Console.Tests.TrelloTests
             Mission = "Creating havoc"
         };
 
-        private TrelloWritingCalendarService Target { get; set; }
+        private WritingCalendarService Target { get; set; }
 
         [TestInitialize]
         public void BeforeEachTest()
         {
             Card.Arrange(c => c.Id).Returns(CardId);
-            Card.Arrange(c => c.ListName).Returns(TrelloWritingCalendarService.PlannedPostsListName);
+            Card.Arrange(c => c.ListName).Returns(WritingCalendarService.PlannedPostsListName);
 
             Board.Arrange(b => b.AllCards).Returns(new List<ITrelloCard>() { Card });
 
-            Target = new TrelloWritingCalendarService(Board);
+            Target = new WritingCalendarService(Board);
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]

@@ -21,7 +21,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         private const int PostId = 12;
 
         private BlogContext Context { get; } = EntityFrameworkMock.Create<BlogContext>();
-        private TrelloWritingCalendarService TrelloService = Mock.Create<TrelloWritingCalendarService>();
+        private WritingCalendarService TrelloService = Mock.Create<WritingCalendarService>();
         private WordpressService WordpressService = Mock.Create<WordpressService>();
 
         private Author Author => Context.Authors.First();

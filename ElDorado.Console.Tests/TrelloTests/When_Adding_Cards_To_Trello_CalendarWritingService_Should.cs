@@ -13,7 +13,7 @@ using Telerik.JustMock.Helpers;
 namespace ElDorado.Console.Tests.TrelloTests
 {
     [TestClass]
-    public class When_Adding_Cards_To_Trello_TrelloCalendarWritingService_Should
+    public class When_Adding_Cards_To_Trello_CalendarWritingService_Should
     {
         private ICalendarBoard Board = Mock.Create<ICalendarBoard>();
 
@@ -29,14 +29,14 @@ namespace ElDorado.Console.Tests.TrelloTests
             Mission = "To boldly go..."
         };
 
-        private TrelloWritingCalendarService Target { get; set; }
+        private WritingCalendarService Target { get; set; }
 
         [TestInitialize]
         public void BeforeEachTest()
         {
             Board.Arrange(b => b.AddPlannedPostCard(Arg.AnyString, Arg.AnyString, Arg.IsAny<DateTime?>(), Arg.AnyString, Arg.AnyString)).Returns(Card);
 
-            Target = new TrelloWritingCalendarService(Board);
+            Target = new WritingCalendarService(Board);
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]

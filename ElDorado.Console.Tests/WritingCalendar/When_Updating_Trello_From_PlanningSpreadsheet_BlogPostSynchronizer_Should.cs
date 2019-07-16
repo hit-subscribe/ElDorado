@@ -13,7 +13,7 @@ namespace ElDorado.Console.Tests.WritingCalendar
     [TestClass]
     public class When_Updating_Trello_From_PlanningSpreadsheet_BlogPostSynchronizer_Should
     {
-        private TrelloWritingCalendarService TrelloWritingCalendarService { get; } = Mock.Create<TrelloWritingCalendarService>();
+        private WritingCalendarService TrelloWritingCalendarService { get; } = Mock.Create<WritingCalendarService>();
         private PlanningSpreadsheetService PlanningSpreadsheetService { get; } = Mock.Create<PlanningSpreadsheetService>();
 
         private static readonly BlogPost UnapprovedPostFromSpreadsheet = new BlogPost() { Title = "An Unapproved Blog Post", IsApproved = false };

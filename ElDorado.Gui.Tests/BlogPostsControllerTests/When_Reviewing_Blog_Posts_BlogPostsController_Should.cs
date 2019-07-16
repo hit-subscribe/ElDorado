@@ -48,7 +48,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
 
             Context.BlogPosts.Add(Post);
 
-            Target = new BlogPostsController(Context, Mock.Create<TrelloWritingCalendarService>(), WordpressService) { MapPath = "Doesn't matter" };
+            Target = new BlogPostsController(Context, Mock.Create<WritingCalendarService>(), WordpressService) { MapPath = "Doesn't matter" };
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]

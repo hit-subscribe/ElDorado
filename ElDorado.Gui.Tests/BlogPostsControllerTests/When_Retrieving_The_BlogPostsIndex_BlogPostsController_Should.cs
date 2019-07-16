@@ -52,7 +52,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
             Context.Authors.Add(new Author());
             Context.Blogs.Add(new Blog());
 
-            Target = new BlogPostsController(Context, Mock.Create<TrelloWritingCalendarService>(), Mock.Create<WordpressService>());
+            Target = new BlogPostsController(Context, Mock.Create<WritingCalendarService>(), Mock.Create<WordpressService>());
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]

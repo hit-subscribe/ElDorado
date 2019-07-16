@@ -48,7 +48,7 @@ namespace ElDorado.Menu
         [MenuMethod("Update Trello based on Post Plan")]
         public static void UpdateTrelloWritingCalendar()
         {
-            var trelloService = new TrelloWritingCalendarService();
+            var trelloService = new WritingCalendarService();
             trelloService.Initialize(new CredentialStore(File.ReadAllText(@"CredFiles\trello.cred")));
 
             var synchornizer = new BlogPostSynchronizer(trelloService, new PlanningSpreadsheetService(new GoogleSheet(PostPlanningSpreadsheetId)));

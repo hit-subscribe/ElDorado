@@ -51,7 +51,7 @@ namespace ElDorado.Gui
             container.RegisterType<BlogContext, BlogContext>();
             container.RegisterType<AccountController>(new InjectionConstructor());
             container.RegisterType<ManageController>(new InjectionConstructor());
-            container.RegisterType<TrelloWritingCalendarService, TrelloWritingCalendarService>();
+            container.RegisterType<WritingCalendarService, WritingCalendarService>();
             container.RegisterType<WordpressService, WordpressService>();
             container.RegisterType<ICalendarBoard, CalendarBoard>(new InjectionConstructor("AhqnpUJD"));
         }

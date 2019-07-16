@@ -5,25 +5,27 @@ using Manatee.Trello.WebApi;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shouldly;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ElDorado.Console.Tests.TrelloTests
 {
     [TestClass]
-    public class When_Initializing_WritingCalendarSynchronizer_Should
+    public class When_Initializing_RefreshCalendarService_Should
     {
         private static readonly string FileLines = $"TrelloAppKey:Key{Environment.NewLine}TrelloUserToken:Token";
 
-        private TrelloWritingCalendarService Target { get; set; }
+        private RefreshCalendarService Target { get; set; }
 
         [TestInitialize]
         public void BeforeEachTest()
         {
-            Target = new TrelloWritingCalendarService();
+            Target = new RefreshCalendarService();
 
             Target.Initialize(new CredentialStore(FileLines));
         }
-
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Set_Serializer_To_ManateeSerializer()

@@ -14,12 +14,12 @@ namespace ElDorado.Gui.Controllers
     public class BlogPostsController : Controller
     {
         private readonly BlogContext _blogContext;
-        private readonly TrelloWritingCalendarService _trelloService;
+        private readonly WritingCalendarService _trelloService;
         private readonly WordpressService _wordpressService;
 
         public string MapPath { get; set; }
 
-        public BlogPostsController(BlogContext blogContext, TrelloWritingCalendarService trelloService, Wordpress.WordpressService wordpressService)
+        public BlogPostsController(BlogContext blogContext, WritingCalendarService trelloService, Wordpress.WordpressService wordpressService)
         {
             _wordpressService = wordpressService;
             _trelloService = trelloService;

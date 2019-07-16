@@ -19,7 +19,7 @@ namespace ElDorado.Console.Tests.TrelloTests
 
         private static readonly string CardId = "ahsdf9";
 
-        private TrelloWritingCalendarService Target { get; set; }
+        private WritingCalendarService Target { get; set; }
 
         [TestInitialize]
         public void BeforeEachTest()
@@ -28,7 +28,7 @@ namespace ElDorado.Console.Tests.TrelloTests
 
             Board.Arrange(b => b.AllCards).Returns(new List<ITrelloCard>() { Card });
 
-            Target = new TrelloWritingCalendarService(Board);
+            Target = new WritingCalendarService(Board);
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
