@@ -13,7 +13,7 @@ namespace ElDorado.Console.Tests.TrelloTests
     [TestClass]
     public class When_Deleting_Cards_TrelloWritingCalendarService_Should
     {
-        private IWritingCalendarBoard Board = Mock.Create<IWritingCalendarBoard>();
+        private ICalendarBoard Board = Mock.Create<ICalendarBoard>();
 
         private ITrelloCard Card = Mock.Create<ITrelloCard>();
 

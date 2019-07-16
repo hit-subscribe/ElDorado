@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace ElDorado.Trello
 {
-    public interface IWritingCalendarBoard
+    public interface ICalendarBoard
     {
         IEnumerable<Label> GetLabelsForCompany(string companyName);
 

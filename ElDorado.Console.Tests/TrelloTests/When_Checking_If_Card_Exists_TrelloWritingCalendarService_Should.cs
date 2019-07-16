@@ -14,7 +14,7 @@ namespace ElDorado.Console.Tests.TrelloTests
     [TestClass]
     public class When_Checking_If_Card_Exists_TrelloWritingCalendarService_Should
     {
-        private IWritingCalendarBoard Board = Mock.Create<IWritingCalendarBoard>();
+        private ICalendarBoard Board = Mock.Create<ICalendarBoard>();
 
         private ITrelloCard Card = Mock.Create<ITrelloCard>();
 

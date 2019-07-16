@@ -186,7 +186,7 @@
     <Compile Include="Scraping\SearchResult.cs" />
     <Compile Include="Scraping\SearchResultRetriever.cs" />
     <Compile Include="Trello\ITrelloCard.cs" />
-    <Compile Include="Trello\IWritingCalendarBoard.cs" />
+    <Compile Include="Trello\ICalendarBoard.cs" />
     <Compile Include="Trello\ManateeExtensions.cs" />
     <Compile Include="Menu\MainMenu.cs" />
     <Compile Include="Metrics\AlexaDataInquisitor.cs" />
@@ -204,7 +204,7 @@
     <Compile Include="SimpleWebClient.cs" />
     <Compile Include="Trello\TrelloCard.cs" />
     <Compile Include="Trello\TrelloWrapperInterfaceExtensions.cs" />
-    <Compile Include="Trello\WritingCalendarBoard.cs" />
+    <Compile Include="Trello\CalendarBoard.cs" />
     <Compile Include="Wordpress\MissingAuthorException.cs" />
     <Compile Include="Wordpress\WordpressService.cs" />
     <Compile Include="Wordpress\WordpressAuthorizationException.cs" />

@@ -15,11 +15,11 @@ namespace ElDorado.Trello
         private TrelloAuthorization Auth => TrelloAuthorization.Default;
 
         public const string PlannedPostsListName = "Planned Posts";
-        private IWritingCalendarBoard _board;
+        private ICalendarBoard _board;
 
-        public TrelloWritingCalendarService(IWritingCalendarBoard board = null)
+        public TrelloWritingCalendarService(ICalendarBoard board = null)
         {
-            _board = board ?? new WritingCalendarBoard();
+            _board = board ?? new CalendarBoard("AhqnpUJD");
         }
 
         public virtual void Initialize(string filePath)

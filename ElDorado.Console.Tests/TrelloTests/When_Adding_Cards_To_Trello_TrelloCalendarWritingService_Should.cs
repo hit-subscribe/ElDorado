@@ -15,7 +15,7 @@ namespace ElDorado.Console.Tests.TrelloTests
     [TestClass]
     public class When_Adding_Cards_To_Trello_TrelloCalendarWritingService_Should
     {
-        private IWritingCalendarBoard Board = Mock.Create<IWritingCalendarBoard>();
+        private ICalendarBoard Board = Mock.Create<ICalendarBoard>();
 
         private ITrelloCard Card = Mock.Create<ITrelloCard>();
 

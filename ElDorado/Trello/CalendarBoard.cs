@@ -7,16 +7,20 @@ using System.Threading.Tasks;
 
 namespace ElDorado.Trello
 {
-    public class WritingCalendarBoard : IWritingCalendarBoard
+    public class CalendarBoard : ICalendarBoard
     {
-        public const string PlannedPostTrelloListName = "Planned Posts";
-        public const string TrelloBoardId = "AhqnpUJD";
+        public const string PlannedColumnName = "Planned Posts";
 
-        private Lazy<Board> LazyWritingCalendar = new Lazy<Board>(() => new Board(TrelloBoardId));
+        private Lazy<Board> LazyWritingCalendar { get; }
         private Board WritingCalendar => LazyWritingCalendar.Value;
-        private CardCollection PlannedPostCards => WritingCalendar.Lists.First(l => l.Name == PlannedPostTrelloListName).Cards;
+        private CardCollection PlannedPostCards => WritingCalendar.Lists.First(l => l.Name == PlannedColumnName).Cards;
 
         public IList<ITrelloCard> AllCards => WritingCalendar.Cards.Filter(CardFilter.All).Select(c => (ITrelloCard)new TrelloCard(c)).ToList();
+
+        public CalendarBoard(string trelloBoardId)
+        {
+            LazyWritingCalendar = new Lazy<Board>(() => new Board(trelloBoardId));
+        }
 
         public ITrelloCard AddPlannedPostCard(string name, string description = null, DateTime? dueDate = null, string companyName = null, string trelloUserName = null)
         {
