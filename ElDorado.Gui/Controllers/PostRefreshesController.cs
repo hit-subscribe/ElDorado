@@ -1,4 +1,5 @@
 ﻿using ElDorado.Domain;
+using ElDorado.Trello;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,13 @@ namespace ElDorado.Gui.Controllers
 {
     public class PostRefreshesController : CrudController<PostRefresh>
     {
-        public PostRefreshesController(BlogContext context) : base(context)
+        private readonly RefreshCalendarService _refreshService;
+
+        public string MapPath { get; set; }
+
+        public PostRefreshesController(BlogContext context, RefreshCalendarService refreshService) : base(context)
         {
+            _refreshService = refreshService;
             IndexSortFunction = refreshes => refreshes.OrderBy(r => r.DraftDate);
         }
 
@@ -25,10 +31,27 @@ namespace ElDorado.Gui.Controllers
             return View(new PostRefresh() { BlogPostId = blogPostId });
         }
 
+        public override ActionResult Create(PostRefresh refresh)
+        {
+            Context.PostRefreshes.Add(refresh);
+            Context.SaveChanges();
+            Context.UpdateRefreshDependencies(refresh);
+
+            InitializeTrelloService();
+            _refreshService.AddCard(refresh);
+
+            return RedirectToAction("Edit", new { id = refresh.Id });
+        }
+
         public override ViewResult Edit(int id)
         {
             ViewBag.Authors = Context.Authors;
             return base.Edit(id);
+        }
+
+        private void InitializeTrelloService()
+        {
+            _refreshService.Initialize(MapPath ?? Server.MapPath(@"~/App_Data/trello.cred"));
         }
     }
 }

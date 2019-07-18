@@ -1,5 +1,6 @@
 ﻿using ElDorado.Domain;
 using ElDorado.Gui.Controllers;
+using ElDorado.Trello;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shouldly;
 using System;
@@ -8,7 +9,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Telerik.JustMock;
 using Telerik.JustMock.EntityFramework;
+using Telerik.JustMock.Helpers;
 
 namespace ElDorado.Gui.Tests.PostRefreshesControllerTests
 {
@@ -20,8 +23,9 @@ namespace ElDorado.Gui.Tests.PostRefreshesControllerTests
         private BlogPost Post = new BlogPost() { Id = BlogPostId };
         private PostRefresh Refresh = new PostRefresh() { Id = 11, BlogPostId = BlogPostId };
         private Author Author = new Author() { };
-        
-        
+
+        private RefreshCalendarService RefreshService = Mock.Create<RefreshCalendarService>();
+
         private BlogContext Context { get; } = EntityFrameworkMock.Create<BlogContext>();
 
         private PostRefreshesController Target { get; set; }
@@ -32,7 +36,7 @@ namespace ElDorado.Gui.Tests.PostRefreshesControllerTests
             Context.PostRefreshes.Add(Refresh);
             Context.Authors.Add(Author);
 
-            Target = new PostRefreshesController(Context);
+            Target = new PostRefreshesController(Context, RefreshService) { MapPath = "somepath" };
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -85,6 +89,26 @@ namespace ElDorado.Gui.Tests.PostRefreshesControllerTests
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Invoke_The_TrelloService_Initialize_On_Create()
+        {
+            RefreshService.Arrange(ts => ts.Initialize(Arg.AnyString));
+
+            Target.Create(Refresh);
+
+            RefreshService.Assert(ts => ts.Initialize(Arg.AnyString));
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Add_A_Trello_Card_On_Create()
+        {
+            RefreshService.Arrange(rs => rs.AddCard(Arg.IsAny<PostRefresh>()));
+
+            Target.Create(Refresh);
+
+            RefreshService.Assert(rs => rs.AddCard(Refresh));
+        }
+
+    [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Add_Authors_To_ViewBag_On_Create()
         {
             var result = Target.Create(BlogPostId);

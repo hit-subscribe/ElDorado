@@ -14,15 +14,15 @@ namespace ElDorado.Gui.Controllers
     public class BlogPostsController : Controller
     {
         private readonly BlogContext _blogContext;
-        private readonly WritingCalendarService _trelloService;
+        private readonly WritingCalendarService _writingCalendarService;
         private readonly WordpressService _wordpressService;
 
         public string MapPath { get; set; }
 
-        public BlogPostsController(BlogContext blogContext, WritingCalendarService trelloService, Wordpress.WordpressService wordpressService)
+        public BlogPostsController(BlogContext blogContext, WritingCalendarService writingCalendarService, WordpressService wordpressService)
         {
             _wordpressService = wordpressService;
-            _trelloService = trelloService;
+            _writingCalendarService = writingCalendarService;
             _blogContext = blogContext;
         }
 
@@ -51,7 +51,7 @@ namespace ElDorado.Gui.Controllers
             _blogContext.UpdateBlogPostDependencies(post);
 
             InitializeTrelloService();
-            _trelloService.AddCard(post);
+            _writingCalendarService.AddCard(post);
 
             post.CalculateAuthorPay();
 
@@ -85,7 +85,7 @@ namespace ElDorado.Gui.Controllers
                SyncToWordpress(blogPostViewModel.Post);
 
             InitializeTrelloService();
-            _trelloService.EditCard(blogPostViewModel.Post);
+            _writingCalendarService.EditCard(blogPostViewModel.Post);
 
             _blogContext.SaveChanges();
             #endregion
@@ -106,7 +106,7 @@ namespace ElDorado.Gui.Controllers
             _blogContext.SaveChanges();
 
             InitializeTrelloService();
-            _trelloService.DeleteCard(trelloId);
+            _writingCalendarService.DeleteCard(trelloId);
 
             AuthorizeWordpress();
             _wordpressService.DeleteFromWordpress(post);
@@ -157,7 +157,7 @@ namespace ElDorado.Gui.Controllers
 
         private void InitializeTrelloService()
         {
-            _trelloService.Initialize(MapPath ?? Server.MapPath(@"~/App_Data/trello.cred"));
+            _writingCalendarService.Initialize(MapPath ?? Server.MapPath(@"~/App_Data/trello.cred"));
         }
 
         private void AuthorizeWordpress() => _wordpressService.AuthorizeUser(MapPath ?? Server.MapPath(@"~/App_Data/wordpress.cred"));

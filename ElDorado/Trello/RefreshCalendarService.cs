@@ -13,9 +13,16 @@ namespace ElDorado.Trello
         {
             Board = board ?? new CalendarBoard("sjMRN6BD");
         }
-        public void AddCard(PostRefresh refresh)
+        public virtual void AddCard(PostRefresh refresh)
         {
-            Board.AddPlannedPostCard(name: refresh.BlogPost.Title);
+            var card = Board.AddPlannedPostCard(
+                name: refresh.BlogPost.Title, 
+                dueDate: refresh.DraftDate.SafeToMidnightEastern(), 
+                trelloUserName: refresh.AuthorTrelloUsername, 
+                companyName: refresh.BlogPost.BlogCompanyName
+            );
+
+            refresh.TrelloId = card.Id;
         }
     }
 }

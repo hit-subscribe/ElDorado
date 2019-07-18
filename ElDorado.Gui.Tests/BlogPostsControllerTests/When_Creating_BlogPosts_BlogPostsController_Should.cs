@@ -21,7 +21,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         private const int PostId = 12;
 
         private BlogContext Context { get; } = EntityFrameworkMock.Create<BlogContext>();
-        private WritingCalendarService TrelloService = Mock.Create<WritingCalendarService>();
+        private WritingCalendarService WritingCalendarService = Mock.Create<WritingCalendarService>();
         private WordpressService WordpressService = Mock.Create<WordpressService>();
 
         private Author Author => Context.Authors.First();
@@ -39,7 +39,7 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
             Context.Authors.Add(new Author() { Id = 1 });
             Context.Arrange(ctx => ctx.UpdateBlogPostDependencies(Arg.IsAny<BlogPost>())).DoInstead((BlogPost bp) => bp.Author = Context.Authors.First(a => a.Id == bp.AuthorId));
 
-            Target = new BlogPostsController(Context, TrelloService, WordpressService) { MapPath = "somepath" };
+            Target = new BlogPostsController(Context, WritingCalendarService, WordpressService) { MapPath = "somepath" };
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -128,11 +128,11 @@ namespace ElDorado.Gui.Tests.BlogPostsControllerTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Invoke_The_TrelloService_Initialize()
         {
-            TrelloService.Arrange(ts => ts.Initialize(Arg.AnyString));
+            WritingCalendarService.Arrange(ts => ts.Initialize(Arg.AnyString));
 
             Target.Create(Post);
 
-            TrelloService.Assert(ts => ts.Initialize(Arg.AnyString));
+            WritingCalendarService.Assert(ts => ts.Initialize(Arg.AnyString));
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]

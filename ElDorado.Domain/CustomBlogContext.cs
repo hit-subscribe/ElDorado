@@ -14,5 +14,12 @@ namespace ElDorado.Domain
             Entry(post).Reference(p => p.Blog).Load();
             Entry(post).Reference(p => p.Editor).Load();
         }
+
+        public virtual void UpdateRefreshDependencies(PostRefresh refresh)
+        {
+            Entry(refresh).Reference(pr => pr.Author).Load();
+            Entry(refresh).Reference(pr => pr.BlogPost).Load();
+            Entry(refresh.BlogPost).Reference(bp => bp.Blog).Load();
+        }
     }
 }
