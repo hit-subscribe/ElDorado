@@ -18,11 +18,22 @@ namespace ElDorado.Trello
             var card = Board.AddPlannedPostCard(
                 name: refresh.BlogPost.Title, 
                 dueDate: refresh.DraftDate.SafeToMidnightEastern(), 
-                trelloUserName: refresh.AuthorTrelloUsername, 
+                trelloUserName: refresh.AuthorTrelloUserName, 
                 companyName: refresh.BlogPost.BlogCompanyName
             );
 
             refresh.TrelloId = card.Id;
+        }
+
+        public void EditCard(PostRefresh postRefresh)
+        {
+            var card = Board.AllCards.FirstOrDefault(c => c.Id == postRefresh?.TrelloId);
+            if (card == null)
+                return;
+
+            card.DueDate = postRefresh.DraftDate.SafeToMidnightEastern();
+            card.UpdateLabels(Board.GetLabelsForCompany(postRefresh.BlogPost.BlogCompanyName));
+            card.UpdateMembers(Board.GetMembersWithUserNames(postRefresh.AuthorTrelloUserName));
         }
     }
 }

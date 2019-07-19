@@ -1,6 +1,5 @@
 ﻿using ElDorado.Trello;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Shouldly;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,20 +11,20 @@ using Telerik.JustMock.Helpers;
 namespace ElDorado.Console.Tests.TrelloTests
 {
     [TestClass]
-    public class When_Checking_If_Card_Exists_TrelloWritingCalendarService_Should
+    public class When_Deleting_Cards_CalendarService_Should
     {
         private ICalendarBoard Board = Mock.Create<ICalendarBoard>();
 
         private ITrelloCard Card = Mock.Create<ITrelloCard>();
 
-        private static readonly string CardTitle = "A Blog Post";
+        private static readonly string CardId = "ahsdf9";
 
-        private WritingCalendarService Target { get; set; }
+        private CalendarService Target { get; set; }
 
         [TestInitialize]
         public void BeforeEachTest()
         {
-            Card.Arrange(c => c.Name).Returns(CardTitle);
+            Card.Arrange(c => c.Id).Returns(CardId);
 
             Board.Arrange(b => b.AllCards).Returns(new List<ITrelloCard>() { Card });
 
@@ -33,17 +32,19 @@ namespace ElDorado.Console.Tests.TrelloTests
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
-        public void Return_False_When_The_Board_Has_No_Cards()
+        public void Invokes_Delete_On_A_Card_With_Matching_Id()
         {
-            Board.Arrange(b => b.AllCards).Returns(new List<ITrelloCard>());
+            Target.DeleteCard(CardId);
 
-            Target.DoesCardExistWithTitle(CardTitle).ShouldBeFalse();
+            Card.Assert(c => c.Delete(), Occurs.Once());
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
-        public void Return_True_When_Board_Has_A_Card_That_Matches_The_Title()
+        public void Not_Delete_A_NonMatching_Card()
         {
-            Target.DoesCardExistWithTitle(CardTitle).ShouldBeTrue();
+            Target.DeleteCard("asdf");
+
+            Card.Assert(c => c.Delete(), Occurs.Never());
         }
 }
 }

@@ -12,8 +12,6 @@ namespace ElDorado.Trello
 {
     public class WritingCalendarService : CalendarService
     {
-        public const string PlannedPostsListName = "Planned Posts";
-
         public WritingCalendarService(ICalendarBoard board = null)
         {
             Board = board ?? new CalendarBoard("AhqnpUJD");
@@ -28,11 +26,6 @@ namespace ElDorado.Trello
             postToAdd.TrelloId = card.Id;
         }
 
-        public virtual bool DoesCardExistWithTitle(string blogPostTitle)
-        {
-            return Board.AllCards.Any(c => c.Name.TrelloCardLooselyMatches(blogPostTitle));
-        }
-
         public virtual void EditCard(BlogPost postToEdit)
         {
             var card = Board.AllCards.FirstOrDefault(c => c.Id == postToEdit?.TrelloId);
@@ -45,13 +38,6 @@ namespace ElDorado.Trello
 
             UpdatePlannedPostPropertiesIfApplicable(postToEdit, card);
 
-        }
-
-        public virtual void DeleteCard(string trelloId)
-        {
-            var card = Board.AllCards.FirstOrDefault(c => c.Id == trelloId);
-            if(card != null)
-                card.Delete();
         }
 
         private void UpdatePlannedPostPropertiesIfApplicable(BlogPost postToEdit, ITrelloCard card)

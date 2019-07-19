@@ -35,6 +35,6 @@ namespace ElDorado.Domain
         public decimal AuthorPay { get; set; }
 
         [NotMapped]
-        public string AuthorTrelloUsername => Author?.TrelloId?.Trim();
+        public string AuthorTrelloUserName => Author?.TrelloId?.Trim();
     }
 }

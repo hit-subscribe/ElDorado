@@ -13,7 +13,7 @@ using Telerik.JustMock.Helpers;
 namespace ElDorado.Console.Tests.TrelloTests
 {
     [TestClass]
-    public class When_Editing_Cards_TrelloCalendarWritingService_Should
+    public class When_Editing_Cards_CalendarWritingService_Should
     {
         private ICalendarBoard Board = Mock.Create<ICalendarBoard>();
 
@@ -93,7 +93,7 @@ namespace ElDorado.Console.Tests.TrelloTests
             Mock.AssertSet(() => Card.DueDate = Arg.IsAny<DateTime>(), Occurs.Never());
         }
 
-    [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Not_Set_Card_Due_Date_When_Card_Is_In_A_Different_Column()
         {
             Card.Arrange(c => c.ListName).Returns("asdf");

@@ -194,9 +194,10 @@
     <Compile Include="TestingExtensions.cs" />
     <Compile Include="TrelloTests\When_Adding_Cards_To_Trello_CalendarWritingService_Should.cs" />
     <Compile Include="TrelloTests\When_Adding_Cards_To_Trello_RefreshCalendarService_Should.cs" />
-    <Compile Include="TrelloTests\When_Checking_If_Card_Exists_TrelloWritingCalendarService_Should.cs" />
-    <Compile Include="TrelloTests\When_Deleting_Cards_TrelloWritingCalendarService_Should.cs" />
-    <Compile Include="TrelloTests\When_Editing_Cards_TrelloCalendarWritingService_Should.cs" />
+    <Compile Include="TrelloTests\When_Checking_If_Card_Exists_CalendarService_Should.cs" />
+    <Compile Include="TrelloTests\When_Deleting_Cards_CalendarService_Should.cs" />
+    <Compile Include="TrelloTests\When_Editing_Cards_RefreshCalendarService_Should.cs" />
+    <Compile Include="TrelloTests\When_Editing_Cards_CalendarWritingService_Should.cs" />
     <Compile Include="TrelloTests\When_Initializing_RefreshCalendarService_Should.cs" />
     <Compile Include="TrelloTests\When_Setting_Card_Description_BuildDescriptionFromBlogPost_Should.cs" />
     <Compile Include="When_Building_The_Moz_Query_Url_MozInquisitor_Should.cs" />

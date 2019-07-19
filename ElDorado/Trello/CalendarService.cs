@@ -12,6 +12,8 @@ namespace ElDorado.Trello
 {
     public abstract class CalendarService
     {
+        public const string PlannedPostsListName = "Planned Posts";
+        
         protected ICalendarBoard Board { get; set; }
         
         private TrelloAuthorization Auth => TrelloAuthorization.Default;
@@ -32,6 +34,18 @@ namespace ElDorado.Trello
 
             Auth.AppKey = credentialStore["TrelloAppKey"];
             Auth.UserToken = credentialStore["TrelloUserToken"];
+        }
+
+        public virtual void DeleteCard(string trelloId)
+        {
+            var card = Board.AllCards.FirstOrDefault(c => c.Id == trelloId);
+            if (card != null)
+                card.Delete();
+        }
+
+        public virtual bool DoesCardExistWithTitle(string blogPostTitle)
+        {
+            return Board.AllCards.Any(c => c.Name.TrelloCardLooselyMatches(blogPostTitle));
         }
 
     }
