@@ -25,7 +25,7 @@ namespace ElDorado.Trello
             refresh.TrelloId = card.Id;
         }
 
-        public void EditCard(PostRefresh postRefresh)
+        public virtual void EditCard(PostRefresh postRefresh)
         {
             var card = Board.AllCards.FirstOrDefault(c => c.Id == postRefresh?.TrelloId);
             if (card == null)

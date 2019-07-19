@@ -49,6 +49,28 @@ namespace ElDorado.Gui.Controllers
             return base.Edit(id);
         }
 
+        public override ViewResult Edit(PostRefresh refresh)
+        {
+            Context.PostRefreshes.Attach(refresh);
+            Context.SetModified(refresh);
+            Context.UpdateRefreshDependencies(refresh);
+
+            InitializeTrelloService();
+            _refreshService.EditCard(refresh);
+
+            return View(refresh.Id);
+        }
+
+        public override ActionResult Delete(int id)
+        {
+            var refresh = Context.PostRefreshes.First(pr => pr.Id == id);
+
+            InitializeTrelloService();
+            _refreshService.DeleteCard(refresh.TrelloId);
+
+            return base.Delete(id);
+        }
+
         private void InitializeTrelloService()
         {
             _refreshService.Initialize(MapPath ?? Server.MapPath(@"~/App_Data/trello.cred"));

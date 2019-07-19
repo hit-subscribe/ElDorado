@@ -108,7 +108,7 @@ namespace ElDorado.Gui.Tests.PostRefreshesControllerTests
             RefreshService.Assert(rs => rs.AddCard(Refresh));
         }
 
-    [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Add_Authors_To_ViewBag_On_Create()
         {
             var result = Target.Create(BlogPostId);
@@ -122,6 +122,49 @@ namespace ElDorado.Gui.Tests.PostRefreshesControllerTests
             var result = Target.Edit(11);
 
             ((IEnumerable<Author>)result.ViewBag.Authors).ShouldNotBeEmpty();
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Invoke_The_TrelloService_Initialize_On_Edit()
+        {
+            RefreshService.Arrange(ts => ts.Initialize(Arg.AnyString));
+
+            Target.Edit(Refresh);
+
+            RefreshService.Assert(ts => ts.Initialize(Arg.AnyString));
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Edit_Trello_Card_On_Edit()
+        {
+            RefreshService.Arrange(rs => rs.EditCard(Arg.IsAny<PostRefresh>()));
+
+            Target.Edit(Refresh);
+
+            RefreshService.Assert(rs => rs.EditCard(Refresh));
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Initialize_TrelloService_On_Delete()
+        {
+            RefreshService.Arrange(ts => ts.Initialize(Arg.AnyString));
+
+            Target.Delete(Refresh.Id);
+
+            RefreshService.Assert(ts => ts.Initialize(Arg.AnyString));
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Delete_In_Trello_Service_On_Delete()
+        {
+            const string trelloId = "asdf";
+            Refresh.TrelloId = trelloId;
+
+            RefreshService.Arrange(ts => ts.DeleteCard(Arg.AnyString));
+
+            Target.Delete(Refresh.Id);
+
+            RefreshService.Assert(ts => ts.DeleteCard(trelloId));
         }
 }
 }

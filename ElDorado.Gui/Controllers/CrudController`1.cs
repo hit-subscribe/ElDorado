@@ -40,14 +40,15 @@ namespace ElDorado.Gui.Controllers
         }
 
         [HttpPost]
-        public ViewResult Edit(T entity)
+        public virtual ViewResult Edit(T entity)
         {
             Context.Set<T>().Attach(entity);
             Context.SetModified(entity);
             Context.SaveChanges();
             return View(Context.Set<T>().First(e => e.Id == entity.Id));
         }
-        public ActionResult Delete(int id)
+
+        public virtual  ActionResult Delete(int id)
         {
             var entityToDelete = Context.Set<T>().First(e => e.Id == id);
             Context.Set<T>().Remove(entityToDelete);
