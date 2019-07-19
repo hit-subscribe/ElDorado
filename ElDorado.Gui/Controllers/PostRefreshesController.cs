@@ -34,11 +34,12 @@ namespace ElDorado.Gui.Controllers
         public override ActionResult Create(PostRefresh refresh)
         {
             Context.PostRefreshes.Add(refresh);
-            Context.SaveChanges();
             Context.UpdateRefreshDependencies(refresh);
 
             InitializeTrelloService();
             _refreshService.AddCard(refresh);
+
+            Context.SaveChanges();
 
             return RedirectToAction("Edit", new { id = refresh.Id });
         }
@@ -55,20 +56,25 @@ namespace ElDorado.Gui.Controllers
             Context.SetModified(refresh);
             Context.UpdateRefreshDependencies(refresh);
 
+            Context.SaveChanges();
+
             InitializeTrelloService();
             _refreshService.EditCard(refresh);
 
-            return View(refresh.Id);
+            ViewBag.Authors = Context.Authors;
+            return View(refresh);
         }
 
         public override ActionResult Delete(int id)
         {
             var refresh = Context.PostRefreshes.First(pr => pr.Id == id);
+            Context.PostRefreshes.Remove(refresh);
+            Context.SaveChanges();
 
             InitializeTrelloService();
             _refreshService.DeleteCard(refresh.TrelloId);
 
-            return base.Delete(id);
+            return RedirectToAction("Index", new { blogPostId = refresh.BlogPostId });
         }
 
         private void InitializeTrelloService()

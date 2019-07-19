@@ -125,6 +125,14 @@ namespace ElDorado.Gui.Tests.PostRefreshesControllerTests
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Add_Authors_To_The_ViewBag_On_Edit_Postback()
+        {
+            var result = Target.Edit(Refresh);
+
+            ((IEnumerable<Author>)result.ViewBag.Authors).ShouldNotBeEmpty();
+        }
+
+    [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Invoke_The_TrelloService_Initialize_On_Edit()
         {
             RefreshService.Arrange(ts => ts.Initialize(Arg.AnyString));
