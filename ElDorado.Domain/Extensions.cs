@@ -12,5 +12,10 @@ namespace ElDorado.Domain
         {
             return target.Replace("—", " ").Split((char[])null, StringSplitOptions.RemoveEmptyEntries).Count();
         }
+
+        public static bool MatchesYearAndMonth(this DateTime? target, int year, int month)
+        {
+            return target.HasValue && target.Value.Year == year && target.Value.Month == month;
+        }
     }
 }

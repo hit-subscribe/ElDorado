@@ -38,5 +38,10 @@ namespace ElDorado.Domain
         {
             return BlogPosts != null && BlogPosts.Any(bp => bp.DraftDate.GetValueOrDefault() == dueDate.Date);
         }
+
+        public bool HasCompletedWorkInMonth(int year, int month)
+        {
+            return BlogPosts.Any(bp => bp.DraftCompleteDate.MatchesYearAndMonth(year, month));
+        }
     }
 }

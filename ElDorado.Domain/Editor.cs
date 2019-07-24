@@ -37,5 +37,10 @@ namespace ElDorado.Domain
 
         [NotMapped]
         public string FullName => $"{FirstName} {LastName}";
+
+        public bool HasCompletedWorkInMonth(int year, int month)
+        {
+            return BlogPosts.Any(bp => bp.DraftCompleteDate.MatchesYearAndMonth(year, month));
+        }
     }
 }

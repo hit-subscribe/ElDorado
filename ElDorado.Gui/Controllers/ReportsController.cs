@@ -41,11 +41,8 @@ namespace ElDorado.Gui.Controllers
             var year = userPickedDate?.Year ?? 0;
             var month = userPickedDate?.Month ?? 0;
 
-            var authors = _context.Authors.ToList();
-            var accountsPayableAuthorsForTheMonth = authors.Where(a => a.BlogPosts.Any(bp => bp.DraftCompleteDate.MatchesYearAndMonth(year, month)));
-
-            var editors = _context.Editors.ToList();
-            var accountsPayableEditorsForTheMonth = editors.Where(e => e.BlogPosts.Any(bp => bp.DraftCompleteDate.MatchesYearAndMonth(year, month)));
+            var accountsPayableAuthorsForTheMonth = _context.Authors.Where(a => a.HasCompletedWorkInMonth(year, month));
+            var accountsPayableEditorsForTheMonth = _context.Editors.Where(e => e.HasCompletedWorkInMonth(year, month));
 
             var viewModel = new AccountsPayableViewModel()
             {
