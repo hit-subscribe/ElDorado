@@ -50,14 +50,14 @@ namespace ElDorado.Gui.Controllers
                 new PersonLedgerViewModel()
                 {
                     Name = $"{a.FirstName} {a.LastName}",
-                    Posts = a.BlogPosts.Where(bp => bp.DraftCompleteDate.MatchesYearAndMonth(year, month)).Select(bp => new PostLineItemViewModel(bp) { Cost = bp.AuthorPay })
+                    LineItems = a.BlogPosts.Where(bp => bp.DraftCompleteDate.MatchesYearAndMonth(year, month)).Select(bp => new LedgerLineItemViewModel(bp) { Cost = bp.AuthorPay })
                 }).OrderBy(a => a.Name),
 
                 EditorLedgers = accountsPayableEditorsForTheMonth.Select(e =>
                 new PersonLedgerViewModel()
                 {
                     Name = $"{e.FirstName} {e.LastName}",
-                    Posts = e.BlogPosts.Where(bp => bp.DraftCompleteDate.MatchesYearAndMonth(year, month)).Select(bp => new PostLineItemViewModel(bp) { Cost = bp.EditorPay })
+                    LineItems = e.BlogPosts.Where(bp => bp.DraftCompleteDate.MatchesYearAndMonth(year, month)).Select(bp => new LedgerLineItemViewModel(bp) { Cost = bp.EditorPay })
                 }).OrderBy(e => e.Name)
             };
             return View(viewModel);

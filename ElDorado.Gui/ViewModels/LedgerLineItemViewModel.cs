@@ -6,12 +6,12 @@ using System.Web;
 
 namespace ElDorado.Gui.ViewModels
 {
-    public class PostLineItemViewModel
+    public class LedgerLineItemViewModel
     {
         public string Title { get; set; }
         public decimal Cost { get; set; }
 
-        public PostLineItemViewModel(BlogPost bp)
+        public LedgerLineItemViewModel(BlogPost bp)
         {
             Title = bp.Title;
         }

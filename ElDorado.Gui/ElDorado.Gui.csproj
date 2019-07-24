@@ -251,7 +251,7 @@
     <Compile Include="ViewModels\BlogPostViewModel.cs" />
     <Compile Include="ViewModels\PostAuthorPairing.cs" />
     <Compile Include="ViewModels\PostHustlingViewModel.cs" />
-    <Compile Include="ViewModels\PostLineItemViewModel.cs" />
+    <Compile Include="ViewModels\LedgerLineItemViewModel.cs" />
     <Compile Include="ViewModels\PostReviewViewModel.cs" />
     <Compile Include="ViewModels\RenderedPostContents.cs" />
   </ItemGroup>

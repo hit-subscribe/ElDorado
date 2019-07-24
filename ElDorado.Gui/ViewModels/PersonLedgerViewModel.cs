@@ -9,7 +9,7 @@ namespace ElDorado.Gui.ViewModels
     {
         public string Name { get; set; }
 
-        public IEnumerable<PostLineItemViewModel> Posts { get; set; }
-        public decimal Total => Posts.Sum(p => p.Cost);
+        public IEnumerable<LedgerLineItemViewModel> LineItems { get; set; }
+        public decimal Total => LineItems.Sum(p => p.Cost);
     }
 }

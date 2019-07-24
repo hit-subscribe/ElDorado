@@ -133,7 +133,7 @@ namespace ElDorado.Gui.Tests.ReportsControllerTests
         {
             var viewModel = GetViewModel(new DateTime(2018, 12, 1));
 
-            viewModel.AuthorLedgers.First().Posts.First().Title.ShouldBe(Post.Title);
+            viewModel.AuthorLedgers.First().LineItems.First().Title.ShouldBe(Post.Title);
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -141,7 +141,7 @@ namespace ElDorado.Gui.Tests.ReportsControllerTests
         {
             var viewModel = GetViewModel(new DateTime(2018, 12, 1));
 
-            viewModel.EditorLedgers.First().Posts.First().Title.ShouldBe(Post.Title);
+            viewModel.EditorLedgers.First().LineItems.First().Title.ShouldBe(Post.Title);
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -149,7 +149,7 @@ namespace ElDorado.Gui.Tests.ReportsControllerTests
         {
             var viewModel = GetViewModel(new DateTime(2018, 12, 1));
 
-            viewModel.AuthorLedgers.First().Posts.First().Cost.ShouldBe(BaseAuthorRate);
+            viewModel.AuthorLedgers.First().LineItems.First().Cost.ShouldBe(BaseAuthorRate);
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -157,7 +157,7 @@ namespace ElDorado.Gui.Tests.ReportsControllerTests
         {
             var viewModel = GetViewModel(new DateTime(2018, 12, 1));
 
-            viewModel.EditorLedgers.First().Posts.First().Cost.ShouldBe(BaseEditorRate * Post.Content.WordCount());
+            viewModel.EditorLedgers.First().LineItems.First().Cost.ShouldBe(BaseEditorRate * Post.Content.WordCount());
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
