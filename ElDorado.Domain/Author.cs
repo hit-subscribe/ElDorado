@@ -41,7 +41,8 @@ namespace ElDorado.Domain
 
         public bool HasCompletedWorkInMonth(int year, int month)
         {
-            return BlogPosts.Any(bp => bp.DraftCompleteDate.MatchesYearAndMonth(year, month));
+            return BlogPosts.Any(bp => bp.DraftCompleteDate.MatchesYearAndMonth(year, month)) || 
+                PostRefreshes.Any(pr => pr.SubmittedDate.MatchesYearAndMonth(year, month));
         }
     }
 }

@@ -32,7 +32,7 @@ namespace ElDorado.Domain
 
         public string TrelloId { get; set; }
 
-        public decimal AuthorPay { get; set; }
+        public decimal AuthorPay { get; set; } = 50;
 
         [NotMapped]
         public string AuthorTrelloUserName => Author?.TrelloId?.Trim();

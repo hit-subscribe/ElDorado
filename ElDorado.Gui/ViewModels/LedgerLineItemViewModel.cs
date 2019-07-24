@@ -15,5 +15,10 @@ namespace ElDorado.Gui.ViewModels
         {
             Title = bp.Title;
         }
+
+        public LedgerLineItemViewModel(PostRefresh pr)
+        {
+            Title = $"REFRESH: {pr.BlogPost.Title}";
+        }
     }
 }

@@ -46,26 +46,36 @@ namespace ElDorado.Gui.Controllers
 
             var viewModel = new AccountsPayableViewModel()
             {
-                AuthorLedgers = accountsPayableAuthorsForTheMonth.Select(a =>
-                new PersonLedgerViewModel()
-                {
-                    Name = $"{a.FirstName} {a.LastName}",
-                    LineItems = a.BlogPosts.Where(bp => bp.DraftCompleteDate.MatchesYearAndMonth(year, month)).Select(bp => new LedgerLineItemViewModel(bp) { Cost = bp.AuthorPay })
-                }).OrderBy(a => a.Name),
-
-                EditorLedgers = accountsPayableEditorsForTheMonth.Select(e =>
-                new PersonLedgerViewModel()
-                {
-                    Name = $"{e.FirstName} {e.LastName}",
-                    LineItems = e.BlogPosts.Where(bp => bp.DraftCompleteDate.MatchesYearAndMonth(year, month)).Select(bp => new LedgerLineItemViewModel(bp) { Cost = bp.EditorPay })
-                }).OrderBy(e => e.Name)
+                AuthorLedgers = accountsPayableAuthorsForTheMonth.Select(a => BuildAuthorLedger(a, year, month)).OrderBy(a => a.Name),
+                EditorLedgers = accountsPayableEditorsForTheMonth.Select(e => BuildEditorLedger(e, year, month)).OrderBy(e => e.Name)
             };
             return View(viewModel);
+        }
+
+        private static PersonLedgerViewModel BuildEditorLedger(Editor e, int year, int month)
+        {
+            return new PersonLedgerViewModel()
+            {
+                Name = $"{e.FirstName} {e.LastName}",
+                LineItems = e.BlogPosts.Where(bp => bp.DraftCompleteDate.MatchesYearAndMonth(year, month)).Select(bp => new LedgerLineItemViewModel(bp) { Cost = bp.EditorPay })
+            };
+        }
+
+        private static PersonLedgerViewModel BuildAuthorLedger(Author a, int year, int month)
+        {
+            return new PersonLedgerViewModel()
+            {
+                Name = $"{a.FirstName} {a.LastName}",
+                LineItems = a.BlogPosts.Where(bp => bp.DraftCompleteDate.MatchesYearAndMonth(year, month)).Select(bp => new LedgerLineItemViewModel(bp) { Cost = bp.AuthorPay }).Concat(
+                                    a.PostRefreshes.Where(pr => pr.SubmittedDate.MatchesYearAndMonth(year, month)).Select(pr => new LedgerLineItemViewModel(pr) { Cost = pr.AuthorPay }))
+            };
         }
 
         private bool ShouldPostAppearInPostHustlingReport(BlogPost post)
         {
             return post.Author == null && post.DraftDate > Today && post.IsApproved;
         }
+
+
     }
 }

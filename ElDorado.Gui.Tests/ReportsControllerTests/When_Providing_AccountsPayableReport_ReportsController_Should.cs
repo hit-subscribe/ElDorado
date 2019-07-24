@@ -18,11 +18,31 @@ namespace ElDorado.Gui.Tests.ReportsControllerTests
 
         private const decimal BaseAuthorRate = 100;
         private const decimal BaseEditorRate = 0.04M;
+        private const decimal BaseRefreshRate = 50;
 
         private BlogContext Context { get; } = EntityFrameworkMock.Create<BlogContext>();
 
         private ReportsController Target { get; set; }
 
+        public static readonly PostRefresh Refresh = new PostRefresh()
+        {
+            SubmittedDate = new DateTime(2018, 12, 10),
+            BlogPost = new BlogPost()
+            {
+                Title = "A Post To Be Refreshed"
+            },
+            AuthorPay = BaseRefreshRate
+        };
+
+
+        private Author AuthorWithOneRefresh = new Author()
+        {
+            FirstName = "Z",
+            LastName = "Alphabetically Last",
+            PostRefreshes = new List<PostRefresh>() { Refresh },
+            BlogPosts = new List<BlogPost>()
+        };
+        
         private static readonly BlogPost Post = new BlogPost()
         {
             DraftCompleteDate = new DateTime(2018, 12, 10),
@@ -34,6 +54,7 @@ namespace ElDorado.Gui.Tests.ReportsControllerTests
             FirstName = "Erik",
             LastName = "Dietrich",
             BlogPosts = new List<BlogPost>() { Post },
+            PostRefreshes = new List<PostRefresh>(),
             BaseRate = BaseAuthorRate,
         };
 
@@ -51,9 +72,12 @@ namespace ElDorado.Gui.Tests.ReportsControllerTests
         public void BeforeEachTest()
         {
             Context.Authors.Add(AuthorWithOnePost);
+            Context.Authors.Add(AuthorWithOneRefresh);
             Context.Editors.Add(EditorWithOnePost);
+
             Post.Author = AuthorWithOnePost;
             Post.Editor = EditorWithOnePost;
+
             Post.CalculateAuthorPay();
             Post.CalculateEditorPay();
 
@@ -64,6 +88,7 @@ namespace ElDorado.Gui.Tests.ReportsControllerTests
         public void Return_A_ViewModel_With_No_AuthorLedgers_When_There_Are_No_Authors()
         {
             Context.Authors.Remove(AuthorWithOnePost);
+            Context.Authors.Remove(AuthorWithOneRefresh);
 
             var viewModel = GetViewModel();
 
@@ -83,9 +108,19 @@ namespace ElDorado.Gui.Tests.ReportsControllerTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_A_ViewModel_With_One_Author_Ledger_When_Author_Had_A_Post_For_The_Month()
         {
+            Context.Authors.Remove(AuthorWithOneRefresh);
+            
             var viewModel = GetViewModel(new DateTime(2018, 12, 1));
 
             viewModel.AuthorLedgers.Count().ShouldBe(1);
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Return_A_Ledger_Each_For_Post_Author_And_Refresh_Author()
+        {
+            var viewModel = GetViewModel(new DateTime(2018, 12, 1));
+
+            viewModel.AuthorLedgers.Count().ShouldBe(2);
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -121,6 +156,14 @@ namespace ElDorado.Gui.Tests.ReportsControllerTests
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Return_A_Refresh_Ledger_With_Refresh_In_The_Title()
+        {
+            var viewModel = GetViewModel(new DateTime(2018, 12, 1));
+
+            viewModel.AuthorLedgers.Last().LineItems.First().Title.ShouldContain("REFRESH: ");
+        }
+
+    [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_A_Ledger_Matching_Editor_Name()
         {
             var viewModel = GetViewModel(new DateTime(2018, 12, 1));
@@ -181,7 +224,7 @@ namespace ElDorado.Gui.Tests.ReportsControllerTests
         {
             var viewModel = GetViewModel(new DateTime(2018, 12, 1));
 
-            viewModel.AuthorTotal.ShouldBe(BaseAuthorRate);
+            viewModel.AuthorTotal.ShouldBe(BaseAuthorRate + BaseRefreshRate);
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -206,6 +249,7 @@ namespace ElDorado.Gui.Tests.ReportsControllerTests
                         DraftCompleteDate = new DateTime(2018, 12, 10),
                     }
                 },
+                PostRefreshes = new List<PostRefresh>(),
                 BaseRate = BaseAuthorRate,
             };
 
@@ -245,7 +289,7 @@ namespace ElDorado.Gui.Tests.ReportsControllerTests
         {
             var viewModel = GetViewModel(new DateTime(2018, 12, 1));
 
-            viewModel.GrandTotal.ShouldBe(BaseAuthorRate + BaseEditorRate * Post.Content.WordCount());
+            viewModel.GrandTotal.ShouldBe(BaseAuthorRate + BaseRefreshRate + BaseEditorRate * Post.Content.WordCount());
         }
 }
 }
