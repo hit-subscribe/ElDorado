@@ -39,12 +39,12 @@
         <tr>
             <td>@Html.DisplayFor(modelItem => ledger.Name)</td>
             <td>
-                @foreach (var post in ledger.Posts)
+                @foreach (var lineItem in ledger.LineItems)
                 {
                     <table width="100%">
                         <tr>
-                            <td>@Html.DisplayFor(modelItem => post.Title)</td>
-                            <td align="right">@Html.DisplayFor(modelItem => post.Cost)</td>
+                            <td>@Html.DisplayFor(modelItem => lineItem.Title)</td>
+                            <td align="right">@Html.DisplayFor(modelItem => lineItem.Cost)</td>
                         </tr>
                     </table>
                 }
@@ -72,12 +72,12 @@
         <tr>
             <td>@Html.DisplayFor(modelItem => ledger.Name)</td>
             <td>
-                @foreach (var post in ledger.Posts)
+                @foreach (var lineItem in ledger.LineItems)
                 {
                     <table width="100%">
                         <tr>
-                            <td>@Html.DisplayFor(modelItem => post.Title)</td>
-                            <td align="right">@Html.DisplayFor(modelItem => post.Cost)</td>
+                            <td>@Html.DisplayFor(modelItem => lineItem.Title)</td>
+                            <td align="right">@Html.DisplayFor(modelItem => lineItem.Cost)</td>
                         </tr>
                     </table>
                 }

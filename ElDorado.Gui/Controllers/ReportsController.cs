@@ -41,8 +41,8 @@ namespace ElDorado.Gui.Controllers
             var year = userPickedDate?.Year ?? 0;
             var month = userPickedDate?.Month ?? 0;
 
-            var accountsPayableAuthorsForTheMonth = _context.Authors.Where(a => a.HasCompletedWorkInMonth(year, month));
-            var accountsPayableEditorsForTheMonth = _context.Editors.Where(e => e.HasCompletedWorkInMonth(year, month));
+            var accountsPayableAuthorsForTheMonth = _context.Authors.ToList().Where(a => a.HasCompletedWorkInMonth(year, month)); //ToList here matters because without it, Linq tries to convert "HasCompletedWorkInMonth" to a SQL construct
+            var accountsPayableEditorsForTheMonth = _context.Editors.ToList().Where(e => e.HasCompletedWorkInMonth(year, month));
 
             var viewModel = new AccountsPayableViewModel()
             {
