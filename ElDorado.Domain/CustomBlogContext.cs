@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,18 @@ namespace ElDorado.Domain
             Entry(refresh).Reference(pr => pr.Author).Load();
             Entry(refresh).Reference(pr => pr.BlogPost).Load();
             Entry(refresh.BlogPost).Reference(bp => bp.Blog).Load();
+        }
+
+        public virtual T SaveAndReload<T>(T entity) where T : class, IHaveIdentity
+        {
+            SaveChanges();
+            return Reload(entity);
+        }
+
+        public virtual T Reload<T>(T entity) where T : class, IHaveIdentity
+        {
+            Entry(entity).State = EntityState.Detached;
+            return Set<T>().First(e => e.Id == entity.Id);
         }
     }
 }

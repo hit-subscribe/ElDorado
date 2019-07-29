@@ -1,0 +1,128 @@
+﻿@model IEnumerable<ElDorado.Domain.Whitepaper>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Author.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Blog.Url)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Editor.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Mission)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Persona)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Notes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TargetOutlineDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OutlineSubmittedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TargetDraftDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DraftSubmittedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TargeSubmissionDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SubmittedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsGhostwritten)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TrelloId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AuthorPay)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EditorPay)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Author.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Blog.Url)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Editor.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Mission)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Persona)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Notes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TargetOutlineDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OutlineSubmittedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TargetDraftDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DraftSubmittedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TargeSubmissionDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SubmittedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsGhostwritten)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TrelloId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AuthorPay)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EditorPay)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

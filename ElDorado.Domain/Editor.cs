@@ -11,6 +11,11 @@ namespace ElDorado.Domain
 {
     public class Editor : IHaveIdentity
     {
+        public Editor()
+        {
+
+        }
+
         [Required]
         public int Id { get; set; }
 

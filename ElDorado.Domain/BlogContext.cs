@@ -7,7 +7,11 @@ namespace ElDorado.Domain
 
     public partial class BlogContext : IdentityDbContext<AppUser>
     {
-        public BlogContext() : base("name=BlogContext") { }
+        public BlogContext() : base("name=BlogContext")
+        {
+            Configuration.LazyLoadingEnabled = true;
+            Configuration.ProxyCreationEnabled = true;
+        }
 
         public virtual DbSet<Blog> Blogs { get; set; }
         public virtual DbSet<BlogMetric> BlogMetrics { get; set; }

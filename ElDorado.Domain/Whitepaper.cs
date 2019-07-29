@@ -1,13 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ElDorado.Domain
 {
-    public class Whitepaper : IHaveIdentity
+    public class Whitepaper : IHaveIdentity, IHaveTrelloId
     {
+        public Whitepaper()
+        {
+
+        }
+        
         public int Id { get; set; }
         public int BlogId { get; set; }
         public virtual Blog Blog { get; set; }
@@ -30,5 +36,12 @@ namespace ElDorado.Domain
         public string TrelloId { get; set; }
         public decimal AuthorPay { get; set; }
         public decimal EditorPay { get; set; }
+
+        [NotMapped]
+        public string AuthorTrelloUserName => Author?.TrelloId?.Trim();
+
+        [NotMapped]
+        public string EditorTrelloUserName => Editor?.TrelloId?.Trim();
+
     }
 }

@@ -70,6 +70,7 @@
     <Compile Include="Editor.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="IHaveIdentity.cs" />
+    <Compile Include="IHaveTrelloId.cs" />
     <Compile Include="Link.cs" />
     <Compile Include="Migrations\201802210846572_CreatedBlogEntity.cs" />
     <Compile Include="Migrations\201802210846572_CreatedBlogEntity.Designer.cs">

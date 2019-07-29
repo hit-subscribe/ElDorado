@@ -11,6 +11,11 @@ namespace ElDorado.Domain
 {
     public class BlogPost : IHaveIdentity
     {
+        public BlogPost()
+        {
+
+        }
+        
         public int Id { get; set; }
 
         public int BlogId { get; set; }

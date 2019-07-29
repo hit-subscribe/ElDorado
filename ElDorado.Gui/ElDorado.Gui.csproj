@@ -230,11 +230,13 @@
     <Compile Include="Controllers\BlogPostsController.cs" />
     <Compile Include="Controllers\BlogsController.cs" />
     <Compile Include="Controllers\CrudController`1.cs" />
+    <Compile Include="Controllers\CrudTrelloController.cs" />
     <Compile Include="Controllers\EditorsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PostRefreshesController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
+    <Compile Include="Controllers\WhitepapersController.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -435,6 +437,9 @@
     <Content Include="Views\PostRefreshes\Index.cshtml" />
     <Content Include="Views\PostRefreshes\Create.cshtml" />
     <Content Include="Views\PostRefreshes\Edit.cshtml" />
+    <Content Include="Views\Whitepapers\Index.cshtml" />
+    <Content Include="Views\Whitepapers\Create.cshtml" />
+    <Content Include="Views\Whitepapers\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

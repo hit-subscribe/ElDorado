@@ -10,6 +10,11 @@ namespace ElDorado.Domain
 {
     public class PostRefresh : IHaveIdentity
     {
+        public PostRefresh()
+        {
+
+        }
+
         [Required]
         public int Id { get; set; }
 
