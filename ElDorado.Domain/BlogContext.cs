@@ -15,7 +15,7 @@ namespace ElDorado.Domain
         public virtual DbSet<Author> Authors { get; set; }
         public virtual DbSet<Editor> Editors { get; set; }
         public virtual DbSet<PostRefresh> PostRefreshes { get; set; }
-
+        public virtual DbSet<Whitepaper> Whitepapers { get; set; }
         public virtual void SetModified<TEntity>(TEntity entity) where TEntity : class
         {
             Entry(entity).State = EntityState.Modified;
@@ -37,10 +37,22 @@ namespace ElDorado.Domain
                 .HasForeignKey(bp => bp.BlogId)
                 .WillCascadeOnDelete(true);
 
+            modelBuilder.Entity<Blog>()
+                .HasMany(b => b.Whitepapers)
+                .WithRequired(wp => wp.Blog)
+                .HasForeignKey(wp => wp.BlogId)
+                .WillCascadeOnDelete(true);
+
             modelBuilder.Entity<Author>()
                 .HasMany(a => a.BlogPosts)
-                .WithOptional(b => b.Author)
-                .HasForeignKey(b => b.AuthorId)
+                .WithOptional(bp => bp.Author)
+                .HasForeignKey(bp => bp.AuthorId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Author>()
+                .HasMany(a => a.Whitepapers)
+                .WithOptional(wp => wp.Author)
+                .HasForeignKey(wp => wp.AuthorId)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Author>()
@@ -53,6 +65,12 @@ namespace ElDorado.Domain
                 .HasMany(e => e.BlogPosts)
                 .WithOptional(bp => bp.Editor)
                 .HasForeignKey(bp => bp.EditorId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Editor>()
+                .HasMany(e => e.Whitepapers)
+                .WithOptional(wp => wp.Editor)
+                .HasForeignKey(wp => wp.EditorId)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<BlogPost>()

@@ -35,6 +35,9 @@ namespace ElDorado.Domain
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BlogPost> BlogPosts { get; set; }
 
+        [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Whitepaper> Whitepapers { get; set; }
+
         [NotMapped]
         public string FullName => $"{FirstName} {LastName}";
 
