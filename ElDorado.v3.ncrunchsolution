@@ -1,6 +1,21 @@
 ﻿<SolutionConfiguration>
   <Settings>
     <AllowParallelTestExecution>True</AllowParallelTestExecution>
+    <MetricsExclusionList>
+      <Value>ElDorado\ElDorado.Console.csproj\netfx</Value>
+      <Value>ElDorado\ElDorado.Console.csproj\Properties</Value>
+      <Value>ElDorado.Gui\ElDorado.Gui.csproj\App_Start</Value>
+      <Value>Controllers\HomeController.cs:ElDorado.Gui\ElDorado.Gui.csproj</Value>
+      <Value>Controllers\ManageController.cs:ElDorado.Gui\ElDorado.Gui.csproj</Value>
+      <Value>Global.asax.cs:ElDorado.Gui\ElDorado.Gui.csproj</Value>
+      <Value>ElDorado.Gui\ElDorado.Gui.csproj\Properties</Value>
+      <Value>Startup.cs:ElDorado.Gui\ElDorado.Gui.csproj</Value>
+      <Value>ElDorado\ElDorado.Console.csproj\Menu</Value>
+      <Value>ElDorado.Domain\ElDorado.Domain.csproj\Migrations</Value>
+      <Value>ElDorado.Domain\ElDorado.Domain.csproj\Properties</Value>
+      <Value>Controllers\AccountController.cs:ElDorado.Gui\ElDorado.Gui.csproj</Value>
+      <Value>ElDorado.Gui\ElDorado.Gui.csproj\Models</Value>
+    </MetricsExclusionList>
     <SolutionConfigured>True</SolutionConfigured>
   </Settings>
 </SolutionConfiguration>

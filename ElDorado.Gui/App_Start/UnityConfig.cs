@@ -54,7 +54,7 @@ namespace ElDorado.Gui
 
             //Pass null into these constructors to force them to build their respective Trello boards with the null check constructor
             container.RegisterType<WritingCalendarService, WritingCalendarService>(new InjectionConstructor(new InjectionParameter<ICalendarBoard>(null)));
-            container.RegisterType<RefreshCalendarService, RefreshCalendarService>(new InjectionConstructor(new InjectionParameter<ICalendarBoard>(null)));
+            container.RegisterType<ITrelloSynchronizer<PostRefresh>, RefreshSynchronizer>(new InjectionConstructor(new InjectionParameter<ICalendarBoard>(null)));
             container.RegisterType<ITrelloSynchronizer<Whitepaper>, WhitepaperSynchronizer>(new InjectionConstructor(new InjectionParameter<ICalendarBoard>(null)));
             container.RegisterType<WordpressService, WordpressService>();
         }

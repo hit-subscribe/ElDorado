@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ElDorado.Domain
 {
-    public class PostRefresh : IHaveIdentity
+    public class PostRefresh : IHaveIdentity, IHaveTrelloId
     {
         public PostRefresh()
         {

@@ -13,7 +13,7 @@ using Telerik.JustMock.Helpers;
 namespace ElDorado.Console.Tests.TrelloTests
 {
     [TestClass]
-    public class When_Adding_Cards_To_Trello_RefreshCalendarService_Should
+    public class When_Adding_Cards_To_Trello_RefreshSynchronizer_Should
     {
         private const string Title = "Blog Post Title";
         private const string RefreshAuthorTrelloId = "A Trello ID";
@@ -46,7 +46,7 @@ namespace ElDorado.Console.Tests.TrelloTests
 
         private PostRefresh Refresh => Post.PostRefreshes.First();
         
-        private RefreshCalendarService Target { get; set; }
+        private RefreshSynchronizer Target { get; set; }
 
         [TestInitialize]
         public void BeforeEachTest()
@@ -54,13 +54,13 @@ namespace ElDorado.Console.Tests.TrelloTests
             Refresh.BlogPost = Post;
             Board.Arrange(b => b.AddPlannedPostCard(Arg.AnyString, Arg.AnyString, Arg.IsAny<DateTime?>(), Arg.AnyString, Arg.AnyString)).Returns(Card);
 
-            Target = new RefreshCalendarService(Board);
+            Target = new RefreshSynchronizer(Board);
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Add_A_Card_With_A_Name_Set_To_BlogPost_Title()
         {
-            Target.AddCard(Refresh);
+            Target.CreateCardForEntity(Refresh);
 
             Board.Assert(b => b.AddPlannedPostCard(Post.Title, Arg.AnyString, Arg.IsAny<DateTime?>(), Arg.AnyString, Arg.AnyString));
         }
@@ -68,7 +68,7 @@ namespace ElDorado.Console.Tests.TrelloTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Add_A_Card_With_DueDate_Set_To_DraftDate_Plus_12_Hours()
         {
-            Target.AddCard(Refresh);
+            Target.CreateCardForEntity(Refresh);
 
             Board.Assert(b => b.AddPlannedPostCard(Arg.AnyString, Arg.AnyString, Refresh.DraftDate.SafeToMidnightEastern(), Arg.AnyString, Arg.AnyString));
         }
@@ -76,7 +76,7 @@ namespace ElDorado.Console.Tests.TrelloTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Add_A_Card_With_TrelloUserName_Set_To_Post_AuthorTrelloUserName()
         {
-            Target.AddCard(Refresh);
+            Target.CreateCardForEntity(Refresh);
 
             Board.Assert(b => b.AddPlannedPostCard(Arg.AnyString, Arg.AnyString, Arg.IsAny<DateTime?>(), Arg.AnyString, RefreshAuthorTrelloId));
         }
@@ -86,7 +86,7 @@ namespace ElDorado.Console.Tests.TrelloTests
         {
             Refresh.Author = null;
 
-            Target.AddCard(Refresh);
+            Target.CreateCardForEntity(Refresh);
 
             Board.Assert(b => b.AddPlannedPostCard(Arg.AnyString, Arg.AnyString, Arg.IsAny<DateTime?>(), Arg.AnyString, null));
         }
@@ -96,7 +96,7 @@ namespace ElDorado.Console.Tests.TrelloTests
         {
             Refresh.Author.TrelloId = null;
 
-            Target.AddCard(Refresh);
+            Target.CreateCardForEntity(Refresh);
 
             Board.Assert(b => b.AddPlannedPostCard(Arg.AnyString, Arg.AnyString, Arg.IsAny<DateTime?>(), Arg.AnyString, null));
         }
@@ -106,7 +106,7 @@ namespace ElDorado.Console.Tests.TrelloTests
         {
             Refresh.Author.TrelloId = RefreshAuthorTrelloId + " ";
 
-            Target.AddCard(Refresh);
+            Target.CreateCardForEntity(Refresh);
 
             Board.Assert(b => b.AddPlannedPostCard(Arg.AnyString, Arg.AnyString, Arg.IsAny<DateTime?>(), Arg.AnyString, RefreshAuthorTrelloId));
         }
@@ -114,7 +114,7 @@ namespace ElDorado.Console.Tests.TrelloTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Add_A_Card_With_CompanyName_Set_To_Post_CompanyName()
         {
-            Target.AddCard(Refresh);
+            Target.CreateCardForEntity(Refresh);
 
             Board.Assert(b => b.AddPlannedPostCard(Arg.AnyString, Arg.AnyString, Arg.IsAny<DateTime?>(), Post.BlogCompanyName, Arg.AnyString));
         }
@@ -125,7 +125,7 @@ namespace ElDorado.Console.Tests.TrelloTests
             const string trelloId = "asdf";
             Card.Arrange(c => c.Id).Returns(trelloId);
 
-            Target.AddCard(Refresh);
+            Target.CreateCardForEntity(Refresh);
 
             Refresh.TrelloId.ShouldBe(trelloId);
         }

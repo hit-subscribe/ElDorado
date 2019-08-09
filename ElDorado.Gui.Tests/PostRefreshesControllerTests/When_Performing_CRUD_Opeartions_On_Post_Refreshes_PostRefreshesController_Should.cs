@@ -24,7 +24,7 @@ namespace ElDorado.Gui.Tests.PostRefreshesControllerTests
         private PostRefresh Refresh = new PostRefresh() { Id = 11, BlogPostId = BlogPostId };
         private Author Author = new Author() { };
 
-        private RefreshCalendarService RefreshService = Mock.Create<RefreshCalendarService>();
+        private ITrelloSynchronizer<PostRefresh> Synchronizer = Mock.Create<ITrelloSynchronizer<PostRefresh>>();
 
         private BlogContext Context { get; } = EntityFrameworkMock.Create<BlogContext>();
 
@@ -36,7 +36,7 @@ namespace ElDorado.Gui.Tests.PostRefreshesControllerTests
             Context.PostRefreshes.Add(Refresh);
             Context.Authors.Add(Author);
 
-            Target = new PostRefreshesController(Context, RefreshService) { MapPath = "somepath" };
+            Target = new PostRefreshesController(Context, Synchronizer) { MapPath = "somepath" };
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -91,21 +91,21 @@ namespace ElDorado.Gui.Tests.PostRefreshesControllerTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Invoke_The_TrelloService_Initialize_On_Create()
         {
-            RefreshService.Arrange(ts => ts.Initialize(Arg.AnyString));
+            Synchronizer.Arrange(ts => ts.Initialize(Arg.AnyString));
 
             Target.Create(Refresh);
 
-            RefreshService.Assert(ts => ts.Initialize(Arg.AnyString));
+            Synchronizer.Assert(ts => ts.Initialize(Arg.AnyString));
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Add_A_Trello_Card_On_Create()
         {
-            RefreshService.Arrange(rs => rs.AddCard(Arg.IsAny<PostRefresh>()));
+            Synchronizer.Arrange(rs => rs.CreateCardForEntity(Arg.IsAny<PostRefresh>()));
 
             Target.Create(Refresh);
 
-            RefreshService.Assert(rs => rs.AddCard(Refresh));
+            Synchronizer.Assert(rs => rs.CreateCardForEntity(Arg.IsAny<PostRefresh>()));
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -135,31 +135,31 @@ namespace ElDorado.Gui.Tests.PostRefreshesControllerTests
     [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Invoke_The_TrelloService_Initialize_On_Edit()
         {
-            RefreshService.Arrange(ts => ts.Initialize(Arg.AnyString));
+            Synchronizer.Arrange(ts => ts.Initialize(Arg.AnyString));
 
             Target.Edit(Refresh);
 
-            RefreshService.Assert(ts => ts.Initialize(Arg.AnyString));
+            Synchronizer.Assert(ts => ts.Initialize(Arg.AnyString));
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Edit_Trello_Card_On_Edit()
         {
-            RefreshService.Arrange(rs => rs.EditCard(Arg.IsAny<PostRefresh>()));
+            Synchronizer.Arrange(rs => rs.UpdateCardForEntity(Arg.IsAny<PostRefresh>()));
 
             Target.Edit(Refresh);
 
-            RefreshService.Assert(rs => rs.EditCard(Refresh));
+            Synchronizer.Assert(rs => rs.UpdateCardForEntity(Arg.IsAny<PostRefresh>()));
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Initialize_TrelloService_On_Delete()
         {
-            RefreshService.Arrange(ts => ts.Initialize(Arg.AnyString));
+            Synchronizer.Arrange(ts => ts.Initialize(Arg.AnyString));
 
             Target.Delete(Refresh.Id);
 
-            RefreshService.Assert(ts => ts.Initialize(Arg.AnyString));
+            Synchronizer.Assert(ts => ts.Initialize(Arg.AnyString));
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -168,11 +168,11 @@ namespace ElDorado.Gui.Tests.PostRefreshesControllerTests
             const string trelloId = "asdf";
             Refresh.TrelloId = trelloId;
 
-            RefreshService.Arrange(ts => ts.DeleteCard(Arg.AnyString));
+            Synchronizer.Arrange(ts => ts.DeleteCard(Arg.AnyString));
 
             Target.Delete(Refresh.Id);
 
-            RefreshService.Assert(ts => ts.DeleteCard(trelloId));
+            Synchronizer.Assert(ts => ts.DeleteCard(trelloId));
         }
 }
 }

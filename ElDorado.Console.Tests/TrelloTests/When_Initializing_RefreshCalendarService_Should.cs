@@ -17,12 +17,12 @@ namespace ElDorado.Console.Tests.TrelloTests
     {
         private static readonly string FileLines = $"TrelloAppKey:Key{Environment.NewLine}TrelloUserToken:Token";
 
-        private RefreshCalendarService Target { get; set; }
+        private RefreshSynchronizer Target { get; set; }
 
         [TestInitialize]
         public void BeforeEachTest()
         {
-            Target = new RefreshCalendarService();
+            Target = new RefreshSynchronizer();
 
             Target.Initialize(new CredentialStore(FileLines));
         }

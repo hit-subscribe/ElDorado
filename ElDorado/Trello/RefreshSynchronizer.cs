@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace ElDorado.Trello
 {
-    public class RefreshCalendarService : CalendarService
+    public class RefreshSynchronizer : CalendarService, ITrelloSynchronizer<PostRefresh>
     {
-        public RefreshCalendarService(ICalendarBoard board = null)
+        public RefreshSynchronizer(ICalendarBoard board = null)
         {
             Board = board ?? new CalendarBoard("sjMRN6BD");
         }
-        public virtual void AddCard(PostRefresh refresh)
+        public virtual void CreateCardForEntity(PostRefresh refresh)
         {
             var card = Board.AddPlannedPostCard(
                 name: refresh.BlogPost.Title, 
@@ -25,7 +25,7 @@ namespace ElDorado.Trello
             refresh.TrelloId = card.Id;
         }
 
-        public virtual void EditCard(PostRefresh postRefresh)
+        public virtual void UpdateCardForEntity(PostRefresh postRefresh)
         {
             var card = Board.AllCards.FirstOrDefault(c => c.Id == postRefresh?.TrelloId);
             if (card == null)

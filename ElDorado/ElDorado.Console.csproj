@@ -204,7 +204,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\BlogPostRepository.cs" />
     <Compile Include="SimpleWebClient.cs" />
-    <Compile Include="Trello\RefreshCalendarService.cs" />
+    <Compile Include="Trello\RefreshSynchronizer.cs" />
     <Compile Include="Trello\TrelloCard.cs" />
     <Compile Include="Trello\TrelloWrapperInterfaceExtensions.cs" />
     <Compile Include="Trello\CalendarBoard.cs" />

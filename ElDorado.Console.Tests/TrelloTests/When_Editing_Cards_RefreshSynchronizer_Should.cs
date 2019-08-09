@@ -15,7 +15,7 @@ namespace ElDorado.Console.Tests.TrelloTests
 
 
     [TestClass]
-    public class When_Editing_Cards_RefreshCalendarService_Should
+    public class When_Editing_Cards_RefreshSynchronizer_Should
     {
         private const string Title = "Blog Post Title";
         private const string RefreshAuthorTrelloId = "A Trello ID";
@@ -49,7 +49,7 @@ namespace ElDorado.Console.Tests.TrelloTests
 
         private PostRefresh Refresh => Post.PostRefreshes.First();
 
-        private RefreshCalendarService Target { get; set; }
+        private RefreshSynchronizer Target { get; set; }
 
         [TestInitialize]
         public void BeforeEachTest()
@@ -61,13 +61,13 @@ namespace ElDorado.Console.Tests.TrelloTests
 
             Board.Arrange(b => b.AllCards).Returns(new List<ITrelloCard>() { Card });
 
-            Target = new RefreshCalendarService(Board);
+            Target = new RefreshSynchronizer(Board);
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Not_Change_The_Name_Of_A_Non_Matching_Card()
         {
-            Target.EditCard(new PostRefresh());
+            Target.UpdateCardForEntity(new PostRefresh());
 
             Card.Assert(c => c.Name, Occurs.Never());
         }
@@ -75,7 +75,7 @@ namespace ElDorado.Console.Tests.TrelloTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Set_The_Card_Due_Date_To_Refresh_DraftDate()
         {
-            Target.EditCard(Refresh);
+            Target.UpdateCardForEntity(Refresh);
 
             var draftDate = Refresh.DraftDate.Value;
             var nearMidnight = new DateTime(draftDate.Year, draftDate.Month, draftDate.Day, 23, 59, 59);
@@ -90,7 +90,7 @@ namespace ElDorado.Console.Tests.TrelloTests
         {
             Refresh.DraftDate = null;
 
-            Target.EditCard(Refresh);
+            Target.UpdateCardForEntity(Refresh);
 
             Mock.AssertSet(() => Card.DueDate = Arg.IsAny<DateTime>(), Occurs.Never());
         }
@@ -98,7 +98,7 @@ namespace ElDorado.Console.Tests.TrelloTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Update_Labels_For_The_Card()
         {
-            Target.EditCard(Refresh);
+            Target.UpdateCardForEntity(Refresh);
 
             Card.Assert(c => c.UpdateLabels(Board.GetLabelsForCompany(Refresh.BlogPost.BlogCompanyName)), Occurs.Once());
         }
@@ -109,7 +109,7 @@ namespace ElDorado.Console.Tests.TrelloTests
             var members = new List<Member>() { null };
             Board.Arrange(b => b.GetMembersWithUserNames(Refresh.AuthorTrelloUserName)).Returns(members);
 
-            Target.EditCard(Refresh);
+            Target.UpdateCardForEntity(Refresh);
 
             Card.Assert(c => c.UpdateMembers(members), Occurs.Once());
         }
@@ -119,7 +119,7 @@ namespace ElDorado.Console.Tests.TrelloTests
         {
             Refresh.Author.TrelloId = "erik ";
 
-            Target.EditCard(Refresh);
+            Target.UpdateCardForEntity(Refresh);
 
             Board.Assert(b => b.GetMembersWithUserNames("erik"));
         }
