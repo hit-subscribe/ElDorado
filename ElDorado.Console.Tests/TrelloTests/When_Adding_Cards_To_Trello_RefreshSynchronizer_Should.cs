@@ -88,7 +88,7 @@ namespace ElDorado.Console.Tests.TrelloTests
 
             Target.CreateCardForEntity(Refresh);
 
-            Board.Assert(b => b.AddPlannedPostCard(Arg.AnyString, Arg.AnyString, Arg.IsAny<DateTime?>(), Arg.AnyString, null));
+            Board.Assert(b => b.AddPlannedPostCard(Arg.AnyString, Arg.AnyString, Arg.IsAny<DateTime?>(), Arg.AnyString, Arg.IsAny<string[]>()));
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -98,7 +98,7 @@ namespace ElDorado.Console.Tests.TrelloTests
 
             Target.CreateCardForEntity(Refresh);
 
-            Board.Assert(b => b.AddPlannedPostCard(Arg.AnyString, Arg.AnyString, Arg.IsAny<DateTime?>(), Arg.AnyString, null));
+            Board.Assert(b => b.AddPlannedPostCard(Arg.AnyString, Arg.AnyString, Arg.IsAny<DateTime?>(), Arg.AnyString, Arg.IsAny<string[]>()));
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]

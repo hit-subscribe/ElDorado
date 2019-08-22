@@ -17,9 +17,12 @@ namespace ElDorado.Trello
         public void CreateCardForEntity(Whitepaper whitepaperToAdd)
         {
             string companyName = whitepaperToAdd.Blog.CompanyName;
-            string authorTrelloUserName = whitepaperToAdd.AuthorTrelloUserName;
+            var cardMembers = new string[] { whitepaperToAdd.AuthorTrelloUserName, whitepaperToAdd.EditorTrelloUserName };
             
-            var card = Board.AddPlannedPostCard(name: whitepaperToAdd.Title, dueDate: whitepaperToAdd.TargetOutlineDate.SafeToMidnightEastern(), trelloUserName: authorTrelloUserName, companyName: companyName);
+            var card = Board.AddPlannedPostCard(name: whitepaperToAdd.Title,
+                                                dueDate: whitepaperToAdd.TargetOutlineDate.SafeToMidnightEastern(),
+                                                trelloUserNames: cardMembers,
+                                                companyName: companyName);
 
             whitepaperToAdd.TrelloId = card.Id;
         }

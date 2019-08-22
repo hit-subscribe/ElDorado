@@ -19,7 +19,7 @@ namespace ElDorado.Trello
 
         public virtual void AddCard(BlogPost postToAdd)
         {
-            var card = Board.AddPlannedPostCard(name: postToAdd.AuthorTitle, dueDate: postToAdd.DraftDate.SafeToMidnightEastern(), trelloUserName: postToAdd.AuthorTrelloUserName, companyName: postToAdd.BlogCompanyName);
+            var card = Board.AddPlannedPostCard(name: postToAdd.AuthorTitle, dueDate: postToAdd.DraftDate.SafeToMidnightEastern(), trelloUserNames: postToAdd.AuthorTrelloUserName, companyName: postToAdd.BlogCompanyName);
             card.BuildDescriptionFromBlogPost(postToAdd);
             card.IsArchived = !postToAdd.IsApproved;
 

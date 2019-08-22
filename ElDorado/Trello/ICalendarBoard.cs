@@ -13,6 +13,6 @@ namespace ElDorado.Trello
 
         IList<ITrelloCard> AllCards { get; }
 
-        ITrelloCard AddPlannedPostCard(string name = null, string description = null, DateTime? dueDate = null, string companyName = null, string trelloUserName = null);
+        ITrelloCard AddPlannedPostCard(string name = null, string description = null, DateTime? dueDate = null, string companyName = null, params string[] trelloUserNames);
     }
 }

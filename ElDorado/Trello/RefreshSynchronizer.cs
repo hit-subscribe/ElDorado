@@ -18,7 +18,7 @@ namespace ElDorado.Trello
             var card = Board.AddPlannedPostCard(
                 name: refresh.BlogPost.Title, 
                 dueDate: refresh.DraftDate.SafeToMidnightEastern(), 
-                trelloUserName: refresh.AuthorTrelloUserName, 
+                trelloUserNames: refresh.AuthorTrelloUserName, 
                 companyName: refresh.BlogPost.BlogCompanyName
             );
 

@@ -22,9 +22,9 @@ namespace ElDorado.Trello
             LazyWritingCalendar = new Lazy<Board>(() => new Board(trelloBoardId));
         }
 
-        public ITrelloCard AddPlannedPostCard(string name, string description = null, DateTime? dueDate = null, string companyName = null, string trelloUserName = null)
+        public ITrelloCard AddPlannedPostCard(string name, string description = null, DateTime? dueDate = null, string companyName = null, params string[] trelloUserNames)
         {
-            var card = PlannedPostCards.Add(name: name, description: description, dueDate: dueDate, members: GetMembersWithUserNames(trelloUserName), labels: GetLabelsForCompany(companyName));
+            var card = PlannedPostCards.Add(name: name, description: description, dueDate: dueDate, members: GetMembersWithUserNames(trelloUserNames), labels: GetLabelsForCompany(companyName));
             return new TrelloCard(card);
         }
 
