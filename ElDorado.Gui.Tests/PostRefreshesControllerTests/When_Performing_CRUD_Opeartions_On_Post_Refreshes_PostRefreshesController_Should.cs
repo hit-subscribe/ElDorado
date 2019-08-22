@@ -174,5 +174,13 @@ namespace ElDorado.Gui.Tests.PostRefreshesControllerTests
 
             Synchronizer.Assert(ts => ts.DeleteCard(trelloId));
         }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Return_A_Redirect_With_BlogPostId_Set_On_Delete()
+        {
+            var result = Target.Delete(Refresh.Id) as RedirectToRouteResult;
+            
+            result.RouteValues["blogPostId"].ShouldBe(BlogPostId);
+        }
 }
 }

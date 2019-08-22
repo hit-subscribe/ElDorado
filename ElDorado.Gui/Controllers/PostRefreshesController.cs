@@ -39,5 +39,14 @@ namespace ElDorado.Gui.Controllers
             ViewBag.Authors = Context.Authors;
             return base.Edit(refresh);
         }
+
+        public override ActionResult Delete(int id)
+        {
+            var postId = Context.PostRefreshes.First(pr => pr.Id == id).BlogPostId;
+            
+            base.Delete(id);
+            
+            return RedirectToAction("Index", new { blogPostId = postId });
+        }
     }
 }
