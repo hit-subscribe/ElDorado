@@ -33,9 +33,18 @@ namespace ElDorado.Trello
             if (card == null)
                 return;
 
-            card.DueDate = whitepaperToEdit.TargetOutlineDate.SafeToMidnightEastern();
-            card.UpdateLabels(Board.GetLabelsForCompany(whitepaperToEdit.Blog.CompanyName));
-            card.UpdateMembers(Board.GetMembersWithUserNames(whitepaperToEdit.AuthorTrelloUserName, whitepaperToEdit.EditorTrelloUserName));
+            card.Name = whitepaperToEdit.Title;
+            UpdatePlannedPostPropertiesIfApplicable(whitepaperToEdit, card);
+        }
+
+        private void UpdatePlannedPostPropertiesIfApplicable(Whitepaper whitepaperToEdit, ITrelloCard card)
+        {
+            if (card.ListName == PlannedPostsListName)
+            {
+                card.DueDate = whitepaperToEdit.TargetOutlineDate.SafeToMidnightEastern();
+                card.UpdateLabels(Board.GetLabelsForCompany(whitepaperToEdit.Blog.CompanyName));
+                card.UpdateMembers(Board.GetMembersWithUserNames(whitepaperToEdit.AuthorTrelloUserName, whitepaperToEdit.EditorTrelloUserName));
+            }
         }
     }
 }
