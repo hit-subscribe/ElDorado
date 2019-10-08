@@ -125,5 +125,44 @@ namespace ElDorado.Menu
             //retriever.SyncToWordpress(new BlogPost() { Title = "Are We Getting This Right?" });
 
         }
-    }
+
+        [MenuMethod("Create table for email")]
+        public static void Tabelize()
+        {
+            Console.WriteLine("Where's the CSV file?");
+            var csvPath = Console.ReadLine();
+
+            var csvLines = File.ReadAllLines(csvPath);
+            var posts = csvLines.Skip(1);
+
+            StringBuilder builder = new StringBuilder($"<table>{Environment.NewLine}");
+            builder.Append($"<tr><th>Post Title</th><th>Client</th><th>Due</th><th>Click to Claim</th></tr>{Environment.NewLine}");
+            foreach(var post in posts)
+            {
+                builder.Append("<tr>");
+                var tokens = GetTokens(post);
+                builder.Append($"<td><a href=\"{tokens[1]}\">{tokens[0]}</a></td><td>{tokens[2]}</td><td>{tokens[3]}</td><td><a href=\"mailto:iwantapost@hitsubscribe.com?subject={Uri.EscapeDataString(tokens[0])}\">This is my post!</a></td></tr>");
+                builder.Append($"</tr>{Environment.NewLine}");
+            }
+            builder.Append("</table>");
+            File.WriteAllText("tablehtml.txt", builder.ToString());
+        }
+
+        private static string[] GetTokens(string postInfo)
+        {
+            var tokens = new List<string>();
+            if (postInfo.StartsWith("\""))
+            {
+                string[] postFields = postInfo.Split('"');
+                tokens.Add(postFields[1]);
+                var remainingTokens = postFields[2].Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                tokens.AddRange(remainingTokens);
+            }
+            else
+            {
+                tokens.AddRange(postInfo.Split(','));
+            }
+            return tokens.ToArray();
+        }
+}
 }
