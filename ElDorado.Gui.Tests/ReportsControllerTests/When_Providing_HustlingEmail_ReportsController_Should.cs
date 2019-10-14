@@ -16,6 +16,8 @@ namespace ElDorado.Gui.Tests.ReportsControllerTests
     {
         public BlogPost Post { get; set; } = new BlogPost()
         {
+            IsApproved = true,
+            DraftDate = Today.AddDays(1),
             Title = "A Blog Post",
         };
 
@@ -53,6 +55,38 @@ namespace ElDorado.Gui.Tests.ReportsControllerTests
         public void Return_Empty_When_Authorless_But_Complete_In_The_Past()
         {
             Post.DraftCompleteDate = Today.AddDays(-1);
+
+            var records = Target.HustlingEmail().GetResult<IEnumerable<BlogPost>>();
+
+            records.ShouldBeEmpty();
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Return_Empty_When_DraftDueDate_Is_In_The_Past()
+        {
+            Post.DraftDate = Today.AddDays(-1);
+
+            var records = Target.HustlingEmail().GetResult<IEnumerable<BlogPost>>();
+
+            records.ShouldBeEmpty();
+
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Returns_Post_When_DraftDue_Is_Null()
+        {
+            Post.DraftDate = null;
+
+            var records = Target.HustlingEmail().GetResult<IEnumerable<BlogPost>>();
+
+            records.First().Title.ShouldBe(Post.Title);
+
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Returns_Nothing_If_Post_Is_Not_Approved()
+        {
+            Post.IsApproved = false;
 
             var records = Target.HustlingEmail().GetResult<IEnumerable<BlogPost>>();
 

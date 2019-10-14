@@ -6,10 +6,6 @@
 
 <h2>HustlingEmail</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-
 &lt;table border="1" cellpadding="10" class="mc-table"&gt;
 <br />
 &lt;tr&gt;
@@ -19,7 +15,7 @@
 {
     @Html.Raw("&lt;tr&gt;");
 
-    @Html.Raw($"&lt;td&gt;&lt;a href=\"https://trello.com/c/{item.TrelloId})\"&gt;{item.Title})&lt;/a&gt;&lt;/td&gt;");
+    @Html.Raw($"&lt;td&gt;&lt;a href=\"https://trello.com/c/{item.TrelloId}\"&gt;{item.Title}&lt;/a&gt;&lt;/td&gt;");
     @Html.Raw($"&lt;td&gt;{item.BlogCompanyName}&lt;/td&gt;");
     if (@item.DraftDate != null)
     {

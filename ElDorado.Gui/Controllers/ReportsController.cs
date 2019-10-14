@@ -54,8 +54,10 @@ namespace ElDorado.Gui.Controllers
 
         public ActionResult HustlingEmail()
         {
-            var posts = _context.BlogPosts.Where(bp => bp.Author == null && bp.DraftCompleteDate == null);
-            return View(posts);
+            var posts = _context.BlogPosts.ToList();
+            var matchingPosts = posts.Where(bp => ShouldPostAppearInHustlingEmail(bp)).ToList();
+
+            return View(matchingPosts);
         }
 
         private static PersonLedgerViewModel BuildEditorLedger(Editor e, int year, int month)
@@ -82,6 +84,10 @@ namespace ElDorado.Gui.Controllers
             return post.Author == null && post.DraftDate > Today && post.IsApproved;
         }
 
-
+        private bool ShouldPostAppearInHustlingEmail(BlogPost post)
+        {
+            return post.Author == null && post.DraftCompleteDate == null && post.IsApproved &&
+                (post.DraftDate == null || post.DraftDate >= Today);
+        }
     }
 }
