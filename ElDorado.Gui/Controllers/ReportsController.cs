@@ -52,6 +52,12 @@ namespace ElDorado.Gui.Controllers
             return View(viewModel);
         }
 
+        public ActionResult HustlingEmail()
+        {
+            var posts = _context.BlogPosts.Where(bp => bp.Author == null && bp.DraftCompleteDate == null);
+            return View(posts);
+        }
+
         private static PersonLedgerViewModel BuildEditorLedger(Editor e, int year, int month)
         {
             return new PersonLedgerViewModel()

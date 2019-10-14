@@ -126,18 +126,14 @@ namespace ElDorado.Menu
 
         }
 
-        [MenuMethod("Create table for email")]
+        [MenuMethod("Create table for internal email")]
         public static void Tabelize()
         {
-            Console.WriteLine("Where's the CSV file?");
-            var csvPath = Console.ReadLine();
+            var builder = new StringBuilder($"<table border=\"1\" cellpadding=\"10\" class=\"mc-table\">{Environment.NewLine}");
+            builder.Append($"<tr><th style=\"width:45%:\">Post Title</th><th>Client</th><th>Due</th><th>Click to Claim</th></tr>{Environment.NewLine}");
 
-            var csvLines = File.ReadAllLines(csvPath);
-            var posts = csvLines.Skip(1);
-
-            StringBuilder builder = new StringBuilder($"<table>{Environment.NewLine}");
-            builder.Append($"<tr><th>Post Title</th><th>Client</th><th>Due</th><th>Click to Claim</th></tr>{Environment.NewLine}");
-            foreach(var post in posts)
+            var posts = GetCsvFileLines();
+            foreach (var post in posts)
             {
                 builder.Append("<tr>");
                 var tokens = GetTokens(post);
@@ -147,6 +143,36 @@ namespace ElDorado.Menu
             builder.Append("</table>");
             File.WriteAllText("tablehtml.txt", builder.ToString());
         }
+
+        [MenuMethod("Create table for external email")]
+        public static void TabelizeExternal()
+        {
+            var builder = new StringBuilder($"<table border=\"1\" cellpadding=\"10\" class=\"mc-table\">{Environment.NewLine}");
+            builder.Append($"<tr><th style=\"width:45%:\">Post Title</th><th>Rate</th><th>Due</th><th>Click to Claim</th></tr>{Environment.NewLine}");
+
+            var posts = GetCsvFileLines();
+            foreach (var post in posts)
+            {
+                builder.Append("<tr>");
+                var tokens = GetTokens(post);
+                builder.Append($"<td>{tokens[0]}</td><td>{tokens[4]}</td><td>{tokens[3]}</td><td><a href=\"mailto:iwantapost@hitsubscribe.com?subject={Uri.EscapeDataString(tokens[0])}\">This is my post!</a></td></tr>");
+                builder.Append($"</tr>{Environment.NewLine}");
+            }
+
+            builder.Append("</table>");
+            File.WriteAllText("tablehtml.txt", builder.ToString());
+        }
+
+        private static IEnumerable<string> GetCsvFileLines()
+        {
+            Console.WriteLine("Where's the CSV file?");
+            var csvPath = Console.ReadLine();
+
+            var csvLines = File.ReadAllLines(csvPath);
+            var posts = csvLines.Skip(1);
+            return posts;
+        }
+
 
         private static string[] GetTokens(string postInfo)
         {
