@@ -440,6 +440,7 @@
     <Content Include="Views\Whitepapers\Index.cshtml" />
     <Content Include="Views\Whitepapers\Create.cshtml" />
     <Content Include="Views\Whitepapers\Edit.cshtml" />
+    <Content Include="Views\Reports\HustlingEmail.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
