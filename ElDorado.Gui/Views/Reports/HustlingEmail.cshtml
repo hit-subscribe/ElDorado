@@ -4,7 +4,7 @@
     ViewBag.Title = "HustlingEmail";
 }
 
-<h2>HustlingEmail</h2>
+<h2>Internal Hustling Email</h2>
 
 &lt;table border="1" cellpadding="10" class="mc-table"&gt;
 <br />
@@ -17,6 +17,34 @@
 
     @Html.Raw($"&lt;td&gt;&lt;a href=\"https://trello.com/c/{item.TrelloId}\"&gt;{item.Title}&lt;/a&gt;&lt;/td&gt;");
     @Html.Raw($"&lt;td&gt;{item.BlogCompanyName}&lt;/td&gt;");
+    if (@item.DraftDate != null)
+    {
+        @Html.Raw($"&lt;td&gt;{item.DraftDate.Value.ToShortDateString()}&lt;/td&gt;");
+    }
+    else
+    {
+        @Html.Raw("&lt;td&gt;Flexible&lt;/td&gt;");
+    }
+    @Html.Raw($"&lt;td&gt;&lt;a href=\"mailto:iwantapost@hitsubscribe.com?subject={Uri.EscapeDataString(item.Title)}\">This my post!&lt;/a&gt;&lt;/td&gt;");
+
+    @Html.Raw("&lt;/tr&gt;");
+    <br />
+}
+&lt;/table&gt;
+
+<h2>External Hustling Email</h2>
+
+&lt;table border="1" cellpadding="10" class="mc-table"&gt;
+<br />
+&lt;tr&gt;
+&lt;th style="width:45%"&gt;Post Title&lt;/th&gt;&lt;th&gt;Rate&lt;/th&gt;&lt;th&gt;Due&lt;/th&gt;&lt;th&gt;Click to Claim&lt;/th&gt;
+<br />
+@foreach (var item in Model)
+{
+    @Html.Raw("&lt;tr&gt;");
+
+    @Html.Raw($"&lt;td&gt;{item.Title}&lt;/td&gt;");
+    @Html.Raw($"&lt;td&gt;${(item.IsDoublePost ? "200" : "100")} &lt;/td&gt;");
     if (@item.DraftDate != null)
     {
         @Html.Raw($"&lt;td&gt;{item.DraftDate.Value.ToShortDateString()}&lt;/td&gt;");
