@@ -49,10 +49,10 @@ namespace ElDorado.Domain
         public string TrelloId { get; set; }
         public decimal AuthorPay { get; set; }
         public decimal EditorPay { get; set; }
-
-        //Need to be added to the database
         public string Content { get; set; } 
         public int WordpressId { get; set; }
+        public bool QualifiesForAuthorBonus { get; set; }
+        public string StaffNotes { get; set; }
 
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PostRefresh> PostRefreshes { get; set; }

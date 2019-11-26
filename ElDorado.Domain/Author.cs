@@ -42,6 +42,9 @@ namespace ElDorado.Domain
         [NotMapped]
         public string FullName => $"{FirstName} {LastName}";
 
+        [NotMapped]
+        public object QualifyingPostCount => BlogPosts.Count(bp => bp.QualifiesForAuthorBonus && bp.SubmittedDate.HasValue);
+
         public bool HasPostsDue(DateTime dueDate)
         {
             return BlogPosts != null && BlogPosts.Any(bp => bp.DraftDate.GetValueOrDefault() == dueDate.Date);

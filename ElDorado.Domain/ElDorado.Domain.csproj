@@ -184,6 +184,10 @@
     <Compile Include="Migrations\201907291813121_Adding whitepaper domain entity.Designer.cs">
       <DependentUpon>201907291813121_Adding whitepaper domain entity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911260439443_AddingBonusQualifications.cs" />
+    <Compile Include="Migrations\201911260439443_AddingBonusQualifications.Designer.cs">
+      <DependentUpon>201911260439443_AddingBonusQualifications.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PostRefresh.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -279,6 +283,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907291813121_Adding whitepaper domain entity.resx">
       <DependentUpon>201907291813121_Adding whitepaper domain entity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911260439443_AddingBonusQualifications.resx">
+      <DependentUpon>201911260439443_AddingBonusQualifications.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -68,6 +68,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthorTests\When_Counting_Eligible_Posts_Author_QualifyingPosts_Should.cs" />
     <Compile Include="AuthorTests\When_Evaluating_Whether_Author_Has_Posts_Due_Author_Should.cs" />
     <Compile Include="BlogPostTests\When_Evaluating_IsHitSubscribeFinished_BlogPost_Should.cs" />
     <Compile Include="BlogPostTests\When_Evaluating_Links_IsInternalLink_Should.cs" />
