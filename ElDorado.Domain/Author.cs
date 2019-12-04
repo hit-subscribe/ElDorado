@@ -43,7 +43,7 @@ namespace ElDorado.Domain
         public string FullName => $"{FirstName} {LastName}";
 
         [NotMapped]
-        public object QualifyingPostCount => BlogPosts.Count(bp => bp.QualifiesForAuthorBonus && bp.SubmittedDate.HasValue);
+        public int QualifyingPostCount => BlogPosts == null ? 0 : BlogPosts.Count(bp => bp.QualifiesForAuthorBonus && bp.SubmittedDate.HasValue);
 
         public bool HasPostsDue(DateTime dueDate)
         {

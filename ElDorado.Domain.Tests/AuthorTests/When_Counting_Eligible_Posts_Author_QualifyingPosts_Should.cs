@@ -49,5 +49,13 @@ namespace ElDorado.Domain.Tests.AuthorTests
 
             Target.QualifyingPostCount.ShouldBe(0);
         }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Return_0_When_Author_Blog_Posts_Collection_Is_Null()
+        {
+            Target.BlogPosts = null;
+
+            Target.QualifyingPostCount.ShouldBe(0);
+        }
 }
 }
