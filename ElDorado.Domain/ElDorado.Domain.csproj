@@ -188,6 +188,10 @@
     <Compile Include="Migrations\201911260439443_AddingBonusQualifications.Designer.cs">
       <DependentUpon>201911260439443_AddingBonusQualifications.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912040104357_ChangingDefault.cs" />
+    <Compile Include="Migrations\201912040104357_ChangingDefault.Designer.cs">
+      <DependentUpon>201912040104357_ChangingDefault.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PostRefresh.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -286,6 +290,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911260439443_AddingBonusQualifications.resx">
       <DependentUpon>201911260439443_AddingBonusQualifications.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912040104357_ChangingDefault.resx">
+      <DependentUpon>201912040104357_ChangingDefault.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

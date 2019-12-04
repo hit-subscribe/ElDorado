@@ -51,7 +51,7 @@ namespace ElDorado.Domain
         public decimal EditorPay { get; set; }
         public string Content { get; set; } 
         public int WordpressId { get; set; }
-        public bool QualifiesForAuthorBonus { get; set; }
+        public bool QualifiesForAuthorBonus { get; set; } = true;
         public string StaffNotes { get; set; }
 
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
