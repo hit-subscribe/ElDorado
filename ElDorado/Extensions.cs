@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using HtmlAgilityPack;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,6 +61,20 @@ namespace ElDorado
         public static string ReplaceWeirdQuotes(this string target)
         {
             return target.Replace("“", "\"").Replace("”", "\"").Replace("’", "'").Replace("‘", "'");
+        }
+
+        public static HtmlNode AsHtml(this string target)
+        {
+            var document = new HtmlDocument();
+            document.LoadHtml(target);
+            return document.DocumentNode;
+        }
+
+        public static IEnumerable<HtmlNode> SelectNodesWithTag(this HtmlNode target, string tag)
+        {
+            var nodes = target.SelectNodes($"//{tag}");
+
+            return nodes ?? Enumerable.Empty<HtmlNode>();
         }
     }
 }

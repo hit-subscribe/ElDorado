@@ -21,19 +21,5 @@ namespace ElDorado.Gui
 
             return DefaultMatches(target.Value, valueToCheck);
         }
-
-        public static HtmlNode AsHtml(this string target)
-        {
-            var document = new HtmlDocument();
-            document.LoadHtml(target);
-            return document.DocumentNode;
-        }
-
-        public static IEnumerable<HtmlNode> SelectNodesWithTag(this HtmlNode target, string tag)
-        {
-            var nodes = target.SelectNodes($"//{tag}");
-
-            return nodes ?? Enumerable.Empty<HtmlNode>();
-        }
     }
 }
