@@ -186,6 +186,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\OrphanedBlogPostException.cs" />
+    <Compile Include="Refreshes\SiteUrl.cs" />
+    <Compile Include="Refreshes\Sitemap.cs" />
     <Compile Include="Scraping\SearchResult.cs" />
     <Compile Include="Scraping\SearchResultRetriever.cs" />
     <Compile Include="Trello\CalendarService.cs" />

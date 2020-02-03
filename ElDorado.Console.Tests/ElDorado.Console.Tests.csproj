@@ -189,6 +189,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientSpreadsheets\When_Retrieving_Posts_From_ClientSpreadsheet_ClientSpreadsheetService_Should.cs" />
+    <Compile Include="RefreshesTests\When_Loading_Sitemap_Should.cs" />
+    <Compile Include="RefreshesTests\When_Providing_A_Collection_Of_SiteUrls_Sitemap_Urls_Should.cs" />
     <Compile Include="Repository\When_Writing_BlogPosts_To_The_Database_BlogPostRepository_Should.cs" />
     <Compile Include="ExtensionTests\When_Converting_DateTimes_SafeToDateTime_Should.cs" />
     <Compile Include="ExtensionTests\When_Loose_Matching_LooselyMatches_Should.cs" />
@@ -239,6 +241,7 @@
       <Name>ElDorado.Console</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

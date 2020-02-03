@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace ElDorado
 {
@@ -75,6 +76,21 @@ namespace ElDorado
             var nodes = target.SelectNodes($"//{tag}");
 
             return nodes ?? Enumerable.Empty<HtmlNode>();
+        }
+
+        public static IEnumerable<XElement> DescendantsNamed(this XDocument target, string simpleName)
+        {
+            return target.Descendants().Where(d => d.Name.LocalName == simpleName);
+        }
+
+        public static IEnumerable<XElement> DescendantsNamed(this XElement target, string simpleName)
+        {
+            return target.Descendants().Where(d => d.Name.LocalName == simpleName);
+        }
+
+        public static string ValueOfFirstDescendantNamed(this XElement target, string simpleName)
+        {
+            return DescendantsNamed(target, simpleName).First().Value;
         }
     }
 }

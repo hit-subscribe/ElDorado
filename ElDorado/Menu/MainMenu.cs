@@ -1,5 +1,6 @@
 ﻿using ElDorado.Domain;
 using ElDorado.Metrics;
+using ElDorado.Refreshes;
 using ElDorado.Repository;
 using ElDorado.Scraping;
 using ElDorado.Trello;
@@ -28,7 +29,7 @@ namespace ElDorado.Menu
 
         private static readonly BlogContext _context = new BlogContext();
 
-        [MenuMethod("Look for outdated posts")]
+        [MenuMethod("Look for refresh candidates")]
         public static void LookForOutdatedPosts()
         {
             Console.WriteLine("Give me the sitemap, please.");
@@ -36,19 +37,19 @@ namespace ElDorado.Menu
 
             var client = new SimpleWebClient();
 
-            var sitemapXml = new XmlDocument();
-            sitemapXml.Load(sitemapFilePath);
+            var sitemap = new Sitemap(sitemapFilePath);
 
-            var blogPostUrls = sitemapXml.GetElementsByTagName("loc").Cast<XmlNode>().Select(node => node.InnerText); 
+            var blogPostUrls = sitemap.SiteUrls; 
 
-            foreach(var url in blogPostUrls)
+            foreach(var siteUrl in blogPostUrls)
             {
-                var rawHtml = client.GetRawResultOfBasicGetRequest(url).AsHtml();
-                var title = rawHtml.SelectNodesWithTag("title").First().InnerText;
-                var h1s = rawHtml.SelectNodesWithTag("h1").Select(n => n.InnerText);
+                Console.WriteLine($"{siteUrl.Url} was last modified {siteUrl.LastUpdated}");
+                //var rawHtml = client.GetRawResultOfBasicGetRequest(url).AsHtml();
+                //var title = rawHtml.SelectNodesWithTag("title").First().InnerText;
+                //var h1s = rawHtml.SelectNodesWithTag("h1").Select(n => n.InnerText);
 
-                if (title.Contains("2019") || h1s.Any(h1 => h1.Contains("2019")))
-                    Console.WriteLine(url);
+                //if (title.Contains("2019") || h1s.Any(h1 => h1.Contains("2019")))
+                //    Console.WriteLine(url);
             }
 
         }
