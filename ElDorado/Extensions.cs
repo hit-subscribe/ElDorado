@@ -78,6 +78,11 @@ namespace ElDorado
             return nodes ?? Enumerable.Empty<HtmlNode>();
         }
 
+        public static IEnumerable<string> SelectAttributeValuesForNode(this HtmlNode target, string attribute, string tag)
+        {
+            return target.SelectNodesWithTag(tag).Select(n => n.Attributes[attribute]?.Value);
+        }
+
         public static IEnumerable<XElement> DescendantsNamed(this XDocument target, string simpleName)
         {
             return target.Descendants().Where(d => d.Name.LocalName == simpleName);

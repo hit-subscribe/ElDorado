@@ -25,9 +25,20 @@ namespace ElDorado.Menu
     public class MainMenu
     {
 
-        private const string PostPlanningSpreadsheetId = "1BFycG-T2eY3Uh8HWr5c5h-MjYEUJ8eKjqJ8GLxhdh2w";
+        [MenuMethod("AnalyzeAPage")]
+        public static void AnalyzeAPage()
+        {
+            Console.WriteLine("Url, please.");
+            var url = Console.ReadLine();
 
-        private static readonly BlogContext _context = new BlogContext();
+            var client = new SimpleWebClient();
+            var pageChecker = new PageChecker();
+
+            var rawHtml = client.GetRawResultOfBasicGetRequest(url);
+
+            pageChecker.GetLinksFrom(rawHtml).ToList().ForEach(l => Console.WriteLine(l));
+
+        }
 
         [MenuMethod("Look for refresh candidates")]
         public static void LookForOutdatedPosts()
@@ -36,8 +47,8 @@ namespace ElDorado.Menu
             var sitemapFilePath = Console.ReadLine();
 
             var client = new SimpleWebClient();
-            var sitemap = new Sitemap(sitemapFilePath);
             var pageChecker = new PageChecker();
+            var sitemap = new Sitemap(sitemapFilePath);
 
             var blogPostUrls = sitemap.SiteUrls; 
 

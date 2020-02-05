@@ -22,7 +22,12 @@ namespace ElDorado.Refreshes
             return ContainsNonCurrentYear(title) || levelOneHeadings.Any(loh => ContainsNonCurrentYear(loh));
         }
 
-        public bool ContainsNonCurrentYear(string targetText)
+        public IEnumerable<string> GetLinksFrom(string rawPageHtml)
+        {
+            return rawPageHtml.AsHtml().SelectAttributeValuesForNode("href", "a").Where(link => IsActualLink(link));
+        }
+
+        private bool ContainsNonCurrentYear(string targetText)
         {
             var tokensInText = targetText.Split(' ');
             var yearsInText = tokensInText.Where(t => Regex.IsMatch(t, @"^(20)\d{2}$"));
@@ -30,15 +35,20 @@ namespace ElDorado.Refreshes
             return yearsInText.Any(y => int.Parse(y) < Now.Year);
         }
 
-        public string GetPageTitle(HtmlNode page)
+        private string GetPageTitle(HtmlNode page)
         {
             var allTitleNodes = page.SelectNodesWithTag("title");
             return allTitleNodes.Any() ? allTitleNodes.First().InnerText.ToString() : string.Empty;
         }
 
-        public IEnumerable<string> GetLevelOneHeadings(HtmlNode page)
+        private IEnumerable<string> GetLevelOneHeadings(HtmlNode page)
         {
             return page.SelectNodesWithTag("h1").Select(n => n.InnerText);
+        }
+
+        private static bool IsActualLink(string hrefAttribute)
+        {
+            return hrefAttribute != null && !hrefAttribute.StartsWith("#");
         }
     }
 }
