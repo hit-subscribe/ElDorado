@@ -36,20 +36,17 @@ namespace ElDorado.Menu
             var sitemapFilePath = Console.ReadLine();
 
             var client = new SimpleWebClient();
-
             var sitemap = new Sitemap(sitemapFilePath);
+            var pageChecker = new PageChecker();
 
             var blogPostUrls = sitemap.SiteUrls; 
 
             foreach(var siteUrl in blogPostUrls)
             {
-                Console.WriteLine($"{siteUrl.Url} was last modified {siteUrl.LastUpdated}");
-                //var rawHtml = client.GetRawResultOfBasicGetRequest(url).AsHtml();
-                //var title = rawHtml.SelectNodesWithTag("title").First().InnerText;
-                //var h1s = rawHtml.SelectNodesWithTag("h1").Select(n => n.InnerText);
+                var rawHtml = client.GetRawResultOfBasicGetRequest(siteUrl.Url);
 
-                //if (title.Contains("2019") || h1s.Any(h1 => h1.Contains("2019")))
-                //    Console.WriteLine(url);
+                if(pageChecker.IsPossiblyOutdated(rawHtml))
+                    Console.WriteLine($"{siteUrl.Url} was last modified {siteUrl.LastUpdated} and might be outdated.");
             }
 
         }
