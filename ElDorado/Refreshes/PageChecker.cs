@@ -11,6 +11,8 @@ namespace ElDorado.Refreshes
     public class PageChecker
     {
         public DateTime Now { get; set; } = DateTime.Now;
+        
+        public List<string> ProblemTerms { get; set; } = new List<string>();
 
         public bool IsPossiblyOutdated(string rawPageHtml)
         {
@@ -25,6 +27,14 @@ namespace ElDorado.Refreshes
         public IEnumerable<string> GetLinksFrom(string rawPageHtml)
         {
             return rawPageHtml.AsHtml().SelectAttributeValuesForNode("href", "a").Where(link => IsActualLink(link));
+        }
+
+        public IEnumerable<string> GetProblematicWords(string rawPageHtml)
+        {
+            var pageBody = rawPageHtml.AsHtml().SelectNodesWithTag("body").FirstOrDefault()?.InnerText?.ToString() ?? string.Empty;
+            var pageBodyWithNoUrls = Regex.Replace(pageBody, "href=\"*\"", string.Empty);
+
+            return ProblemTerms.Where(pt => Regex.IsMatch(pageBodyWithNoUrls, $@"\b{pt}\b", RegexOptions.IgnoreCase));
         }
 
         private bool ContainsNonCurrentYear(string targetText)

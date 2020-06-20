@@ -14,8 +14,6 @@ namespace ElDorado.Console.Tests.RefreshesTests
     [TestClass]
     public class When_Providing_A_Collection_Of_SiteUrls_Sitemap_Urls_Should
     {
-        private static readonly string Filepath = "Some filepath";
-
         //I took these from MMAP's actual site map
         private static readonly string EmptySiteMap = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><?xml-stylesheet type=\"text/xsl\" href=\"//makemeaprogrammer.com/wp-content/plugins/wordpress-seo/css/main-sitemap.xsl\"?><urlset xmlns:xsi =\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\" xsi:schemaLocation=\"http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd http://www.google.com/schemas/sitemap-image/1.1 http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd\" xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"></urlset>";
         private static readonly string SingleUrlSiteMap = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><?xml-stylesheet type=\"text/xsl\" href=\"//makemeaprogrammer.com/wp-content/plugins/wordpress-seo/css/main-sitemap.xsl\"?><urlset xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\" xsi:schemaLocation=\"http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd http://www.google.com/schemas/sitemap-image/1.1 http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd\" xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">	<url>		<loc>https://makemeaprogrammer.com/</loc>		<lastmod>2020-01-18T20:01:28+00:00</lastmod>	</url></urlset>";
