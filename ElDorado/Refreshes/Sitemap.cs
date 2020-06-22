@@ -11,7 +11,7 @@ namespace ElDorado.Refreshes
     {
         private readonly XDocument _document;
 
-        public IEnumerable<SiteUrl> SiteUrls => _document.DescendantsNamed("url").Select(n => 
+        public virtual IEnumerable<SiteUrl> SiteUrls => _document.DescendantsNamed("url").Select(n => 
         new SiteUrl(n.ValueOfFirstDescendantNamed("loc"), n.ValueOfFirstDescendantNamed("lastmod").SafeToDateTime())
         );
 

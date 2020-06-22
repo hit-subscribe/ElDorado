@@ -186,6 +186,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\OrphanedBlogPostException.cs" />
+    <Compile Include="Refreshes\AuditResult.cs" />
+    <Compile Include="Refreshes\Page.cs" />
     <Compile Include="Refreshes\PageChecker.cs" />
     <Compile Include="Refreshes\SiteUrl.cs" />
     <Compile Include="Refreshes\Sitemap.cs" />

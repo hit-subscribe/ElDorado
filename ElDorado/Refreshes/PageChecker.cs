@@ -10,18 +10,33 @@ namespace ElDorado.Refreshes
 {
     public class PageChecker
     {
+        private readonly SimpleWebClient _client;
         public DateTime Now { get; set; } = DateTime.Now;
         
         public List<string> ProblemTerms { get; set; } = new List<string>();
 
-        public bool IsPossiblyOutdated(string rawPageHtml)
+        public PageChecker(SimpleWebClient client = null)
         {
-            var rawHtml = rawPageHtml.AsHtml();
+            this._client = client ?? new SimpleWebClient();
+        }
 
-            var title = GetPageTitle(rawHtml);
-            var levelOneHeadings = GetLevelOneHeadings(rawHtml);
+        public AuditResult AuditSiteFromSiteMap(Sitemap siteMap)
+        {
+            var result = new AuditResult();
 
-            return ContainsNonCurrentYear(title) || levelOneHeadings.Any(loh => ContainsNonCurrentYear(loh));
+            foreach(var siteUrl in siteMap.SiteUrls)
+            {
+                var page = new Page(_client.GetRawResultOfBasicGetRequest(siteUrl.Url), siteUrl.Url);
+
+                if (IsPossiblyOutdated(page))
+                    result.AddProblem(page, "Is possibly outdated");
+
+                var problemWords = GetProblematicWords(page).ToList();
+                if (problemWords.Any())
+                    problemWords.ForEach(pw => result.AddProblem(page, $"Contains term \"{pw}\""));
+            }
+
+            return result;
         }
 
         public IEnumerable<string> GetLinksFrom(string rawPageHtml)
@@ -29,10 +44,14 @@ namespace ElDorado.Refreshes
             return rawPageHtml.AsHtml().SelectAttributeValuesForNode("href", "a").Where(link => IsActualLink(link));
         }
 
-        public IEnumerable<string> GetProblematicWords(string rawPageHtml)
+        private bool IsPossiblyOutdated(Page rawPage)
         {
-            var pageBody = rawPageHtml.AsHtml().SelectNodesWithTag("body").FirstOrDefault()?.InnerText?.ToString() ?? string.Empty;
-            var pageBodyWithNoUrls = Regex.Replace(pageBody, "href=\"*\"", string.Empty);
+            return ContainsNonCurrentYear(rawPage.Title) || rawPage.H1s.Any(h1 => ContainsNonCurrentYear(h1));
+        }
+
+        private IEnumerable<string> GetProblematicWords(Page rawPage)
+        {
+            var pageBodyWithNoUrls = Regex.Replace(rawPage.Body, "href=\"*\"", string.Empty);
 
             return ProblemTerms.Where(pt => Regex.IsMatch(pageBodyWithNoUrls, $@"\b{pt}\b", RegexOptions.IgnoreCase));
         }
@@ -43,17 +62,6 @@ namespace ElDorado.Refreshes
             var yearsInText = tokensInText.Where(t => Regex.IsMatch(t, @"^(20)\d{2}$"));
 
             return yearsInText.Any(y => int.Parse(y) < Now.Year);
-        }
-
-        private string GetPageTitle(HtmlNode page)
-        {
-            var allTitleNodes = page.SelectNodesWithTag("title");
-            return allTitleNodes.Any() ? allTitleNodes.First().InnerText.ToString() : string.Empty;
-        }
-
-        private IEnumerable<string> GetLevelOneHeadings(HtmlNode page)
-        {
-            return page.SelectNodesWithTag("h1").Select(n => n.InnerText);
         }
 
         private static bool IsActualLink(string hrefAttribute)

@@ -47,26 +47,16 @@ namespace ElDorado.Menu
             var sitemapFilePath = Console.ReadLine();
 
             var client = new SimpleWebClient();
-            var pageChecker = new PageChecker() { ProblemTerms = new List<string>() { "master", "slave", "lame", "retard", "crazy", "derp", "ocd", "gyp", "jip", "ghetto", "hysterical", "dumb", "cripple" } };
             var sitemap = new Sitemap(sitemapFilePath);
+            var pageChecker = new PageChecker(client) 
+            { 
+                ProblemTerms = new List<string>() 
+                { "master", "slave", "lame", "retard", "crazy", "derp", "ocd", "gyp", "jip", "ghetto", "hysterical", "dumb", "cripple" } 
+            };
 
-            var blogPostUrls = sitemap.SiteUrls;
+            var auditResult = pageChecker.AuditSiteFromSiteMap(sitemap);
 
-            var problems = new List<string>();
-
-            foreach(var siteUrl in blogPostUrls)
-            {
-                var rawHtml = client.GetRawResultOfBasicGetRequest(siteUrl.Url);
-
-                if(pageChecker.IsPossiblyOutdated(rawHtml))
-                    problems.Add($"{siteUrl.Url} was last modified {siteUrl.LastUpdated} and might be outdated.");
-
-                var problemWords = pageChecker.GetProblematicWords(rawHtml);
-                if(problemWords.Any())
-                    problems.Add($"{siteUrl.Url} contains problematic langauge: {String.Join(" ", problemWords)}.");
-            }
-
-            File.WriteAllText(@"C:\users\erik\desktop\problems.txt", String.Join("\n", problems));
+            File.WriteAllText(@"C:\users\erik\desktop\problems.csv", auditResult.ToCsv());
 
         }
 
