@@ -95,7 +95,7 @@ namespace ElDorado
 
         public static string ValueOfFirstDescendantNamed(this XElement target, string simpleName)
         {
-            return DescendantsNamed(target, simpleName).First().Value;
+            return DescendantsNamed(target, simpleName).FirstOrDefault()?.Value;
         }
     }
 }

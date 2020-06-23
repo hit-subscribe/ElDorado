@@ -66,7 +66,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
 
             var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
 
-            auditResult.ToCsv().ShouldBe($"{FirstUrl},Best Stuff in 2019,Is possibly outdated{Environment.NewLine}");
+            auditResult.ToCsv().ShouldBe($"{FirstUrl},\"Best Stuff in 2019\",Is possibly outdated{Environment.NewLine}");
         }
 
     [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]

@@ -34,5 +34,15 @@ namespace ElDorado.Console.Tests.RefreshesTests
         {
             Should.Throw<ArgumentNullException>(() => new Sitemap((string)null));
         }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Set_SiteUrl_LastModified_To_Null_When_Missing()
+        {
+            var document = XDocument.Parse("<?xml version=\"1.0\" encoding=\"UTF - 8\"?><urlset xmlns = \"http://www.sitemaps.org/schemas/sitemap/0.9\" xmlns:xhtml=\"http://www.w3.org/1999/xhtml\"><url><loc>https://aspetraining.com/</loc><priority>1</priority></url></urlset>");
+
+            Target = new Sitemap(document);
+
+            Target.SiteUrls.First().LastUpdated.ShouldBeNull();
+        }
     }
 }

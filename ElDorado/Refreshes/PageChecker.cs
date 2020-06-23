@@ -17,7 +17,7 @@ namespace ElDorado.Refreshes
 
         public PageChecker(SimpleWebClient client = null)
         {
-            this._client = client ?? new SimpleWebClient();
+            _client = client ?? new SimpleWebClient();
         }
 
         public AuditResult AuditSiteFromSiteMap(Sitemap siteMap)

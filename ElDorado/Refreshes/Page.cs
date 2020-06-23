@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,7 +20,8 @@ namespace ElDorado.Refreshes
             get 
             {
                 var allTitleNodes = _pageHtml.SelectNodesWithTag("title");
-                return allTitleNodes.Any() ? allTitleNodes.First().InnerText.ToString() : string.Empty;
+                var title = allTitleNodes.Any() ? allTitleNodes.First().InnerText.ToString() : string.Empty;
+                return WebUtility.HtmlDecode(title);
             }
         }
 

@@ -29,7 +29,7 @@ namespace ElDorado.Refreshes
             var fileContents = new StringBuilder();
 
             foreach (var kvp in _problems)
-                fileContents.AppendLine($"{kvp.Key},{_pages[kvp.Key].Title},{String.Join(",", kvp.Value)}");
+                fileContents.AppendLine($"{kvp.Key},\"{_pages[kvp.Key].Title}\",{String.Join(",", kvp.Value)}");
 
             return fileContents.ToString();
         }
