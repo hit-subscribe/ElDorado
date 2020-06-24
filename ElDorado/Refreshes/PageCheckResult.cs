@@ -20,5 +20,11 @@ namespace ElDorado.Refreshes
         {
             _issues.Add(issue);
         }
+
+        public void AddIssues(IEnumerable<string> issues)
+        {
+            foreach (var issue in issues)
+                AddIssue(issue);
+        }
     }
 }

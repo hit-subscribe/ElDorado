@@ -1,7 +1,9 @@
-﻿using HtmlAgilityPack;
+﻿using ElDorado.Domain;
+using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -40,24 +42,51 @@ namespace ElDorado.Refreshes
             var page = new Page(rawHtml, pageUrl);
             var pageResult = new PageCheckResult() { PageUrl = pageUrl, PageTitle = page.Title };
 
-            if (IsPossiblyOutdated(page))
-                pageResult.AddIssue("Is possibly outdated");
-
-            var problemWords = GetProblematicWords(page).ToList();
-            if (problemWords.Any())
-                problemWords.ForEach(pw => pageResult.AddIssue($"Contains term \"{pw}\""));
+            CheckForOutdated(page, pageResult);
+            CheckForProblematicWords(page, pageResult);
+            await CheckForBadLinks(page, pageResult);
 
             return pageResult;
+        }
+
+        private async Task CheckForBadLinks(Page page, PageCheckResult pageResult)
+        {
+            var linkCheckingTasks = new List<Task<string>>(page.InPostExternalLinks.Select(ipl => GetIssuesWithLink(ipl)));
+
+            await Task.WhenAll(linkCheckingTasks);
+
+            var linkProblems = linkCheckingTasks.Select(lct => lct.Result).Where(lcr => !string.IsNullOrEmpty(lcr));
+            pageResult.AddIssues(linkProblems);
+        }
+
+        private void CheckForProblematicWords(Page page, PageCheckResult pageResult)
+        {
+            var problemWords = GetProblematicWords(page).ToList();
+            pageResult.AddIssues(problemWords.Select(pw => $"Contains term \"{pw}\""));
+        }
+
+        private void CheckForOutdated(Page page, PageCheckResult pageResult)
+        {
+            if (ContainsNonCurrentYear(page.Title) || page.H1s.Any(h1 => ContainsNonCurrentYear(h1)))
+                pageResult.AddIssue("Is possibly outdated");
+        }
+
+        private async Task<string> GetIssuesWithLink(Link linkToCheck)
+        {
+            try
+            {
+                var response = await _client.GetHttpResponseFromGetRequestAsync(linkToCheck.Url);
+                return response == HttpStatusCode.NotFound ? $"404 for link {linkToCheck.Url} with anchor text {linkToCheck.AnchorText}." : string.Empty;
+            }
+            catch
+            {
+                return $"Link {linkToCheck.Url} with anchor text {linkToCheck.AnchorText} generated an error.";
+            }
         }
 
         public IEnumerable<string> GetLinksFrom(string rawPageHtml)
         {
             return rawPageHtml.AsHtml().SelectAttributeValuesForNode("href", "a").Where(link => IsActualLink(link));
-        }
-
-        private bool IsPossiblyOutdated(Page rawPage)
-        {
-            return ContainsNonCurrentYear(rawPage.Title) || rawPage.H1s.Any(h1 => ContainsNonCurrentYear(h1));
         }
 
         private IEnumerable<string> GetProblematicWords(Page rawPage)

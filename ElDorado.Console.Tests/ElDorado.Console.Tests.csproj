@@ -190,6 +190,7 @@
   <ItemGroup>
     <Compile Include="ClientSpreadsheets\When_Retrieving_Posts_From_ClientSpreadsheet_ClientSpreadsheetService_Should.cs" />
     <Compile Include="RefreshesTests\When_Checking_A_Page_For_Possible_Outdated_Content_PageChecker_Should.cs" />
+    <Compile Include="RefreshesTests\When_Checking_For_Bad_Links_PageChecker_Should.cs" />
     <Compile Include="RefreshesTests\When_Checking_For_Problematic_Terms_PageChecker_Should.cs" />
     <Compile Include="RefreshesTests\When_Loading_Sitemap_Should.cs" />
     <Compile Include="RefreshesTests\When_Logging_Problems_AuditResult_Should.cs" />

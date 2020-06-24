@@ -1,4 +1,5 @@
-﻿using HtmlAgilityPack;
+﻿using ElDorado.Domain;
+using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,40 +16,21 @@ namespace ElDorado.Refreshes
 
         public string Url => _url;
 
-        public string Title
+        public IEnumerable<Link> InPostExternalLinks
         {
             get 
             {
-                var allTitleNodes = _pageHtml.SelectNodesWithTag("title");
-                var title = allTitleNodes.Any() ? allTitleNodes.First().InnerText.ToString() : string.Empty;
-                return WebUtility.HtmlDecode(title);
+                var linkNodesWithValidHref = _pageHtml?.SelectNodes("//body")?.Descendants("a")?.Where(n => n.Attributes["href"] != null && n.Attributes["href"].Value.StartsWith("http"));
+                var validExternalLinks = linkNodesWithValidHref?.Where(n => n.Attributes["href"].Value.DomainName() != _url.DomainName());
+                return validExternalLinks?.Select(n => new Link(n)) ?? Enumerable.Empty<Link>(); 
             }
         }
 
-        public string Body
-        {
-            get
-            {
-                return _pageHtml.SelectNodesWithTag("body").FirstOrDefault()?.InnerText?.ToString() ?? string.Empty;
-            }
-        }
+        public string Title => WebUtility.HtmlDecode(_pageHtml.SafeGetNodeText("//title"));
+        public string Body =>  _pageHtml.SafeGetNodeText("//body");
+        public IEnumerable<string> H1s => _pageHtml.SafeGetNodeCollectionText("//h1");
 
-        public IEnumerable<string> H1s
-        {
-            get
-            {
-                return _pageHtml.SelectNodesWithTag("h1").Select(n => n.InnerText);
-
-            }
-        }
-
-        public IEnumerable<string> H2s
-        {
-            get
-            {
-                return _pageHtml.SelectNodesWithTag("h2").Select(n => n.InnerText);
-            }
-        }
+        public IEnumerable<string> H2s => _pageHtml.SafeGetNodeCollectionText("//h2");
 
         public Page(string rawHtml, string url)
         {

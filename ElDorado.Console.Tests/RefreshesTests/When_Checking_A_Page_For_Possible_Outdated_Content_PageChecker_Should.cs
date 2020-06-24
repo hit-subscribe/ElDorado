@@ -112,7 +112,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Flag_If_An_H1_Has_Last_Year()
         {
-            ArrangePage("<html><h1>Best Stuff in 2019</h1></html>");
+            ArrangePage("<html><body><h1>Best Stuff in 2019</h1></body></html>");
 
             var auditResult = Target.AuditSiteFromSiteMap(Sitemap).Result;
 
@@ -128,5 +128,16 @@ namespace ElDorado.Console.Tests.RefreshesTests
 
             auditResult.ProblemsToCsv().ShouldBeEmpty();
         }
-    }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Include_The_Title_Of_The_Post_Regardless_Of_Nesting_Depth_Of_Title()
+        {
+            const string title = "Some Post Title";
+            ArrangePage($"<html><blah><title>{title}</title></blah><body><h1>Best Stuff in 2019</h1></body></html>");
+
+            var auditResult = Target.AuditSiteFromSiteMap(Sitemap).Result;
+
+            auditResult.ProblemsToCsv().ShouldContain(title);
+        }
+}
 }

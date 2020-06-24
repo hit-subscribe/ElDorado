@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -24,6 +25,13 @@ namespace ElDorado
             var message = await _basicClient.GetAsync(url);
 
             return message.Content.ReadAsStringAsync().Result;
+        }
+
+        public async virtual Task<HttpStatusCode> GetHttpResponseFromGetRequestAsync(string url)
+        {
+            var message = await _basicClient.GetAsync(url);
+
+            return message.StatusCode;
         }
 
         public virtual string GetRawResultOfBearerRequest(HttpMethod method, string url, string bearerToken, string content = null)

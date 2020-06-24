@@ -71,6 +71,16 @@ namespace ElDorado
             return document.DocumentNode;
         }
 
+        public static string SafeGetNodeText(this HtmlNode target, string nodeSequenceString)
+        {
+            return target.SelectSingleNode(nodeSequenceString)?.InnerText?.ToString() ?? string.Empty;
+        }
+
+        public static IEnumerable<string> SafeGetNodeCollectionText(this HtmlNode target, string nodeSequenceString)
+        {
+            return target.SelectNodes(nodeSequenceString)?.Select(n => n.InnerText) ?? Enumerable.Empty<string>();
+        }
+
         public static IEnumerable<HtmlNode> SelectNodesWithTag(this HtmlNode target, string tag)
         {
             var nodes = target.SelectNodes($"//{tag}");
@@ -96,6 +106,11 @@ namespace ElDorado
         public static string ValueOfFirstDescendantNamed(this XElement target, string simpleName)
         {
             return DescendantsNamed(target, simpleName).FirstOrDefault()?.Value;
+        }
+
+        public static string DomainName(this string targetUrl)
+        {
+            return new Uri(targetUrl).Host;
         }
     }
 }

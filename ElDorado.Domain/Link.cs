@@ -32,7 +32,7 @@ namespace ElDorado.Domain
         {
             var fullHost = new Uri(url).Host;
             var tokens = fullHost.Split('.').Reverse().ToList();
-            return $"{tokens[1]}.{tokens[0]}";
+            return tokens.Count > 1 ? $"{tokens[1]}.{tokens[0]}" : tokens[0];
         }
     }
 }
