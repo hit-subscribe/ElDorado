@@ -20,22 +20,31 @@ namespace ElDorado.Refreshes
             _client = client ?? new SimpleWebClient();
         }
 
-        public AuditResult AuditSiteFromSiteMap(Sitemap siteMap)
+        public async Task<AuditResult> AuditSiteFromSiteMap(Sitemap siteMap)
         {
             var result = new AuditResult();
 
+            var pageResultTasks = new List<Task<PageCheckResult>>();
+
             foreach(var pageUrl in siteMap.SiteUrls.Select(su => su.Url))
             {
-                var pageResult = GetPageResult(pageUrl);
-                result.AddPageCheckResult(pageResult);
+                pageResultTasks.Add(GetPageResult(pageUrl));
+                //var pageResult = GetPageResult(pageUrl);
+                //result.AddPageCheckResult(pageResult);
             }
+            await Task.WhenAll(pageResultTasks);
+
+            foreach (var taskResult in pageResultTasks.Select(prt => prt.Result))
+                result.AddPageCheckResult(taskResult);
 
             return result;
         }
 
-        private PageCheckResult GetPageResult(string pageUrl)
+        private async Task<PageCheckResult> GetPageResult(string pageUrl)
         {
-            var page = new Page(_client.GetRawResultOfBasicGetRequest(pageUrl), pageUrl);
+            string rawHtml = await _client.GetRawResultOfBasicGetRequestAsync(pageUrl);
+
+            var page = new Page(rawHtml, pageUrl);
             var pageResult = new PageCheckResult() { PageUrl = pageUrl, PageTitle = page.Title };
 
             if (IsPossiblyOutdated(page))

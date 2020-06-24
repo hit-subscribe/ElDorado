@@ -28,7 +28,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
         private void ArrangePage(string html)
         {
             Sitemap.Arrange(sm => sm.SiteUrls).Returns(new SiteUrl(FirstUrl, null).AsEnumerable());
-            Client.Arrange(c => c.GetRawResultOfBasicGetRequest(Arg.AnyString)).Returns(html);
+            Client.Arrange(c => c.GetRawResultOfBasicGetRequestAsync(Arg.AnyString)).Returns(Task.FromResult(html));
         }
 
         [TestInitialize]
@@ -44,7 +44,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
         {
             ArrangePage("<html></html>");
 
-            var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
+            var auditResult = Target.AuditSiteFromSiteMap(Sitemap).Result;
 
             auditResult.ProblemsToCsv().ShouldBeEmpty();
         }
@@ -54,7 +54,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
         {
             ArrangePage("<html><title>Best Stuff in 2019</title></html>");
 
-            var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
+            var auditResult = Target.AuditSiteFromSiteMap(Sitemap).Result;
 
             auditResult.ProblemsToCsv().ShouldContain("Is possibly outdated");
         }
@@ -64,7 +64,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
         {
             ArrangePage("<html><title>Best Stuff in 2019</title></html>");
 
-            var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
+            var auditResult = Target.AuditSiteFromSiteMap(Sitemap).Result;
 
             auditResult.ProblemsToCsv().ShouldBe($"{FirstUrl},\"Best Stuff in 2019\",Is possibly outdated{Environment.NewLine}");
         }
@@ -74,7 +74,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
         {
             ArrangePage("<html><title>Best Stuff in 2016</title></html>");
 
-            var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
+            var auditResult = Target.AuditSiteFromSiteMap(Sitemap).Result;
 
             auditResult.ProblemsToCsv().ShouldContain($"Is possibly outdated");
         }
@@ -84,7 +84,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
         {
             ArrangePage("<html><title>Best Stuff in 1998</title></html>");
 
-            var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
+            var auditResult = Target.AuditSiteFromSiteMap(Sitemap).Result;
 
             auditResult.ProblemsToCsv().ShouldBeEmpty();
         }
@@ -94,7 +94,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
         {
             ArrangePage("<html><title>Best Stuff in 2020</title></html>");
 
-            var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
+            var auditResult = Target.AuditSiteFromSiteMap(Sitemap).Result;
 
             auditResult.ProblemsToCsv().ShouldBeEmpty();
         }
@@ -104,7 +104,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
         {
             ArrangePage("<html><title>Best Stuff in 2070</title></html>");
 
-            var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
+            var auditResult = Target.AuditSiteFromSiteMap(Sitemap).Result;
 
             auditResult.ProblemsToCsv().ShouldBeEmpty();
         }
@@ -114,7 +114,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
         {
             ArrangePage("<html><h1>Best Stuff in 2019</h1></html>");
 
-            var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
+            var auditResult = Target.AuditSiteFromSiteMap(Sitemap).Result;
 
             auditResult.ProblemsToCsv().ShouldContain($"Is possibly outdated");
         }
@@ -124,7 +124,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
         {
             ArrangePage("<html><h1>Best Stuff in 2020</h1></html>");
 
-            var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
+            var auditResult = Target.AuditSiteFromSiteMap(Sitemap).Result;
 
             auditResult.ProblemsToCsv().ShouldBeEmpty();
         }

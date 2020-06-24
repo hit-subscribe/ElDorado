@@ -26,7 +26,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
         private void ArrangePage(string html)
         {
             Sitemap.Arrange(sm => sm.SiteUrls).Returns(new SiteUrl(FirstUrl, null).AsEnumerable());
-            Client.Arrange(c => c.GetRawResultOfBasicGetRequest(Arg.AnyString)).Returns(html);
+            Client.Arrange(c => c.GetRawResultOfBasicGetRequestAsync(Arg.AnyString)).Returns(Task.FromResult(html));
         }
 
         [TestInitialize]
@@ -40,7 +40,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
         {
             ArrangePage("<html><body>slave</body></html>");
 
-            var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
+            var auditResult = Target.AuditSiteFromSiteMap(Sitemap).Result;
 
             auditResult.ProblemsToCsv().ShouldContain("Contains term \"slave\"");
         }
@@ -50,7 +50,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
         {
             ArrangePage("<html><body>salve</body></html>");
 
-            var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
+            var auditResult = Target.AuditSiteFromSiteMap(Sitemap).Result;
 
             auditResult.ProblemsToCsv().ShouldBeEmpty();
         }
@@ -60,7 +60,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
         {
             ArrangePage("<html><body>master</body></html>");
 
-            var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
+            var auditResult = Target.AuditSiteFromSiteMap(Sitemap).Result;
 
             auditResult.ProblemsToCsv().ShouldContain($"Contains term \"master\"");
         }
@@ -70,7 +70,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
         {
             ArrangePage("<html><body>mAsTeR</body></html>");
 
-            var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
+            var auditResult = Target.AuditSiteFromSiteMap(Sitemap).Result;
 
             auditResult.ProblemsToCsv().ShouldContain($"Contains term \"master\"");
         }
@@ -80,7 +80,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
         {
             ArrangePage("<html><body>masterful</body></html>");
 
-            var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
+            var auditResult = Target.AuditSiteFromSiteMap(Sitemap).Result;
 
             auditResult.ProblemsToCsv().ShouldBeEmpty();
         }
@@ -90,7 +90,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
         {
             ArrangePage("<html><body>master.</body></html>");
 
-            var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
+            var auditResult = Target.AuditSiteFromSiteMap(Sitemap).Result;
 
             auditResult.ProblemsToCsv().ShouldContain($"Contains term \"master\"");
         }
@@ -100,7 +100,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
         {
             ArrangePage("<html>masterful<body></body></html>");
 
-            var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
+            var auditResult = Target.AuditSiteFromSiteMap(Sitemap).Result;
 
             auditResult.ProblemsToCsv().ShouldBeEmpty();
         }
@@ -110,7 +110,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
         {
             ArrangePage("<html><body><a href=\"https://blah.com/master/slave/whatever.html\">asdf</a></body></html>");
 
-            var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
+            var auditResult = Target.AuditSiteFromSiteMap(Sitemap).Result;
 
             auditResult.ProblemsToCsv().ShouldBeEmpty();
         }
@@ -120,7 +120,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
         {
             ArrangePage("<html></html>");
 
-            var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
+            var auditResult = Target.AuditSiteFromSiteMap(Sitemap).Result;
 
             auditResult.ProblemsToCsv().ShouldBeEmpty();
         }

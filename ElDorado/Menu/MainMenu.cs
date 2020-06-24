@@ -54,7 +54,7 @@ namespace ElDorado.Menu
                 { "master", "slave", "lame", "retard", "crazy", "derp", "ocd", "gyp", "jip", "ghetto", "hysterical", "dumb", "cripple" } 
             };
 
-            var auditResult = pageChecker.AuditSiteFromSiteMap(sitemap);
+            var auditResult = pageChecker.AuditSiteFromSiteMap(sitemap).Result;
 
             File.WriteAllText(@"C:\users\erik\desktop\problems.csv", auditResult.ProblemsToCsv(), Encoding.UTF8);
 

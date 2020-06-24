@@ -12,11 +12,18 @@ namespace ElDorado
 {
     public class SimpleWebClient
     {
-        HttpClient _basicClient = new HttpClient();
+        private HttpClient _basicClient = new HttpClient() { Timeout = TimeSpan.FromMinutes(30) };
 
         public virtual string GetRawResultOfBasicGetRequest(string url)
         {
             return GetRawTextFrom(_basicClient.GetAsync(url));
+        }
+
+        public async virtual Task<string> GetRawResultOfBasicGetRequestAsync(string url)
+        {
+            var message = await _basicClient.GetAsync(url);
+
+            return message.Content.ReadAsStringAsync().Result;
         }
 
         public virtual string GetRawResultOfBearerRequest(HttpMethod method, string url, string bearerToken, string content = null)
