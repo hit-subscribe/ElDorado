@@ -24,16 +24,20 @@ namespace ElDorado.Refreshes
         {
             var result = new AuditResult();
 
-            foreach(var siteUrl in siteMap.SiteUrls)
+            foreach(var pageUrl in siteMap.SiteUrls.Select(su => su.Url))
             {
-                var page = new Page(_client.GetRawResultOfBasicGetRequest(siteUrl.Url), siteUrl.Url);
-
+                var page = new Page(_client.GetRawResultOfBasicGetRequest(pageUrl), pageUrl);
+                var pageResult = new PageCheckResult() { PageUrl = pageUrl, PageTitle = page.Title };
+                
                 if (IsPossiblyOutdated(page))
-                    result.AddProblem(page, "Is possibly outdated");
+                    pageResult.AddIssue("Is possibly outdated");
 
                 var problemWords = GetProblematicWords(page).ToList();
                 if (problemWords.Any())
-                    problemWords.ForEach(pw => result.AddProblem(page, $"Contains term \"{pw}\""));
+                    problemWords.ForEach(pw => pageResult.AddIssue($"Contains term \"{pw}\""));
+
+                if(pageResult.Issues.Any())
+                    result.AddPageCheckResult(pageResult);
             }
 
             return result;

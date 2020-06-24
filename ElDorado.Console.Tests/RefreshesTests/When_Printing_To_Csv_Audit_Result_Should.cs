@@ -12,17 +12,26 @@ namespace ElDorado.Console.Tests.RefreshesTests
     [TestClass]
     public class When_Printing_To_Csv_Audit_Result_Should
     {
+        private AuditResult Target { get; set; }
+
+        [TestInitialize]
+        public void BeforeEachTest()
+        {
+            Target = new AuditResult();   
+        }
+
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Add_Quotations_To_The_Title_Fields_In_Case_Of_Commas()
         {
-            var title = "A Man, A Plan, A Canal, Panama";
-            var page = new Page($"<html><title>{title}</title></html>", "https://www.somesitem.com");
+            const string title = "A Man, A Plan, A Canal, Panama";
+            const string url = "https://www.somesitem.com";
 
-            var target = new AuditResult();
+            var result = new PageCheckResult() { PageUrl = url, PageTitle = title };
+            result.AddIssue("Oops!");
 
-            target.AddProblem(page, "Oops!");
+            Target.AddPageCheckResult(result);
 
-            target.ToCsv().ShouldContain($"\"{title}\"");
+            Target.ToCsv().ShouldContain($"\"{title}\"");
         }
 }
 }
