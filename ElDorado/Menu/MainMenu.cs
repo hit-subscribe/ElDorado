@@ -56,7 +56,7 @@ namespace ElDorado.Menu
 
             var auditResult = pageChecker.AuditSiteFromSiteMap(sitemap);
 
-            File.WriteAllText(@"C:\users\erik\desktop\problems.csv", auditResult.ToCsv(), Encoding.UTF8);
+            File.WriteAllText(@"C:\users\erik\desktop\problems.csv", auditResult.ProblemsToCsv(), Encoding.UTF8);
 
         }
 

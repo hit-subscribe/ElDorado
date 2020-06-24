@@ -46,7 +46,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
 
             var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
 
-            auditResult.ToCsv().ShouldBeEmpty();
+            auditResult.ProblemsToCsv().ShouldBeEmpty();
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -56,7 +56,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
 
             var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
 
-            auditResult.ToCsv().ShouldContain("Is possibly outdated");
+            auditResult.ProblemsToCsv().ShouldContain("Is possibly outdated");
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -66,7 +66,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
 
             var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
 
-            auditResult.ToCsv().ShouldBe($"{FirstUrl},\"Best Stuff in 2019\",Is possibly outdated{Environment.NewLine}");
+            auditResult.ProblemsToCsv().ShouldBe($"{FirstUrl},\"Best Stuff in 2019\",Is possibly outdated{Environment.NewLine}");
         }
 
     [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -76,7 +76,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
 
             var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
 
-            auditResult.ToCsv().ShouldContain($"Is possibly outdated");
+            auditResult.ProblemsToCsv().ShouldContain($"Is possibly outdated");
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -86,7 +86,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
 
             var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
 
-            auditResult.ToCsv().ShouldBeEmpty();
+            auditResult.ProblemsToCsv().ShouldBeEmpty();
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -96,7 +96,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
 
             var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
 
-            auditResult.ToCsv().ShouldBeEmpty();
+            auditResult.ProblemsToCsv().ShouldBeEmpty();
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -106,7 +106,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
 
             var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
 
-            auditResult.ToCsv().ShouldBeEmpty();
+            auditResult.ProblemsToCsv().ShouldBeEmpty();
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -116,7 +116,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
 
             var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
 
-            auditResult.ToCsv().ShouldContain($"Is possibly outdated");
+            auditResult.ProblemsToCsv().ShouldContain($"Is possibly outdated");
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -126,7 +126,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
 
             var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
 
-            auditResult.ToCsv().ShouldBeEmpty();
+            auditResult.ProblemsToCsv().ShouldBeEmpty();
         }
     }
 }

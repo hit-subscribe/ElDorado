@@ -31,7 +31,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
 
             Target.AddPageCheckResult(result);
 
-            Target.ToCsv().ShouldContain($"\"{title}\"");
+            Target.ProblemsToCsv().ShouldContain($"\"{title}\"");
         }
 }
 }

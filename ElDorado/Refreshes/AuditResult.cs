@@ -15,11 +15,11 @@ namespace ElDorado.Refreshes
             _pageCheckResults.Add(result);
         }
 
-        public string ToCsv()
+        public string ProblemsToCsv()
         {
             var fileContents = new StringBuilder();
 
-            foreach (var result in _pageCheckResults)
+            foreach (var result in _pageCheckResults.Where(pcr => pcr.Issues.Any()))
                 fileContents.AppendLine($"{result.PageUrl},\"{result.PageTitle}\",{String.Join(",", result.Issues)}");
 
             return fileContents.ToString();

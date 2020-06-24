@@ -29,7 +29,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_Empty_String_When_No_Problems_Added()
         {
-            Target.ToCsv().ShouldBeEmpty();
+            Target.ProblemsToCsv().ShouldBeEmpty();
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -40,7 +40,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
 
             Target.AddPageCheckResult(result);
 
-            Target.ToCsv().ShouldContain(BadPostProblem);
+            Target.ProblemsToCsv().ShouldContain(BadPostProblem);
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -52,7 +52,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
 
             Target.AddPageCheckResult(result);
 
-            Target.ToCsv().ShouldContain($"{BadPostProblem},{OutdatedProblem}");
+            Target.ProblemsToCsv().ShouldContain($"{BadPostProblem},{OutdatedProblem}");
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -67,7 +67,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
             Target.AddPageCheckResult(firstResult);
             Target.AddPageCheckResult(secondResult);
 
-            Target.ToCsv().ShouldContain($"{Environment.NewLine}{SecondUrl}");
+            Target.ProblemsToCsv().ShouldContain($"{Environment.NewLine}{SecondUrl}");
         }
 
     }

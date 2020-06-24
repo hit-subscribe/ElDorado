@@ -26,21 +26,26 @@ namespace ElDorado.Refreshes
 
             foreach(var pageUrl in siteMap.SiteUrls.Select(su => su.Url))
             {
-                var page = new Page(_client.GetRawResultOfBasicGetRequest(pageUrl), pageUrl);
-                var pageResult = new PageCheckResult() { PageUrl = pageUrl, PageTitle = page.Title };
-                
-                if (IsPossiblyOutdated(page))
-                    pageResult.AddIssue("Is possibly outdated");
-
-                var problemWords = GetProblematicWords(page).ToList();
-                if (problemWords.Any())
-                    problemWords.ForEach(pw => pageResult.AddIssue($"Contains term \"{pw}\""));
-
-                if(pageResult.Issues.Any())
-                    result.AddPageCheckResult(pageResult);
+                var pageResult = GetPageResult(pageUrl);
+                result.AddPageCheckResult(pageResult);
             }
 
             return result;
+        }
+
+        private PageCheckResult GetPageResult(string pageUrl)
+        {
+            var page = new Page(_client.GetRawResultOfBasicGetRequest(pageUrl), pageUrl);
+            var pageResult = new PageCheckResult() { PageUrl = pageUrl, PageTitle = page.Title };
+
+            if (IsPossiblyOutdated(page))
+                pageResult.AddIssue("Is possibly outdated");
+
+            var problemWords = GetProblematicWords(page).ToList();
+            if (problemWords.Any())
+                problemWords.ForEach(pw => pageResult.AddIssue($"Contains term \"{pw}\""));
+
+            return pageResult;
         }
 
         public IEnumerable<string> GetLinksFrom(string rawPageHtml)

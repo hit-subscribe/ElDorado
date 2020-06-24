@@ -42,7 +42,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
 
             var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
 
-            auditResult.ToCsv().ShouldContain("Contains term \"slave\"");
+            auditResult.ProblemsToCsv().ShouldContain("Contains term \"slave\"");
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -52,7 +52,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
 
             var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
 
-            auditResult.ToCsv().ShouldBeEmpty();
+            auditResult.ProblemsToCsv().ShouldBeEmpty();
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -62,7 +62,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
 
             var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
 
-            auditResult.ToCsv().ShouldContain($"Contains term \"master\"");
+            auditResult.ProblemsToCsv().ShouldContain($"Contains term \"master\"");
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -72,7 +72,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
 
             var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
 
-            auditResult.ToCsv().ShouldContain($"Contains term \"master\"");
+            auditResult.ProblemsToCsv().ShouldContain($"Contains term \"master\"");
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -82,7 +82,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
 
             var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
 
-            auditResult.ToCsv().ShouldBeEmpty();
+            auditResult.ProblemsToCsv().ShouldBeEmpty();
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -92,7 +92,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
 
             var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
 
-            auditResult.ToCsv().ShouldContain($"Contains term \"master\"");
+            auditResult.ProblemsToCsv().ShouldContain($"Contains term \"master\"");
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -102,7 +102,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
 
             var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
 
-            auditResult.ToCsv().ShouldBeEmpty();
+            auditResult.ProblemsToCsv().ShouldBeEmpty();
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -112,7 +112,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
 
             var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
 
-            auditResult.ToCsv().ShouldBeEmpty();
+            auditResult.ProblemsToCsv().ShouldBeEmpty();
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
@@ -122,7 +122,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
 
             var auditResult = Target.AuditSiteFromSiteMap(Sitemap);
 
-            auditResult.ToCsv().ShouldBeEmpty();
+            auditResult.ProblemsToCsv().ShouldBeEmpty();
         }
 }
 }
