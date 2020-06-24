@@ -27,7 +27,7 @@ namespace ElDorado.Console.Tests.RefreshesTests
 
         private void ArrangePage(string html)
         {
-            Sitemap.Arrange(sm => sm.SiteUrls).Returns(new SiteUrl(FirstUrl, null).AsEnumerable());
+            Sitemap.Arrange(sm => sm.Urls).Returns(FirstUrl.AsEnumerable());
             Client.Arrange(c => c.GetRawResultOfBasicGetRequestAsync(Arg.AnyString)).Returns(Task.FromResult(html));
         }
 

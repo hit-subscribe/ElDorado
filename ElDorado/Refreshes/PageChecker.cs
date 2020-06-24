@@ -22,20 +22,13 @@ namespace ElDorado.Refreshes
 
         public async Task<AuditResult> AuditSiteFromSiteMap(Sitemap siteMap)
         {
-            var result = new AuditResult();
-
             var pageResultTasks = new List<Task<PageCheckResult>>();
+            siteMap.Urls.ToList().ForEach(su => pageResultTasks.Add(GetPageResult(su)));
 
-            foreach(var pageUrl in siteMap.SiteUrls.Select(su => su.Url))
-            {
-                pageResultTasks.Add(GetPageResult(pageUrl));
-                //var pageResult = GetPageResult(pageUrl);
-                //result.AddPageCheckResult(pageResult);
-            }
             await Task.WhenAll(pageResultTasks);
 
-            foreach (var taskResult in pageResultTasks.Select(prt => prt.Result))
-                result.AddPageCheckResult(taskResult);
+            var result = new AuditResult();
+            result.AddPageCheckResults(pageResultTasks.Select(prt => prt.Result));
 
             return result;
         }

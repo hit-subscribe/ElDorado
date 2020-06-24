@@ -15,6 +15,12 @@ namespace ElDorado.Refreshes
             _pageCheckResults.Add(result);
         }
 
+        public void AddPageCheckResults(IEnumerable<PageCheckResult> results)
+        {
+            foreach (var result in results)
+                AddPageCheckResult(result);
+        }
+
         public string ProblemsToCsv()
         {
             var fileContents = new StringBuilder();

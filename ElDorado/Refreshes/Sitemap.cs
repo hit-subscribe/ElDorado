@@ -15,6 +15,8 @@ namespace ElDorado.Refreshes
         new SiteUrl(n.ValueOfFirstDescendantNamed("loc"), n.ValueOfFirstDescendantNamed("lastmod").SafeToDateTime())
         );
 
+        public virtual IEnumerable<string> Urls => SiteUrls.Select(su => su.Url);
+
         public Sitemap(string xmlFilePath, XDocument document = null)
         {
             if (string.IsNullOrEmpty(xmlFilePath))
