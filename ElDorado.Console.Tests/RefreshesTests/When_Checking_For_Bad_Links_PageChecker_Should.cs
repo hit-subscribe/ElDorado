@@ -128,5 +128,15 @@ namespace ElDorado.Console.Tests.RefreshesTests
             auditResult.ProblemsToCsv().ShouldContain($"Link http://something.com with anchor text Oh noes! generated an error.");
         }
 
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Log_No_Issue_For_Url_That_Cannot_Be_Parsed()
+        {
+            ArrangePage($"<html><body><a href=\"http:/r\">Oh noes!</a></body></html>");
+            Client.Arrange(c => c.GetHttpResponseFromGetRequestAsync(Arg.AnyString)).Returns(Task.FromResult(HttpStatusCode.NotFound));
+
+            var auditResult = Target.AuditSiteFromSiteMap(Sitemap).Result;
+
+            auditResult.ProblemsToCsv().ShouldBeEmpty();
+        }
 }
 }

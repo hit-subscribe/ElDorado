@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -108,9 +109,22 @@ namespace ElDorado
             return DescendantsNamed(target, simpleName).FirstOrDefault()?.Value;
         }
 
-        public static string DomainName(this string targetUrl)
+        public static string SafeDomainName(this string targetUrl)
         {
-            return new Uri(targetUrl).Host;
+            try
+            {
+                return new Uri(targetUrl).Host;
+            }
+            catch(UriFormatException)
+            {
+                return string.Empty;
+            }
+        }
+
+        public static bool IsValidUri(this string targetUrl)
+        {
+            Uri outUri;
+            return Uri.TryCreate(targetUrl, UriKind.Absolute, out outUri) && (outUri.Scheme == Uri.UriSchemeHttp || outUri.Scheme == Uri.UriSchemeHttps);
         }
     }
 }

@@ -18,12 +18,24 @@ namespace ElDorado.Refreshes
 
         public IEnumerable<Link> InPostExternalLinks
         {
-            get 
+            get
             {
-                var linkNodesWithValidHref = _pageHtml?.SelectNodes("//body")?.Descendants("a")?.Where(n => n.Attributes["href"] != null && n.Attributes["href"].Value.StartsWith("http"));
-                var validExternalLinks = linkNodesWithValidHref?.Where(n => n.Attributes["href"].Value.DomainName() != _url.DomainName());
-                return validExternalLinks?.Select(n => new Link(n)) ?? Enumerable.Empty<Link>(); 
+                var linkNodesWithValidHref = _pageHtml?.SelectNodes("//body")?.Descendants("a")?.Where(n => HasValidHrefAttribute(n));
+                var validExternalLinks = linkNodesWithValidHref?.Where(n => IsValidExternalLink(n));
+                return validExternalLinks?.Select(n => new Link(n)) ?? Enumerable.Empty<Link>();
             }
+        }
+
+        private static bool HasValidHrefAttribute(HtmlNode n)
+        {
+            var ahrefAttribute = n.Attributes["href"];
+            return ahrefAttribute != null && ahrefAttribute.Value.StartsWith("http");
+        }
+
+        private bool IsValidExternalLink(HtmlNode linkNode)
+        {
+            var url = linkNode.Attributes["href"].Value;
+            return url.IsValidUri() && url.SafeDomainName() != _url.SafeDomainName();
         }
 
         public string Title => WebUtility.HtmlDecode(_pageHtml.SafeGetNodeText("//title"));
