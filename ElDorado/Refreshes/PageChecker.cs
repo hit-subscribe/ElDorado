@@ -6,12 +6,15 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ElDorado.Refreshes
 {
     public class PageChecker
     {
+        private static readonly SemaphoreSlim _throttler = new SemaphoreSlim(500);
+
         private readonly SimpleWebClient _client;
         public DateTime Now { get; set; } = DateTime.Now;
         
@@ -25,6 +28,7 @@ namespace ElDorado.Refreshes
         public async Task<AuditResult> AuditSiteFromSiteMap(Sitemap siteMap)
         {
             var pageResultTasks = new List<Task<PageCheckResult>>();
+
             siteMap.Urls.ToList().ForEach(su => pageResultTasks.Add(GetPageResult(su)));
 
             await Task.WhenAll(pageResultTasks);
@@ -37,21 +41,34 @@ namespace ElDorado.Refreshes
 
         private async Task<PageCheckResult> GetPageResult(string pageUrl)
         {
-            string rawHtml = await _client.GetRawResultOfBasicGetRequestAsync(pageUrl);
+            await _throttler.WaitAsync();
 
-            var page = new Page(rawHtml, pageUrl);
-            var pageResult = new PageCheckResult() { PageUrl = pageUrl, PageTitle = page.Title };
+            try
+            {
+                string rawHtml = await _client.GetRawResultOfBasicGetRequestAsync(pageUrl);
 
-            CheckForOutdated(page, pageResult);
-            CheckForProblematicWords(page, pageResult);
-            await CheckForBadLinks(page, pageResult);
+                var page = new Page(rawHtml, pageUrl);
+                var pageResult = new PageCheckResult(pageUrl, page.Title);
 
-            return pageResult;
+                CheckForOutdated(page, pageResult);
+                CheckForProblematicWords(page, pageResult);
+                await CheckForBadLinks(page.InPostExternalLinks, pageResult);
+
+                return pageResult;
+            }
+            catch
+            {
+                return new PageCheckResult(pageUrl, string.Empty, "This page generated an exception on parsing.");
+            }
+            finally
+            {
+                _throttler.Release();
+            }
         }
 
-        private async Task CheckForBadLinks(Page page, PageCheckResult pageResult)
+        private async Task CheckForBadLinks(IEnumerable<Link> inPostExternalLinks, PageCheckResult pageResult)
         {
-            var linkCheckingTasks = new List<Task<string>>(page.InPostExternalLinks.Select(ipl => GetIssuesWithLink(ipl)));
+            var linkCheckingTasks = new List<Task<string>>(inPostExternalLinks.Select(ipl => GetIssuesWithLink(ipl)));
 
             await Task.WhenAll(linkCheckingTasks);
 

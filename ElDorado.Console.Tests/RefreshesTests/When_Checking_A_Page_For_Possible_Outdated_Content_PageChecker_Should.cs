@@ -5,6 +5,7 @@ using Shouldly;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Security.AccessControl;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -138,6 +139,18 @@ namespace ElDorado.Console.Tests.RefreshesTests
             var auditResult = Target.AuditSiteFromSiteMap(Sitemap).Result;
 
             auditResult.ProblemsToCsv().ShouldContain(title);
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Log_That_An_Exception_Happened_When_GetRawResult_Throws_Exception()
+        {
+            ArrangePage("<html><body><h1>Page Containing Weird Exceptions</h1></body></html>");
+
+            Client.Arrange(c => c.GetRawResultOfBasicGetRequestAsync(Arg.AnyString)).Throws<SocketException>();
+
+            var auditResult = Target.AuditSiteFromSiteMap(Sitemap).Result;
+
+            auditResult.ProblemsToCsv().ShouldContain("This page generated an exception on parsing.");
         }
 }
 }

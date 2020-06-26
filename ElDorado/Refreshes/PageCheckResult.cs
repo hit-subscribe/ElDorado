@@ -16,6 +16,17 @@ namespace ElDorado.Refreshes
 
         public IEnumerable<string> Issues => _issues;
 
+        public PageCheckResult() : this(null, null) { }
+
+        public PageCheckResult(string url, string title) : this(url, title, new string[0]) { }
+
+        public PageCheckResult(string url, string title, params string[] issues)
+        {
+            PageUrl = url;
+            PageTitle = title;
+            _issues.AddRange(issues);
+        }
+
         public void AddIssue(string issue)
         {
             _issues.Add(issue);
