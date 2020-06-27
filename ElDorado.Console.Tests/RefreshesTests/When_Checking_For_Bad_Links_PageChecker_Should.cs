@@ -138,5 +138,18 @@ namespace ElDorado.Console.Tests.RefreshesTests
 
             auditResult.ProblemsToCsv().ShouldBeEmpty();
         }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Log_Anchor_Text_Has_The_Tag_It_Contains()
+        {
+            const string brokenLink = "https://brokensite.com";
+
+            ArrangePage($"<html><body><p><a href=\"{brokenLink}\"><img/></a></p></body></html>");
+            Client.Arrange(c => c.GetHttpResponseFromGetRequestAsync(Arg.AnyString)).Returns(Task.FromResult(HttpStatusCode.NotFound));
+
+            var auditResult = Target.AuditSiteFromSiteMap(Sitemap).Result;
+
+            auditResult.ProblemsToCsv().ShouldContain($"404 for link {brokenLink} with anchor text img tag.");
+        }
 }
 }

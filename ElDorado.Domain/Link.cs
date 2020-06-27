@@ -17,7 +17,7 @@ namespace ElDorado.Domain
 
         public Link(HtmlNode node)
         {
-            AnchorText = node.InnerHtml;
+            AnchorText = string.IsNullOrEmpty(node.InnerText) ? node.ChildNodes.First().Name + " tag" : node.InnerText;
             Url = node.Attributes["href"].Value;
             Domain = ComputeDomain(Url);
         }

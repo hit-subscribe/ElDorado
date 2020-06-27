@@ -56,7 +56,7 @@ namespace ElDorado.Refreshes
 
                 return pageResult;
             }
-            catch
+            catch(Exception ex)
             {
                 return new PageCheckResult(pageUrl, string.Empty, "This page generated an exception on parsing.");
             }
