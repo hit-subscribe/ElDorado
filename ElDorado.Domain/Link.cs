@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,7 +18,7 @@ namespace ElDorado.Domain
 
         public Link(HtmlNode node)
         {
-            AnchorText = string.IsNullOrEmpty(node.InnerText) ? node.ChildNodes.First().Name + " tag" : node.InnerText;
+            AnchorText = ComputeAnchorText(node);
             Url = node.Attributes["href"].Value;
             Domain = ComputeDomain(Url);
         }
@@ -26,6 +27,16 @@ namespace ElDorado.Domain
         {
             Url = simpleUrl;
             Domain = ComputeDomain(Url);
+        }
+
+        private static string ComputeAnchorText(HtmlNode node)
+        {
+            if (string.IsNullOrEmpty(node.InnerText) && !node.ChildNodes.Any())
+                return string.Empty;
+            else if (string.IsNullOrEmpty(node.InnerText))
+                return node.ChildNodes.First().Name + " tag";
+
+            return node.InnerText;
         }
 
         private static string ComputeDomain(string url)

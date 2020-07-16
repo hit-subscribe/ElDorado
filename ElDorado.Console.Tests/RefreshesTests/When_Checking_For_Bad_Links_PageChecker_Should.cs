@@ -151,5 +151,16 @@ namespace ElDorado.Console.Tests.RefreshesTests
 
             auditResult.ProblemsToCsv().ShouldContain($"404 for link {brokenLink} with anchor text img tag.");
         }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Strip_Newlines_From_Anchor_Text_On_Errors()
+        {
+            ArrangePage("<html><body><a href=\"http://something.com\">Oh noes!\nAn error!</a></body></html>");
+            Client.Arrange(c => c.GetHttpResponseFromGetRequestAsync(Arg.AnyString)).Throws<Exception>();
+
+            var auditResult = Target.AuditSiteFromSiteMap(Sitemap).Result;
+
+            auditResult.ProblemsToCsv().ShouldContain($"Link http://something.com with anchor text Oh noes!An error! generated an error.");
+        }
 }
 }

@@ -73,6 +73,7 @@
     <Compile Include="BlogPostTests\When_Evaluating_IsHitSubscribeFinished_BlogPost_Should.cs" />
     <Compile Include="BlogPostTests\When_Evaluating_Links_IsInternalLink_Should.cs" />
     <Compile Include="BlogPostTests\When_Resolving_An_Author_Title_AuthorTitle_Should.cs" />
+    <Compile Include="LinkTests\When_Initializing_From_HtmlNode_Link_Should.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

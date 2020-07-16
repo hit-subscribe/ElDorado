@@ -97,7 +97,7 @@ namespace ElDorado.Refreshes
             }
             catch
             {
-                return $"Link {linkToCheck.Url} with anchor text {linkToCheck.AnchorText} generated an error.";
+                return $"Link {linkToCheck.Url} with anchor text {linkToCheck.AnchorText?.StripLineBreaks()} generated an error.";
             }
         }
 

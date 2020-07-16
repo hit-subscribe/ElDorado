@@ -46,17 +46,25 @@ namespace ElDorado.Menu
             Console.WriteLine("Give me the sitemap, please.");
             var sitemapFilePath = Console.ReadLine();
 
-            var client = new SimpleWebClient();
-            var sitemap = new Sitemap(sitemapFilePath);
-            var pageChecker = new PageChecker(client) 
-            { 
-                ProblemTerms = new List<string>() 
-                { "master", "slave", "lame", "retard", "crazy", "derp", "ocd", "gyp", "jip", "ghetto", "hysterical", "dumb", "cripple" } 
-            };
+            try
+            {
+                var sitemap = new Sitemap(sitemapFilePath);
 
-            var auditResult = pageChecker.AuditSiteFromSiteMap(sitemap).Result;
+                var client = new SimpleWebClient();
+                var pageChecker = new PageChecker(client)
+                {
+                    ProblemTerms = new List<string>()
+                { "master", "slave", "blacklist", "whitelist", "lame", "retard", "crazy", "derp", "ocd", "gyp", "jip", "ghetto", "hysterical", "dumb", "cripple" }
+                };
 
-            File.WriteAllText(@"C:\users\erik\desktop\problems.csv", auditResult.ProblemsToCsv(), Encoding.UTF8);
+                var auditResult = pageChecker.AuditSiteFromSiteMap(sitemap).Result;
+
+                File.WriteAllText(@"C:\users\erik\desktop\problems.csv", auditResult.ProblemsToCsv(), Encoding.UTF8);
+            }
+            catch
+            {
+                Console.WriteLine("Oops, try again.");
+            }
 
         }
 
@@ -94,7 +102,7 @@ namespace ElDorado.Menu
             var csvRows = results.Select(res => $"{res.DisplayLink},{res.Link}").ToList();
             csvRows.Insert(0, "Base Site,Resut Link");
 
-            File.WriteAllLines("results.csv", csvRows);
+            File.WriteAllLines(@"C:\users\erik\desktop\results.csv", csvRows);
         }
 
     }

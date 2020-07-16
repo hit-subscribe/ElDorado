@@ -24,7 +24,7 @@ namespace ElDorado
         {
             var message = await _basicClient.GetAsync(url);
 
-            message.Content.Headers.ContentType.CharSet = message.Content.Headers.ContentType.CharSet.Replace("\"", string.Empty);
+            message.Content.Headers.ContentType.CharSet = message.Content.Headers.ContentType.CharSet?.Replace("\"", string.Empty);
 
             return message.Content.ReadAsStringAsync().Result;
         }
