@@ -162,5 +162,30 @@ namespace ElDorado.Console.Tests.RefreshesTests
 
             auditResult.ProblemsToCsv().ShouldContain($"Link http://something.com with anchor text Oh noes!An error! generated an error.");
         }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Log_A_Problem_For_Link_With_Permanent_Redirect()
+        {
+            const string redirectedSite = "https://redirectedsite.com";
+            const string anchorText = "It up and moved!";
+            ArrangePage($"<html><body><a href=\"{redirectedSite}\">{anchorText}</a></body></html>");
+            Client.Arrange(c => c.GetHttpResponseFromGetRequestAsync(Arg.AnyString)).Returns(Task.FromResult(HttpStatusCode.MovedPermanently));
+
+            var auditResult = Target.AuditSiteFromSiteMap(Sitemap).Result;
+
+            auditResult.ProblemsToCsv().ShouldContain($"Permanent redirect for link {redirectedSite} with anchor text {anchorText}.");
+        }
+
+        [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
+        public void Log_A_Problem_For_A_Non_SSL_Link()
+        {
+            const string nonSslLink = "http://getacertdude.com";
+            const string anchorText = "What is this, 2006?";
+            ArrangePage($"<html><body><a href=\"{nonSslLink}\">{anchorText}</a></body></html>");
+
+            var auditResult = Target.AuditSiteFromSiteMap(Sitemap).Result;
+
+            auditResult.ProblemsToCsv().ShouldContain($"Non-ssl link {nonSslLink} with anchor text {anchorText}.");
+        }
 }
 }

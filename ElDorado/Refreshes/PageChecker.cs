@@ -68,12 +68,15 @@ namespace ElDorado.Refreshes
 
         private async Task CheckForBadLinks(IEnumerable<Link> inPostExternalLinks, PageCheckResult pageResult)
         {
+            var nonSslLinks = inPostExternalLinks.Where(ipel => ipel.Url.StartsWith("http://"));
+            pageResult.AddIssues(nonSslLinks.Select(nssl => $"Non-ssl link {nssl.Url} with anchor text {nssl.AnchorText}."));
+
             var linkCheckingTasks = new List<Task<string>>(inPostExternalLinks.Select(ipl => GetIssuesWithLink(ipl)));
 
             await Task.WhenAll(linkCheckingTasks);
 
-            var linkProblems = linkCheckingTasks.Select(lct => lct.Result).Where(lcr => !string.IsNullOrEmpty(lcr));
-            pageResult.AddIssues(linkProblems);
+            var badResponseCodeLinkProblems = linkCheckingTasks.Select(lct => lct.Result).Where(lcr => !string.IsNullOrEmpty(lcr));
+            pageResult.AddIssues(badResponseCodeLinkProblems);
         }
 
         private void CheckForProblematicWords(Page page, PageCheckResult pageResult)
@@ -90,14 +93,23 @@ namespace ElDorado.Refreshes
 
         private async Task<string> GetIssuesWithLink(Link linkToCheck)
         {
+            var readableLinkDescription = $"link {linkToCheck.Url} with anchor text {linkToCheck.AnchorText?.StripLineBreaks()}";
+
             try
             {
                 var response = await _client.GetHttpResponseFromGetRequestAsync(linkToCheck.Url);
-                return response == HttpStatusCode.NotFound ? $"404 for link {linkToCheck.Url} with anchor text {linkToCheck.AnchorText}." : string.Empty;
+                
+
+                switch (response)
+                {
+                    case HttpStatusCode.NotFound: return $"404 for {readableLinkDescription}.";
+                    case HttpStatusCode.MovedPermanently: return $"Permanent redirect for {readableLinkDescription}.";
+                    default: return string.Empty;
+                }
             }
             catch
             {
-                return $"Link {linkToCheck.Url} with anchor text {linkToCheck.AnchorText?.StripLineBreaks()} generated an error.";
+                return $"Link for {readableLinkDescription} generated an error.";
             }
         }
 
