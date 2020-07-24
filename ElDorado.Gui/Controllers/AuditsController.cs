@@ -1,4 +1,5 @@
 ﻿using ElDorado.Console.Refreshes;
+using ElDorado.Gui.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,9 @@ namespace ElDorado.Gui.Controllers
         {
             var auditResult = _checker.AuditFromSitemapUrl(sitemapPath);
 
-            return View("SeoAuditResults", auditResult.PageResults);
+            var viewModels = auditResult.PageResults.Select(pr => new PageCheckViewModel(pr));
+
+            return View("SeoAuditResults", viewModels);
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Telerik.JustMock;
 using Telerik.JustMock.Helpers;
+using ElDorado.Gui.ViewModels;
 
 namespace ElDorado.Gui.Tests.AuditsControllerTests
 {
@@ -29,7 +30,7 @@ namespace ElDorado.Gui.Tests.AuditsControllerTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_PageCheckResults_From_A_Post_To_SeoAuditResults()
         {
-            var pageCheckResults = Target.SeoCheck("https://site.com/sitemap.xml").GetResult<IEnumerable<PageCheckResult>>();
+            var pageCheckResults = Target.SeoCheck("https://site.com/sitemap.xml").GetResult<IEnumerable<PageCheckViewModel>>();
 
             pageCheckResults.ShouldBeEmpty();
         }
