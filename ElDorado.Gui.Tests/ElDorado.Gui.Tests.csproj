@@ -96,6 +96,7 @@
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="Telerik.JustMock, Version=2015.3.929.5, Culture=neutral, PublicKeyToken=721b6c5bc0326b3a, processorArchitecture=MSIL">
       <HintPath>..\packages\JustMock.2015.3.929.5\lib\Net35\Telerik.JustMock.dll</HintPath>
     </Reference>
@@ -104,6 +105,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuditsControllerTests\When_Looking_For_SEO_Issues_AuditsController_Should.cs" />
     <Compile Include="AuthorControllerTests\When_Performing_CRUD_Operations_On_Authors_AuthorControllerShould.cs" />
     <Compile Include="BlogPostsControllerTests\When_Creating_BlogPosts_BlogPostsController_Should.cs" />
     <Compile Include="BlogPostsControllerTests\When_Deleting_BlogPosts_BlogPostsController_Should.cs" />

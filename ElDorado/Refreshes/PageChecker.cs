@@ -25,7 +25,13 @@ namespace ElDorado.Refreshes
             _client = client ?? new SimpleWebClient();
         }
 
-        public async Task<AuditResult> AuditSiteFromSiteMap(Sitemap siteMap)
+        public virtual AuditResult AuditFromSitemapUrl(string sitemapUrl)
+        {
+            var map = new Sitemap(sitemapUrl);
+            return AuditSiteFromSiteMap(map).Result;
+        }
+
+        public virtual async Task<AuditResult> AuditSiteFromSiteMap(Sitemap siteMap)
         {
             var pageResultTasks = new List<Task<PageCheckResult>>();
 
@@ -37,6 +43,11 @@ namespace ElDorado.Refreshes
             result.AddPageCheckResults(pageResultTasks.Select(prt => prt.Result));
 
             return result;
+        }
+
+        public IEnumerable<string> GetLinksFrom(string rawPageHtml)
+        {
+            return rawPageHtml.AsHtml().SelectAttributeValuesForNode("href", "a").Where(link => IsActualLink(link));
         }
 
         private async Task<PageCheckResult> GetPageResult(string pageUrl)
@@ -111,11 +122,6 @@ namespace ElDorado.Refreshes
             {
                 return $"Link for {readableLinkDescription} generated an error.";
             }
-        }
-
-        public IEnumerable<string> GetLinksFrom(string rawPageHtml)
-        {
-            return rawPageHtml.AsHtml().SelectAttributeValuesForNode("href", "a").Where(link => IsActualLink(link));
         }
 
         private IEnumerable<string> GetProblematicWords(Page rawPage)

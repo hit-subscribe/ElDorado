@@ -1,0 +1,33 @@
+﻿@model IEnumerable<ElDorado.Refreshes.PageCheckResult>
+
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>View</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PageTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PageUrl)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.PageTitle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PageUrl)
+        </td>
+    </tr>
+}
+
+</table>

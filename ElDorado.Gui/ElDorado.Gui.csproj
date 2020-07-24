@@ -226,6 +226,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AuditsController.cs" />
     <Compile Include="Controllers\AuthorsController.cs" />
     <Compile Include="Controllers\BlogPostsController.cs" />
     <Compile Include="Controllers\BlogsController.cs" />
@@ -441,6 +442,8 @@
     <Content Include="Views\Whitepapers\Create.cshtml" />
     <Content Include="Views\Whitepapers\Edit.cshtml" />
     <Content Include="Views\Reports\HustlingEmail.cshtml" />
+    <Content Include="Views\Audits\SeoAuditResults.cshtml" />
+    <Content Include="Views\Audits\SeoCheck.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

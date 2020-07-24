@@ -10,6 +10,8 @@ namespace ElDorado.Refreshes
     {
         private readonly List<PageCheckResult> _pageCheckResults = new List<PageCheckResult>();
 
+        public IEnumerable<PageCheckResult> PageResults => _pageCheckResults;
+
         public void AddPageCheckResult(PageCheckResult result)
         {
             _pageCheckResults.Add(result);
@@ -20,6 +22,7 @@ namespace ElDorado.Refreshes
             foreach (var result in results)
                 AddPageCheckResult(result);
         }
+
 
         public string ProblemsToCsv()
         {
