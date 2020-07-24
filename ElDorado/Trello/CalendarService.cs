@@ -8,14 +8,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ElDorado.Trello
+namespace ElDorado.Console.Trello
 {
     public abstract class CalendarService
     {
         public const string PlannedPostsListName = "Planned Posts";
-        
+
         protected ICalendarBoard Board { get; set; }
-        
+
         private TrelloAuthorization Auth => TrelloAuthorization.Default;
 
         public virtual void Initialize(string filePath)

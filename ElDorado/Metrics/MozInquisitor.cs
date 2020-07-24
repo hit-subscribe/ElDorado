@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Web;
 
-namespace ElDorado.Metrics
+namespace ElDorado.Console.Metrics
 {
     public class MozInquisitor
     {
@@ -65,7 +65,7 @@ namespace ElDorado.Metrics
             return $"http://lsapi.seomoz.com/linkscape/url-metrics/{baseUrl}?Cols=288230376151711743&AccessID={accessId}&Expires={expiration}&Signature={signatureCode}";
         }
 
-        private static String GetSignatureCode(byte[] bytesToHash, string secret)
+        private static string GetSignatureCode(byte[] bytesToHash, string secret)
         {
             using (HMACSHA1 hashCalculator = new HMACSHA1(Encoding.ASCII.GetBytes(secret)))
             {

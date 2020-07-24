@@ -1,4 +1,4 @@
-﻿using ElDorado.Trello;
+﻿using ElDorado.Console.Trello;
 using Manatee.Trello;
 using Manatee.Trello.ManateeJson;
 using Manatee.Trello.WebApi;

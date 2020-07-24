@@ -1,14 +1,10 @@
-﻿using ElDorado.Domain;
-using ElDorado.Exceptions;
-using ElDorado.Repository;
+﻿using ElDorado.Console.Exceptions;
+using ElDorado.Console.Repository;
+using ElDorado.Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shouldly;
 using System;
-using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Telerik.JustMock;
 using Telerik.JustMock.EntityFramework;
 using Telerik.JustMock.Helpers;

@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ElDorado.Console.Trello;
 using Manatee.Trello;
 
-namespace ElDorado.Trello
+namespace ElDorado.Console.Trello
 {
     public class TrelloCard : ITrelloCard
     {

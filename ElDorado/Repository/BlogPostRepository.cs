@@ -1,12 +1,10 @@
-﻿using ElDorado.Domain;
-using ElDorado.Exceptions;
+﻿using ElDorado.Console.Exceptions;
+using ElDorado.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ElDorado.Repository
+namespace ElDorado.Console.Repository
 {
     public class BlogPostRepository
     {

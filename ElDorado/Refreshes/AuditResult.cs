@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ElDorado.Refreshes
+namespace ElDorado.Console.Refreshes
 {
     public class AuditResult
     {
@@ -29,7 +29,7 @@ namespace ElDorado.Refreshes
             var fileContents = new StringBuilder();
 
             foreach (var result in _pageCheckResults.Where(pcr => pcr.Issues.Any()))
-                fileContents.AppendLine($"{result.PageUrl},\"{result.PageTitle}\",{String.Join(",", result.Issues)}");
+                fileContents.AppendLine($"{result.PageUrl},\"{result.PageTitle}\",{string.Join(",", result.Issues)}");
 
             return fileContents.ToString();
         }

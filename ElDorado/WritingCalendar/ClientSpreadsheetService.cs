@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ElDorado.WritingCalendar
+namespace ElDorado.Console.WritingCalendar
 {
     public class ClientSpreadsheetService
     {

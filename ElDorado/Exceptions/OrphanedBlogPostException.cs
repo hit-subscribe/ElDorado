@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ElDorado.Exceptions
+namespace ElDorado.Console.Exceptions
 {
     public class OrphanedBlogPostException : Exception
     {

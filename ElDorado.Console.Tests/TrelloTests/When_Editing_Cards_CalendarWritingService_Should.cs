@@ -1,12 +1,10 @@
-﻿using ElDorado.Domain;
-using ElDorado.Trello;
+﻿using ElDorado.Console.Trello;
+using ElDorado.Domain;
 using Manatee.Trello;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Telerik.JustMock;
 using Telerik.JustMock.Helpers;
 

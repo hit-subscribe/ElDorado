@@ -1,8 +1,9 @@
-﻿using ElDorado.Domain;
+﻿using ElDorado.Console.Trello;
+using ElDorado.Domain;
 using System;
 using System.Linq;
 
-namespace ElDorado.Trello
+namespace ElDorado.Console.Trello
 {
     //I'm creating this instead of adding instance methods to the Trello API classes because those are untestable.  Want to keep logic out of there.
     public static class TrelloWrapperInterfaceExtensions

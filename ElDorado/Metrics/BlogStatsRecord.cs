@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ElDorado.Metrics
+namespace ElDorado.Console.Metrics
 {
     public class BlogStatsRecord
     {

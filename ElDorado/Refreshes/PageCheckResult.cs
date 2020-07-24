@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ElDorado.Refreshes
+namespace ElDorado.Console.Refreshes
 {
     public class PageCheckResult
     {

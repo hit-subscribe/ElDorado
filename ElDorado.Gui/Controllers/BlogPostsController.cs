@@ -1,12 +1,9 @@
-﻿using ElDorado.Domain;
+﻿using ElDorado.Console.Trello;
+using ElDorado.Console.Wordpress;
+using ElDorado.Domain;
 using ElDorado.Gui.ViewModels;
-using ElDorado.Trello;
-using ElDorado.Wordpress;
 using System;
-using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ElDorado.Gui.Controllers

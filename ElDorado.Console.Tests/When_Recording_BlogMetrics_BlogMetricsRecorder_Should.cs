@@ -1,5 +1,5 @@
-﻿using ElDorado.Domain;
-using ElDorado.Metrics;
+﻿using ElDorado.Console.Metrics;
+using ElDorado.Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shouldly;
 using System;

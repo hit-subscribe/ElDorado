@@ -1,4 +1,4 @@
-﻿using ElDorado.Scraping;
+﻿using ElDorado.Console.Trello;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shouldly;
 using System;

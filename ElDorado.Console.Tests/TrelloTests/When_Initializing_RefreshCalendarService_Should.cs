@@ -1,14 +1,11 @@
-﻿using ElDorado.Trello;
+﻿using ElDorado.Console.Trello;
 using Manatee.Trello;
 using Manatee.Trello.ManateeJson;
 using Manatee.Trello.WebApi;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shouldly;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ElDorado.Console.Tests.TrelloTests
 {

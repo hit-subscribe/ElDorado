@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ElDorado.Wordpress
+namespace ElDorado.Console.Wordpress
 {
     public class MissingAuthorException : Exception
     {

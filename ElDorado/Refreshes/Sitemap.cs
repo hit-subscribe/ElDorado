@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace ElDorado.Refreshes
+namespace ElDorado.Console.Refreshes
 {
     public class Sitemap
     {
         private readonly XDocument _document;
 
-        public virtual IEnumerable<SiteUrl> SiteUrls => _document.DescendantsNamed("url").Select(n => 
+        public virtual IEnumerable<SiteUrl> SiteUrls => _document.DescendantsNamed("url").Select(n =>
         new SiteUrl(n.ValueOfFirstDescendantNamed("loc"), n.ValueOfFirstDescendantNamed("lastmod").SafeToDateTime())
         );
 
@@ -31,4 +31,3 @@ namespace ElDorado.Refreshes
         }
     }
 }
-    

@@ -1,4 +1,5 @@
-﻿using ElDorado.Refreshes;
+﻿using ElDorado.Console.Refreshes;
+using ElDorado.Console.Trello;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shouldly;
 using System;

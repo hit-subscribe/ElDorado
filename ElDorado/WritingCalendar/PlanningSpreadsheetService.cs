@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ElDorado.WritingCalendar
+namespace ElDorado.Console.WritingCalendar
 {
     public class PlanningSpreadsheetService
     {

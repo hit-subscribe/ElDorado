@@ -1,8 +1,8 @@
 ﻿using ElDorado.Domain;
 using ElDorado.Gui.Controllers;
 using ElDorado.Gui.ViewModels;
-using ElDorado.Trello;
-using ElDorado.Wordpress;
+using ElDorado.Console.Trello;
+using ElDorado.Console.Wordpress;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shouldly;
 using System;

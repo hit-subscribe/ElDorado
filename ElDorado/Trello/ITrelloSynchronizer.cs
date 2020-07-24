@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ElDorado.Trello
+namespace ElDorado.Console.Trello
 {
     public interface ITrelloSynchronizer<T> where T : class, IHaveIdentity, new()
     {

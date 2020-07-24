@@ -1,6 +1,6 @@
-﻿using ElDorado.Domain;
-using ElDorado.Trello;
-using ElDorado.WritingCalendar;
+﻿using ElDorado.Console.Trello;
+using ElDorado.Console.WritingCalendar;
+using ElDorado.Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;

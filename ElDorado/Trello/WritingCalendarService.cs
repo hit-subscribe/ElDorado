@@ -1,4 +1,5 @@
-﻿using ElDorado.Domain;
+﻿using ElDorado.Console.Trello;
+using ElDorado.Domain;
 using Manatee.Trello;
 using Manatee.Trello.ManateeJson;
 using Manatee.Trello.WebApi;
@@ -8,7 +9,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 
-namespace ElDorado.Trello
+namespace ElDorado.Console.Trello
 {
     public class WritingCalendarService : CalendarService
     {

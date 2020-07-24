@@ -1,4 +1,7 @@
-﻿using ElDorado.Domain;
+﻿using ElDorado.Console;
+using ElDorado.Console.Refreshes;
+using ElDorado.Console.Trello;
+using ElDorado.Domain;
 using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;

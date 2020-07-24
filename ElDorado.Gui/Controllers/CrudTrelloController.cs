@@ -1,5 +1,5 @@
-﻿using ElDorado.Domain;
-using ElDorado.Trello;
+﻿using ElDorado.Console.Trello;
+using ElDorado.Domain;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;

@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ElDorado.Scraping
+namespace ElDorado.Console.Trello
 {
     public class SearchResultRetriever
     {
@@ -39,7 +39,7 @@ namespace ElDorado.Scraping
                 var singlePageResults = ExecuteSearch(searchParameters);
                 allResults.AddRange(singlePageResults);
 
-                if(resultNumber + 1 < serpPages && singlePageResults.Any())
+                if (resultNumber + 1 < serpPages && singlePageResults.Any())
                     Delay(30);
             }
         }

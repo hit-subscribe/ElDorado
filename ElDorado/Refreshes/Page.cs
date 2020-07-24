@@ -7,7 +7,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ElDorado.Refreshes
+namespace ElDorado.Console.Refreshes
 {
     public class Page
     {
@@ -39,7 +39,7 @@ namespace ElDorado.Refreshes
         }
 
         public string Title => WebUtility.HtmlDecode(_pageHtml.SafeGetNodeText("//title"));
-        public string Body =>  _pageHtml.SafeGetNodeText("//body");
+        public string Body => _pageHtml.SafeGetNodeText("//body");
         public IEnumerable<string> H1s => _pageHtml.SafeGetNodeCollectionText("//h1");
 
         public IEnumerable<string> H2s => _pageHtml.SafeGetNodeCollectionText("//h2");

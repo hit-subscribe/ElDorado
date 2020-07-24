@@ -1,4 +1,4 @@
-﻿using ElDorado.Metrics;
+﻿using ElDorado.Console.Metrics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shouldly;
 using System;

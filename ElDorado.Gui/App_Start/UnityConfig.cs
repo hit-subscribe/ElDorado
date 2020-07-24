@@ -1,9 +1,8 @@
+using ElDorado.Console.Trello;
+using ElDorado.Console.Wordpress;
 using ElDorado.Domain;
 using ElDorado.Gui.Controllers;
-using ElDorado.Trello;
-using ElDorado.Wordpress;
 using System;
-using System.Data.Entity;
 using Unity;
 using Unity.Injection;
 

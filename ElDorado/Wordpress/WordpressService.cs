@@ -7,7 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 
-namespace ElDorado.Wordpress
+namespace ElDorado.Console.Wordpress
 {
     public class WordpressService
     {

@@ -1,15 +1,10 @@
-﻿using ElDorado.Refreshes;
+﻿using ElDorado.Console.Refreshes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shouldly;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
 using System.Xml.Linq;
 using Telerik.JustMock;
-using Telerik.JustMock.Helpers;
 
 namespace ElDorado.Console.Tests.RefreshesTests
 {
