@@ -2,7 +2,6 @@
 using ElDorado.Console.Refreshes;
 using ElDorado.Console.Trello;
 using ElDorado.Domain;
-using ElDorado.Refreshes;
 using Gold.ConsoleMenu;
 using System;
 using System.Collections.Generic;

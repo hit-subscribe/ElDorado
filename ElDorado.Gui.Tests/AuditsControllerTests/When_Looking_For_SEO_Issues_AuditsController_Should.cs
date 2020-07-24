@@ -1,16 +1,10 @@
-﻿using ElDorado.Console.Refreshes;
-using ElDorado.Console.Trello;
-using ElDorado.Gui.Controllers;
-using ElDorado.Refreshes;
+﻿using ElDorado.Gui.Controllers;
+using ElDorado.Console.Refreshes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shouldly;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using System.Xml.Linq;
 using Telerik.JustMock;
 using Telerik.JustMock.Helpers;
 
@@ -29,7 +23,6 @@ namespace ElDorado.Gui.Tests.AuditsControllerTests
         public void BeforeEachTest()
         {
             Checker.Arrange(c => c.AuditFromSitemapUrl(Arg.AnyString)).Returns(Result);
-
             Target = new AuditsController(Checker);
         }
 
@@ -48,6 +41,6 @@ namespace ElDorado.Gui.Tests.AuditsControllerTests
 
             viewResult.ViewName.ShouldBe("SeoAuditResults");
         }
-}
+    }
 
 }

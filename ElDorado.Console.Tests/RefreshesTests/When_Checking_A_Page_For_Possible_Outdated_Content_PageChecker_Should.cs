@@ -1,5 +1,4 @@
 ﻿using ElDorado.Console.Refreshes;
-using ElDorado.Refreshes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shouldly;
 using System;
@@ -19,7 +18,6 @@ namespace ElDorado.Console.Tests.RefreshesTests
         private SimpleWebClient Client { get; } = Mock.Create<SimpleWebClient>();
 
         private Sitemap Sitemap { get; } = Mock.Create<Sitemap>();
-
         private PageChecker Target { get; set; }
 
         private void ArrangePage(string html)

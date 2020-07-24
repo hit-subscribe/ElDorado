@@ -12,7 +12,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ElDorado.Refreshes
+namespace ElDorado.Console.Refreshes
 {
     public class PageChecker
     {

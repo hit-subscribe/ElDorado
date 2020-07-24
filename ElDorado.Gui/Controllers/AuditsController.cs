@@ -1,4 +1,4 @@
-﻿using ElDorado.Refreshes;
+﻿using ElDorado.Console.Refreshes;
 using System;
 using System.Collections.Generic;
 using System.Linq;

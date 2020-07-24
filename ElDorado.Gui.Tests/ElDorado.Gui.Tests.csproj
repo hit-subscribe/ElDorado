@@ -141,7 +141,7 @@
       <Name>ElDorado.Gui</Name>
     </ProjectReference>
     <ProjectReference Include="..\ElDorado\ElDorado.Console.csproj">
-      <Project>{0E3D0F5E-C657-4544-BBB0-DE1ABAEAFF1C}</Project>
+      <Project>{0e3d0f5e-c657-4544-bbb0-de1abaeaff1c}</Project>
       <Name>ElDorado.Console</Name>
     </ProjectReference>
   </ItemGroup>
