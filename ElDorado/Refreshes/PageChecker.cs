@@ -53,7 +53,7 @@ namespace ElDorado.Console.Refreshes
             return rawPageHtml.AsHtml().SelectAttributeValuesForNode("href", "a").Where(link => IsActualLink(link));
         }
 
-        private async Task<PageCheckResult> GetPageResult(string pageUrl)
+        public async Task<PageCheckResult> GetPageResult(string pageUrl)
         {
             await _throttler.WaitAsync();
 

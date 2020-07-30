@@ -16,21 +16,22 @@ namespace ElDorado.Gui.Tests.AuditsControllerTests
     {
         private AuditResult Result { get; set; } = new AuditResult();
 
-        private PageChecker Checker { get; set; } = Mock.Create<PageChecker>();
+        private SitemapService SitemapService { get; set; } = Mock.Create<SitemapService>();
+
+        private AuditService AuditService { get; set; } = Mock.Create<AuditService>();
 
         private AuditsController Target { get; set; }
 
         [TestInitialize]
         public void BeforeEachTest()
         {
-            Checker.Arrange(c => c.AuditFromSitemapUrl(Arg.AnyString)).Returns(Result);
-            Target = new AuditsController(Checker);
+            Target = new AuditsController(SitemapService, AuditService);
         }
 
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Return_PageCheckResults_From_A_Post_To_SeoAuditResults()
         {
-            var pageCheckResults = Target.SeoCheck("https://site.com/sitemap.xml").GetResult<IEnumerable<PageCheckViewModel>>();
+            var pageCheckResults = Target.SeoCheck("https://site.com/sitemap.xml").Result.GetResult<IEnumerable<PageCheckViewModel>>();
 
             pageCheckResults.ShouldBeEmpty();
         }
@@ -38,7 +39,7 @@ namespace ElDorado.Gui.Tests.AuditsControllerTests
         [TestMethod, Owner("ebd"), TestCategory("Proven"), TestCategory("Unit")]
         public void Use_SeoAuditResults_On_Postback()
         {
-            var viewResult = Target.SeoCheck("https://site.com/sitemap.xml");
+            var viewResult = Target.SeoCheck("https://site.com/sitemap.xml").Result;
 
             viewResult.ViewName.ShouldBe("SeoAuditResults");
         }

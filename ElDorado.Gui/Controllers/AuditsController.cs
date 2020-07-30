@@ -1,9 +1,11 @@
-﻿using ElDorado.Console.Refreshes;
+﻿using ElDorado.Console;
+using ElDorado.Console.Refreshes;
 using ElDorado.Gui.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace ElDorado.Gui.Controllers
@@ -11,10 +13,15 @@ namespace ElDorado.Gui.Controllers
     public class AuditsController : Controller
     {
         private PageChecker _checker;
+        private SitemapService _sitemapService;
+        private AuditService _auditService;
 
-        public AuditsController(PageChecker checker)
+        public DateTime Now { get; set; } = DateTime.Now;
+
+        public AuditsController(SitemapService sitemapService, AuditService auditService)
         {
-            _checker = checker;
+            _sitemapService = sitemapService;
+            _auditService = auditService;
         }
 
         public ViewResult SeoCheck()
@@ -23,11 +30,13 @@ namespace ElDorado.Gui.Controllers
         }
 
         [HttpPost]
-        public ViewResult SeoCheck(string sitemapPath)
+        public async Task<ViewResult> SeoCheck(string sitemapPath)
         {
-            var auditResult = _checker.AuditFromSitemapUrl(sitemapPath);
+            var urls = _sitemapService.GetBasicUrlsFromSitemap(sitemapPath);
 
-            var viewModels = auditResult.PageResults.Select(pr => new PageCheckViewModel(pr));
+            var pageResults = await _auditService.GetPageResultsAsync(urls);
+
+            var viewModels = pageResults.Select(pr => new PageCheckViewModel(pr));
 
             return View("SeoAuditResults", viewModels);
         }

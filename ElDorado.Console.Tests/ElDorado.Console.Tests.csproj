@@ -192,6 +192,8 @@
     <Compile Include="RefreshesTests\When_Checking_A_Page_For_Possible_Outdated_Content_PageChecker_Should.cs" />
     <Compile Include="RefreshesTests\When_Checking_For_Bad_Links_PageChecker_Should.cs" />
     <Compile Include="RefreshesTests\When_Checking_For_Problematic_Terms_PageChecker_Should.cs" />
+    <Compile Include="RefreshesTests\When_Getting_A_PageResult_Async_AuditService_Should.cs" />
+    <Compile Include="RefreshesTests\When_Getting_Multiple_PageResults_Async_AuditService_Should.cs" />
     <Compile Include="RefreshesTests\When_Loading_Sitemap_Should.cs" />
     <Compile Include="RefreshesTests\When_Logging_Problems_AuditResult_Should.cs" />
     <Compile Include="RefreshesTests\When_Parsing_Raw_Html_Page_Should.cs" />
